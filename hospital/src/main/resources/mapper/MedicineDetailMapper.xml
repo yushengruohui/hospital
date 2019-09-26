@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.MedicineDetailMapper">
+
+    <resultMap type="com.ys.hospital.pojo.MedicineDetail" id="MedicineDetailMap">
+        <result property="medicineDetailId" column="medicine_detail_id" jdbcType="INTEGER"/>
+        <result property="medicineDetailValid" column="medicine_detail_valid" jdbcType="VARCHAR"/>
+        <result property="medicineDetailComponents" column="medicine_detail_components" jdbcType="VARCHAR"/>
+        <result property="medicineDetailProductionDate" column="medicine_detail_production_date" jdbcType="TIMESTAMP"/>
+        <result property="medicineDetailProductionAddress" column="medicine_detail_production_address" jdbcType="VARCHAR"/>
+        <result property="medicineId" column="medicine_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询所有MedicineDetail信息-->
+    <select id="queryAllMedicineDetail" resultMap="MedicineDetailMap">
+        select
+          medicine_detail_id, medicine_detail_valid, medicine_detail_components, medicine_detail_production_date, medicine_detail_production_address, medicine_id
+        from medicine_detail
+    </select>
+
+    <!--根据实体类MedicineDetail的相关属性查询实体类MedicineDetail-->
+    <select id="queryMedicineDetailByParam" resultMap="MedicineDetailMap">
+        select
+          medicine_detail_id, medicine_detail_valid, medicine_detail_components, medicine_detail_production_date, medicine_detail_production_address, medicine_id
+        from medicine_detail
+        <where>
+            <if test="medicineDetailId != null">
+                and medicine_detail_id = #{medicineDetailId}
+            </if>
+            <if test="medicineDetailValid != null and medicineDetailValid != ''">
+                and medicine_detail_valid = #{medicineDetailValid}
+            </if>
+            <if test="medicineDetailComponents != null and medicineDetailComponents != ''">
+                and medicine_detail_components = #{medicineDetailComponents}
+            </if>
+            <if test="medicineDetailProductionDate != null">
+                and medicine_detail_production_date = #{medicineDetailProductionDate}
+            </if>
+            <if test="medicineDetailProductionAddress != null and medicineDetailProductionAddress != ''">
+                and medicine_detail_production_address = #{medicineDetailProductionAddress}
+            </if>
+            <if test="medicineId != null">
+                and medicine_id = #{medicineId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增MedicineDetail数据-->
+    <insert id="insertMedicineDetail" keyProperty="medicineDetailId" useGeneratedKeys="true">
+        insert into medicine_detail(medicine_detail_valid, medicine_detail_components, medicine_detail_production_date, medicine_detail_production_address, medicine_id)
+        values (#{medicineDetailValid}, #{medicineDetailComponents}, #{medicineDetailProductionDate}, #{medicineDetailProductionAddress}, #{medicineId})
+    </insert>
+
+    <!--修改MedicineDetail记录-->
+    <update id="updateMedicineDetail">
+        update medicine_detail
+        <set>
+            <if test="medicineDetailValid != null and medicineDetailValid != ''">
+                medicine_detail_valid = #{medicineDetailValid},
+            </if>
+            <if test="medicineDetailComponents != null and medicineDetailComponents != ''">
+                medicine_detail_components = #{medicineDetailComponents},
+            </if>
+            <if test="medicineDetailProductionDate != null">
+                medicine_detail_production_date = #{medicineDetailProductionDate},
+            </if>
+            <if test="medicineDetailProductionAddress != null and medicineDetailProductionAddress != ''">
+                medicine_detail_production_address = #{medicineDetailProductionAddress},
+            </if>
+            <if test="medicineId != null">
+                medicine_id = #{medicineId},
+            </if>
+        </set>
+        where medicine_detail_id = #{medicineDetailId}
+    </update>
+
+    <!--通过主键删除一条MedicineDetail记录-->
+    <delete id="deleteMedicineDetailById">
+        delete from medicine_detail where medicine_detail_id = #{medicineDetailId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.AdminMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Admin" id="AdminMap">
+        <result property="adminId" column="admin_id" jdbcType="INTEGER"/>
+        <result property="adminName" column="admin_name" jdbcType="VARCHAR"/>
+        <result property="adminPhone" column="admin_phone" jdbcType="VARCHAR"/>
+        <result property="adminPassword" column="admin_password" jdbcType="VARCHAR"/>
+        <result property="adminEmail" column="admin_email" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询所有Admin信息-->
+    <select id="queryAllAdmin" resultMap="AdminMap">
+        select
+          admin_id, admin_name, admin_phone, admin_password, admin_email
+        from admin
+    </select>
+
+    <!--根据实体类Admin的相关属性查询实体类Admin-->
+    <select id="queryAdminByParam" resultMap="AdminMap">
+        select
+          admin_id, admin_name, admin_phone, admin_password, admin_email
+        from admin
+        <where>
+            <if test="adminId != null">
+                and admin_id = #{adminId}
+            </if>
+            <if test="adminName != null and adminName != ''">
+                and admin_name = #{adminName}
+            </if>
+            <if test="adminPhone != null and adminPhone != ''">
+                and admin_phone = #{adminPhone}
+            </if>
+            <if test="adminPassword != null and adminPassword != ''">
+                and admin_password = #{adminPassword}
+            </if>
+            <if test="adminEmail != null and adminEmail != ''">
+                and admin_email = #{adminEmail}
+            </if>
+        </where>
+    </select>
+
+    <!--新增Admin数据-->
+    <insert id="insertAdmin" keyProperty="adminId" useGeneratedKeys="true">
+        insert into admin(admin_name, admin_phone, admin_password, admin_email)
+        values (#{adminName}, #{adminPhone}, #{adminPassword}, #{adminEmail})
+    </insert>
+
+    <!--修改Admin记录-->
+    <update id="updateAdmin">
+        update admin
+        <set>
+            <if test="adminName != null and adminName != ''">
+                admin_name = #{adminName},
+            </if>
+            <if test="adminPhone != null and adminPhone != ''">
+                admin_phone = #{adminPhone},
+            </if>
+            <if test="adminPassword != null and adminPassword != ''">
+                admin_password = #{adminPassword},
+            </if>
+            <if test="adminEmail != null and adminEmail != ''">
+                admin_email = #{adminEmail},
+            </if>
+        </set>
+        where admin_id = #{adminId}
+    </update>
+
+    <!--通过主键删除一条Admin记录-->
+    <delete id="deleteAdminById">
+        delete from admin where admin_id = #{adminId}
+    </delete>
+
+</mapper>

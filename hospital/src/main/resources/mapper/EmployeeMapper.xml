@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.EmployeeMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Employee" id="EmployeeMap">
+        <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+        <result property="employeeName" column="employee_name" jdbcType="VARCHAR"/>
+        <result property="employeePassword" column="employee_password" jdbcType="VARCHAR"/>
+        <result property="employeeOnline" column="employee_online" jdbcType="INTEGER"/>
+        <result property="employeeLastLoginTime" column="employee_last_login_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询所有Employee信息-->
+    <select id="queryAllEmployee" resultMap="EmployeeMap">
+        select
+          employee_id, employee_name, employee_password, employee_online, employee_last_login_time
+        from employee
+    </select>
+
+    <!--根据实体类Employee的相关属性查询实体类Employee-->
+    <select id="queryEmployeeByParam" resultMap="EmployeeMap">
+        select
+          employee_id, employee_name, employee_password, employee_online, employee_last_login_time
+        from employee
+        <where>
+            <if test="employeeId != null">
+                and employee_id = #{employeeId}
+            </if>
+            <if test="employeeName != null and employeeName != ''">
+                and employee_name = #{employeeName}
+            </if>
+            <if test="employeePassword != null and employeePassword != ''">
+                and employee_password = #{employeePassword}
+            </if>
+            <if test="employeeOnline != null">
+                and employee_online = #{employeeOnline}
+            </if>
+            <if test="employeeLastLoginTime != null">
+                and employee_last_login_time = #{employeeLastLoginTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增Employee数据-->
+    <insert id="insertEmployee" keyProperty="employeeId" useGeneratedKeys="true">
+        insert into employee(employee_name, employee_password, employee_online, employee_last_login_time)
+        values (#{employeeName}, #{employeePassword}, #{employeeOnline}, #{employeeLastLoginTime})
+    </insert>
+
+    <!--修改Employee记录-->
+    <update id="updateEmployee">
+        update employee
+        <set>
+            <if test="employeeName != null and employeeName != ''">
+                employee_name = #{employeeName},
+            </if>
+            <if test="employeePassword != null and employeePassword != ''">
+                employee_password = #{employeePassword},
+            </if>
+            <if test="employeeOnline != null">
+                employee_online = #{employeeOnline},
+            </if>
+            <if test="employeeLastLoginTime != null">
+                employee_last_login_time = #{employeeLastLoginTime},
+            </if>
+        </set>
+        where employee_id = #{employeeId}
+    </update>
+
+    <!--通过主键删除一条Employee记录-->
+    <delete id="deleteEmployeeById">
+        delete from employee where employee_id = #{employeeId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.PositionMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Position" id="PositionMap">
+        <result property="positionId" column="position_id" jdbcType="INTEGER"/>
+        <result property="positionName" column="position_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询所有Position信息-->
+    <select id="queryAllPosition" resultMap="PositionMap">
+        select
+          position_id, position_name
+        from position
+    </select>
+
+    <!--根据实体类Position的相关属性查询实体类Position-->
+    <select id="queryPositionByParam" resultMap="PositionMap">
+        select
+          position_id, position_name
+        from position
+        <where>
+            <if test="positionId != null">
+                and position_id = #{positionId}
+            </if>
+            <if test="positionName != null and positionName != ''">
+                and position_name = #{positionName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增Position数据-->
+    <insert id="insertPosition" keyProperty="positionId" useGeneratedKeys="true">
+        insert into position(position_name)
+        values (#{positionName})
+    </insert>
+
+    <!--修改Position记录-->
+    <update id="updatePosition">
+        update position
+        <set>
+            <if test="positionName != null and positionName != ''">
+                position_name = #{positionName},
+            </if>
+        </set>
+        where position_id = #{positionId}
+    </update>
+
+    <!--通过主键删除一条Position记录-->
+    <delete id="deletePositionById">
+        delete from position where position_id = #{positionId}
+    </delete>
+
+</mapper>

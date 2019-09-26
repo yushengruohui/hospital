@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.WorkTimeMapper">
+
+    <resultMap type="com.ys.hospital.pojo.WorkTime" id="WorkTimeMap">
+        <result property="workTimeId" column="work_time_id" jdbcType="INTEGER"/>
+        <result property="workTime1" column="work_time1" jdbcType="INTEGER"/>
+        <result property="workTime2" column="work_time2" jdbcType="INTEGER"/>
+        <result property="workTime3" column="work_time3" jdbcType="INTEGER"/>
+        <result property="workTime4" column="work_time4" jdbcType="INTEGER"/>
+        <result property="workTime5" column="work_time5" jdbcType="INTEGER"/>
+        <result property="workTime6" column="work_time6" jdbcType="INTEGER"/>
+        <result property="workTime7" column="work_time7" jdbcType="INTEGER"/>
+        <result property="workTime8" column="work_time8" jdbcType="INTEGER"/>
+        <result property="workTime9" column="work_time9" jdbcType="INTEGER"/>
+        <result property="workTime10" column="work_time10" jdbcType="INTEGER"/>
+        <result property="workTime11" column="work_time11" jdbcType="INTEGER"/>
+        <result property="workTime12" column="work_time12" jdbcType="INTEGER"/>
+        <result property="workTime13" column="work_time13" jdbcType="INTEGER"/>
+        <result property="workTime14" column="work_time14" jdbcType="INTEGER"/>
+        <result property="workId" column="work_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询所有WorkTime信息-->
+    <select id="queryAllWorkTime" resultMap="WorkTimeMap">
+        select
+          work_time_id, work_time1, work_time2, work_time3, work_time4, work_time5, work_time6, work_time7, work_time8, work_time9, work_time10, work_time11, work_time12, work_time13, work_time14, work_id
+        from work_time
+    </select>
+
+    <!--根据实体类WorkTime的相关属性查询实体类WorkTime-->
+    <select id="queryWorkTimeByParam" resultMap="WorkTimeMap">
+        select
+          work_time_id, work_time1, work_time2, work_time3, work_time4, work_time5, work_time6, work_time7, work_time8, work_time9, work_time10, work_time11, work_time12, work_time13, work_time14, work_id
+        from work_time
+        <where>
+            <if test="workTimeId != null">
+                and work_time_id = #{workTimeId}
+            </if>
+            <if test="workTime1 != null">
+                and work_time1 = #{workTime1}
+            </if>
+            <if test="workTime2 != null">
+                and work_time2 = #{workTime2}
+            </if>
+            <if test="workTime3 != null">
+                and work_time3 = #{workTime3}
+            </if>
+            <if test="workTime4 != null">
+                and work_time4 = #{workTime4}
+            </if>
+            <if test="workTime5 != null">
+                and work_time5 = #{workTime5}
+            </if>
+            <if test="workTime6 != null">
+                and work_time6 = #{workTime6}
+            </if>
+            <if test="workTime7 != null">
+                and work_time7 = #{workTime7}
+            </if>
+            <if test="workTime8 != null">
+                and work_time8 = #{workTime8}
+            </if>
+            <if test="workTime9 != null">
+                and work_time9 = #{workTime9}
+            </if>
+            <if test="workTime10 != null">
+                and work_time10 = #{workTime10}
+            </if>
+            <if test="workTime11 != null">
+                and work_time11 = #{workTime11}
+            </if>
+            <if test="workTime12 != null">
+                and work_time12 = #{workTime12}
+            </if>
+            <if test="workTime13 != null">
+                and work_time13 = #{workTime13}
+            </if>
+            <if test="workTime14 != null">
+                and work_time14 = #{workTime14}
+            </if>
+            <if test="workId != null">
+                and work_id = #{workId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增WorkTime数据-->
+    <insert id="insertWorkTime" keyProperty="workTimeId" useGeneratedKeys="true">
+        insert into work_time(work_time1, work_time2, work_time3, work_time4, work_time5, work_time6, work_time7, work_time8, work_time9, work_time10, work_time11, work_time12, work_time13, work_time14, work_id)
+        values (#{workTime1}, #{workTime2}, #{workTime3}, #{workTime4}, #{workTime5}, #{workTime6}, #{workTime7}, #{workTime8}, #{workTime9}, #{workTime10}, #{workTime11}, #{workTime12}, #{workTime13}, #{workTime14}, #{workId})
+    </insert>
+
+    <!--修改WorkTime记录-->
+    <update id="updateWorkTime">
+        update work_time
+        <set>
+            <if test="workTime1 != null">
+                work_time1 = #{workTime1},
+            </if>
+            <if test="workTime2 != null">
+                work_time2 = #{workTime2},
+            </if>
+            <if test="workTime3 != null">
+                work_time3 = #{workTime3},
+            </if>
+            <if test="workTime4 != null">
+                work_time4 = #{workTime4},
+            </if>
+            <if test="workTime5 != null">
+                work_time5 = #{workTime5},
+            </if>
+            <if test="workTime6 != null">
+                work_time6 = #{workTime6},
+            </if>
+            <if test="workTime7 != null">
+                work_time7 = #{workTime7},
+            </if>
+            <if test="workTime8 != null">
+                work_time8 = #{workTime8},
+            </if>
+            <if test="workTime9 != null">
+                work_time9 = #{workTime9},
+            </if>
+            <if test="workTime10 != null">
+                work_time10 = #{workTime10},
+            </if>
+            <if test="workTime11 != null">
+                work_time11 = #{workTime11},
+            </if>
+            <if test="workTime12 != null">
+                work_time12 = #{workTime12},
+            </if>
+            <if test="workTime13 != null">
+                work_time13 = #{workTime13},
+            </if>
+            <if test="workTime14 != null">
+                work_time14 = #{workTime14},
+            </if>
+            <if test="workId != null">
+                work_id = #{workId},
+            </if>
+        </set>
+        where work_time_id = #{workTimeId}
+    </update>
+
+    <!--通过主键删除一条WorkTime记录-->
+    <delete id="deleteWorkTimeById">
+        delete from work_time where work_time_id = #{workTimeId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.RoomMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Room" id="RoomMap">
+        <result property="roomId" column="room_id" jdbcType="INTEGER"/>
+        <result property="roomName" column="room_name" jdbcType="VARCHAR"/>
+        <result property="branchId" column="branch_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询所有Room信息-->
+    <select id="queryAllRoom" resultMap="RoomMap">
+        select
+          room_id, room_name, branch_id
+        from room
+    </select>
+
+    <!--根据实体类Room的相关属性查询实体类Room-->
+    <select id="queryRoomByParam" resultMap="RoomMap">
+        select
+          room_id, room_name, branch_id
+        from room
+        <where>
+            <if test="roomId != null">
+                and room_id = #{roomId}
+            </if>
+            <if test="roomName != null and roomName != ''">
+                and room_name = #{roomName}
+            </if>
+            <if test="branchId != null">
+                and branch_id = #{branchId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增Room数据-->
+    <insert id="insertRoom" keyProperty="roomId" useGeneratedKeys="true">
+        insert into room(room_name, branch_id)
+        values (#{roomName}, #{branchId})
+    </insert>
+
+    <!--修改Room记录-->
+    <update id="updateRoom">
+        update room
+        <set>
+            <if test="roomName != null and roomName != ''">
+                room_name = #{roomName},
+            </if>
+            <if test="branchId != null">
+                branch_id = #{branchId},
+            </if>
+        </set>
+        where room_id = #{roomId}
+    </update>
+
+    <!--通过主键删除一条Room记录-->
+    <delete id="deleteRoomById">
+        delete from room where room_id = #{roomId}
+    </delete>
+
+</mapper>

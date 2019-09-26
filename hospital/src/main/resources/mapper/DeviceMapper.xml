@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.DeviceMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Device" id="DeviceMap">
+        <result property="deviceId" column="device_id" jdbcType="INTEGER"/>
+        <result property="deviceName" column="device_name" jdbcType="VARCHAR"/>
+        <result property="deviceProductionTime" column="device_production_time" jdbcType="TIMESTAMP"/>
+        <result property="deviceProductionAddress" column="device_production_address" jdbcType="VARCHAR"/>
+        <result property="deviceDecription" column="device_decription" jdbcType="VARCHAR"/>
+        <result property="deviceAlert" column="device_alert" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询所有Device信息-->
+    <select id="queryAllDevice" resultMap="DeviceMap">
+        select
+          device_id, device_name, device_production_time, device_production_address, device_decription, device_alert
+        from device
+    </select>
+
+    <!--根据实体类Device的相关属性查询实体类Device-->
+    <select id="queryDeviceByParam" resultMap="DeviceMap">
+        select
+          device_id, device_name, device_production_time, device_production_address, device_decription, device_alert
+        from device
+        <where>
+            <if test="deviceId != null">
+                and device_id = #{deviceId}
+            </if>
+            <if test="deviceName != null and deviceName != ''">
+                and device_name = #{deviceName}
+            </if>
+            <if test="deviceProductionTime != null">
+                and device_production_time = #{deviceProductionTime}
+            </if>
+            <if test="deviceProductionAddress != null and deviceProductionAddress != ''">
+                and device_production_address = #{deviceProductionAddress}
+            </if>
+            <if test="deviceDecription != null and deviceDecription != ''">
+                and device_decription = #{deviceDecription}
+            </if>
+            <if test="deviceAlert != null and deviceAlert != ''">
+                and device_alert = #{deviceAlert}
+            </if>
+        </where>
+    </select>
+
+    <!--新增Device数据-->
+    <insert id="insertDevice" keyProperty="deviceId" useGeneratedKeys="true">
+        insert into device(device_name, device_production_time, device_production_address, device_decription, device_alert)
+        values (#{deviceName}, #{deviceProductionTime}, #{deviceProductionAddress}, #{deviceDecription}, #{deviceAlert})
+    </insert>
+
+    <!--修改Device记录-->
+    <update id="updateDevice">
+        update device
+        <set>
+            <if test="deviceName != null and deviceName != ''">
+                device_name = #{deviceName},
+            </if>
+            <if test="deviceProductionTime != null">
+                device_production_time = #{deviceProductionTime},
+            </if>
+            <if test="deviceProductionAddress != null and deviceProductionAddress != ''">
+                device_production_address = #{deviceProductionAddress},
+            </if>
+            <if test="deviceDecription != null and deviceDecription != ''">
+                device_decription = #{deviceDecription},
+            </if>
+            <if test="deviceAlert != null and deviceAlert != ''">
+                device_alert = #{deviceAlert},
+            </if>
+        </set>
+        where device_id = #{deviceId}
+    </update>
+
+    <!--通过主键删除一条Device记录-->
+    <delete id="deleteDeviceById">
+        delete from device where device_id = #{deviceId}
+    </delete>
+
+</mapper>

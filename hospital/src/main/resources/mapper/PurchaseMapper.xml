@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.PurchaseMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Purchase" id="PurchaseMap">
+        <result property="purchaseId" column="purchase_id" jdbcType="INTEGER"/>
+        <result property="purchaseEntryTime" column="purchase_entry_time" jdbcType="TIMESTAMP"/>
+        <result property="purchaseEntryPrice" column="purchase_entry_price" jdbcType="NUMERIC"/>
+        <result property="purchaseProvider" column="purchase_provider" jdbcType="VARCHAR"/>
+        <result property="medicineId" column="medicine_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询所有Purchase信息-->
+    <select id="queryAllPurchase" resultMap="PurchaseMap">
+        select
+          purchase_id, purchase_entry_time, purchase_entry_price, purchase_provider, medicine_id
+        from purchase
+    </select>
+
+    <!--根据实体类Purchase的相关属性查询实体类Purchase-->
+    <select id="queryPurchaseByParam" resultMap="PurchaseMap">
+        select
+          purchase_id, purchase_entry_time, purchase_entry_price, purchase_provider, medicine_id
+        from purchase
+        <where>
+            <if test="purchaseId != null">
+                and purchase_id = #{purchaseId}
+            </if>
+            <if test="purchaseEntryTime != null">
+                and purchase_entry_time = #{purchaseEntryTime}
+            </if>
+            <if test="purchaseEntryPrice != null">
+                and purchase_entry_price = #{purchaseEntryPrice}
+            </if>
+            <if test="purchaseProvider != null and purchaseProvider != ''">
+                and purchase_provider = #{purchaseProvider}
+            </if>
+            <if test="medicineId != null">
+                and medicine_id = #{medicineId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增Purchase数据-->
+    <insert id="insertPurchase" keyProperty="purchaseId" useGeneratedKeys="true">
+        insert into purchase(purchase_entry_time, purchase_entry_price, purchase_provider, medicine_id)
+        values (#{purchaseEntryTime}, #{purchaseEntryPrice}, #{purchaseProvider}, #{medicineId})
+    </insert>
+
+    <!--修改Purchase记录-->
+    <update id="updatePurchase">
+        update purchase
+        <set>
+            <if test="purchaseEntryTime != null">
+                purchase_entry_time = #{purchaseEntryTime},
+            </if>
+            <if test="purchaseEntryPrice != null">
+                purchase_entry_price = #{purchaseEntryPrice},
+            </if>
+            <if test="purchaseProvider != null and purchaseProvider != ''">
+                purchase_provider = #{purchaseProvider},
+            </if>
+            <if test="medicineId != null">
+                medicine_id = #{medicineId},
+            </if>
+        </set>
+        where purchase_id = #{purchaseId}
+    </update>
+
+    <!--通过主键删除一条Purchase记录-->
+    <delete id="deletePurchaseById">
+        delete from purchase where purchase_id = #{purchaseId}
+    </delete>
+
+</mapper>

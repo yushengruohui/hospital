@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.OperationMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Operation" id="OperationMap">
+        <result property="operationId" column="operation_id" jdbcType="INTEGER"/>
+        <result property="operationName" column="operation_name" jdbcType="VARCHAR"/>
+        <result property="operationAssistant" column="operation_assistant" jdbcType="VARCHAR"/>
+        <result property="operationAnesthetist" column="operation_anesthetist" jdbcType="VARCHAR"/>
+        <result property="operationMedicine" column="operation_medicine" jdbcType="VARCHAR"/>
+        <result property="operationDevice" column="operation_device" jdbcType="VARCHAR"/>
+        <result property="operationTime" column="operation_time" jdbcType="TIMESTAMP"/>
+        <result property="operationStatus" column="operation_status" jdbcType="INTEGER"/>
+        <result property="operationDescription" column="operation_description" jdbcType="VARCHAR"/>
+        <result property="operationNotifyId" column="operation_notify_id" jdbcType="INTEGER"/>
+        <result property="roomId" column="room_id" jdbcType="INTEGER"/>
+        <result property="operationPrice" column="operation_price" jdbcType="NUMERIC"/>
+        <result property="operationPayTime" column="operation_pay_time" jdbcType="TIMESTAMP"/>
+        <result property="operationPayStatus" column="operation_pay_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询所有Operation信息-->
+    <select id="queryAllOperation" resultMap="OperationMap">
+        select
+          operation_id, operation_name, operation_assistant, operation_anesthetist, operation_medicine, operation_device, operation_time, operation_status, operation_description, operation_notify_id, room_id, operation_price, operation_pay_time, operation_pay_status
+        from operation
+    </select>
+
+    <!--根据实体类Operation的相关属性查询实体类Operation-->
+    <select id="queryOperationByParam" resultMap="OperationMap">
+        select
+          operation_id, operation_name, operation_assistant, operation_anesthetist, operation_medicine, operation_device, operation_time, operation_status, operation_description, operation_notify_id, room_id, operation_price, operation_pay_time, operation_pay_status
+        from operation
+        <where>
+            <if test="operationId != null">
+                and operation_id = #{operationId}
+            </if>
+            <if test="operationName != null and operationName != ''">
+                and operation_name = #{operationName}
+            </if>
+            <if test="operationAssistant != null and operationAssistant != ''">
+                and operation_assistant = #{operationAssistant}
+            </if>
+            <if test="operationAnesthetist != null and operationAnesthetist != ''">
+                and operation_anesthetist = #{operationAnesthetist}
+            </if>
+            <if test="operationMedicine != null and operationMedicine != ''">
+                and operation_medicine = #{operationMedicine}
+            </if>
+            <if test="operationDevice != null and operationDevice != ''">
+                and operation_device = #{operationDevice}
+            </if>
+            <if test="operationTime != null">
+                and operation_time = #{operationTime}
+            </if>
+            <if test="operationStatus != null">
+                and operation_status = #{operationStatus}
+            </if>
+            <if test="operationDescription != null and operationDescription != ''">
+                and operation_description = #{operationDescription}
+            </if>
+            <if test="operationNotifyId != null">
+                and operation_notify_id = #{operationNotifyId}
+            </if>
+            <if test="roomId != null">
+                and room_id = #{roomId}
+            </if>
+            <if test="operationPrice != null">
+                and operation_price = #{operationPrice}
+            </if>
+            <if test="operationPayTime != null">
+                and operation_pay_time = #{operationPayTime}
+            </if>
+            <if test="operationPayStatus != null">
+                and operation_pay_status = #{operationPayStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增Operation数据-->
+    <insert id="insertOperation" keyProperty="operationId" useGeneratedKeys="true">
+        insert into operation(operation_name, operation_assistant, operation_anesthetist, operation_medicine, operation_device, operation_time, operation_status, operation_description, operation_notify_id, room_id, operation_price, operation_pay_time, operation_pay_status)
+        values (#{operationName}, #{operationAssistant}, #{operationAnesthetist}, #{operationMedicine}, #{operationDevice}, #{operationTime}, #{operationStatus}, #{operationDescription}, #{operationNotifyId}, #{roomId}, #{operationPrice}, #{operationPayTime}, #{operationPayStatus})
+    </insert>
+
+    <!--修改Operation记录-->
+    <update id="updateOperation">
+        update operation
+        <set>
+            <if test="operationName != null and operationName != ''">
+                operation_name = #{operationName},
+            </if>
+            <if test="operationAssistant != null and operationAssistant != ''">
+                operation_assistant = #{operationAssistant},
+            </if>
+            <if test="operationAnesthetist != null and operationAnesthetist != ''">
+                operation_anesthetist = #{operationAnesthetist},
+            </if>
+            <if test="operationMedicine != null and operationMedicine != ''">
+                operation_medicine = #{operationMedicine},
+            </if>
+            <if test="operationDevice != null and operationDevice != ''">
+                operation_device = #{operationDevice},
+            </if>
+            <if test="operationTime != null">
+                operation_time = #{operationTime},
+            </if>
+            <if test="operationStatus != null">
+                operation_status = #{operationStatus},
+            </if>
+            <if test="operationDescription != null and operationDescription != ''">
+                operation_description = #{operationDescription},
+            </if>
+            <if test="operationNotifyId != null">
+                operation_notify_id = #{operationNotifyId},
+            </if>
+            <if test="roomId != null">
+                room_id = #{roomId},
+            </if>
+            <if test="operationPrice != null">
+                operation_price = #{operationPrice},
+            </if>
+            <if test="operationPayTime != null">
+                operation_pay_time = #{operationPayTime},
+            </if>
+            <if test="operationPayStatus != null">
+                operation_pay_status = #{operationPayStatus},
+            </if>
+        </set>
+        where operation_id = #{operationId}
+    </update>
+
+    <!--通过主键删除一条Operation记录-->
+    <delete id="deleteOperationById">
+        delete from operation where operation_id = #{operationId}
+    </delete>
+
+</mapper>
