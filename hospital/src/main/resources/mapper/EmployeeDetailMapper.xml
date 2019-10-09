@@ -13,23 +13,23 @@
         <result property="employeeDetailEmail" column="employee_detail_email" jdbcType="VARCHAR"/>
         <result property="employeeDetailDescript" column="employee_detail_descript" jdbcType="VARCHAR"/>
         <result property="employeeDetailStatus" column="employee_detail_status" jdbcType="INTEGER"/>
-        <result property="employeeDetailTitle" column="employee_detail_title" jdbcType="VARCHAR"/>
         <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
         <result property="positionId" column="position_id" jdbcType="INTEGER"/>
         <result property="branchId" column="branch_id" jdbcType="INTEGER"/>
+        <result property="titleId" column="title_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询所有EmployeeDetail信息-->
     <select id="queryAllEmployeeDetail" resultMap="EmployeeDetailMap">
         select
-          employee_detail_id, employee_detail_gender, employee_detail_birthday, employee_detail_address, employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email, employee_detail_descript, employee_detail_status, employee_detail_title, employee_id, position_id, branch_id
+          employee_detail_id, employee_detail_gender, employee_detail_birthday, employee_detail_address, employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email, employee_detail_descript, employee_detail_status, employee_id, position_id, branch_id, title_id
         from employee_detail
     </select>
 
     <!--根据实体类EmployeeDetail的相关属性查询实体类EmployeeDetail-->
     <select id="queryEmployeeDetailByParam" resultMap="EmployeeDetailMap">
         select
-          employee_detail_id, employee_detail_gender, employee_detail_birthday, employee_detail_address, employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email, employee_detail_descript, employee_detail_status, employee_detail_title, employee_id, position_id, branch_id
+          employee_detail_id, employee_detail_gender, employee_detail_birthday, employee_detail_address, employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email, employee_detail_descript, employee_detail_status, employee_id, position_id, branch_id, title_id
         from employee_detail
         <where>
             <if test="employeeDetailId != null">
@@ -62,9 +62,6 @@
             <if test="employeeDetailStatus != null">
                 and employee_detail_status = #{employeeDetailStatus}
             </if>
-            <if test="employeeDetailTitle != null and employeeDetailTitle != ''">
-                and employee_detail_title = #{employeeDetailTitle}
-            </if>
             <if test="employeeId != null">
                 and employee_id = #{employeeId}
             </if>
@@ -74,13 +71,16 @@
             <if test="branchId != null">
                 and branch_id = #{branchId}
             </if>
+            <if test="titleId != null">
+                and title_id = #{titleId}
+            </if>
         </where>
     </select>
 
     <!--新增EmployeeDetail数据-->
     <insert id="insertEmployeeDetail" keyProperty="employeeDetailId" useGeneratedKeys="true">
-        insert into employee_detail(employee_detail_gender, employee_detail_birthday, employee_detail_address, employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email, employee_detail_descript, employee_detail_status, employee_detail_title, employee_id, position_id, branch_id)
-        values (#{employeeDetailGender}, #{employeeDetailBirthday}, #{employeeDetailAddress}, #{employeeDetailPhone}, #{employeeDetailIdentity}, #{employeeDetailEntryTime}, #{employeeDetailEmail}, #{employeeDetailDescript}, #{employeeDetailStatus}, #{employeeDetailTitle}, #{employeeId}, #{positionId}, #{branchId})
+        insert into employee_detail(employee_detail_gender, employee_detail_birthday, employee_detail_address, employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email, employee_detail_descript, employee_detail_status, employee_id, position_id, branch_id)
+        values (#{employeeDetailGender}, #{employeeDetailBirthday}, #{employeeDetailAddress}, #{employeeDetailPhone}, #{employeeDetailIdentity}, #{employeeDetailEntryTime}, #{employeeDetailEmail}, #{employeeDetailDescript}, #{employeeDetailStatus}, #{employeeId}, #{positionId}, #{branchId})
     </insert>
 
     <!--修改EmployeeDetail记录-->
@@ -113,9 +113,6 @@
             </if>
             <if test="employeeDetailStatus != null">
                 employee_detail_status = #{employeeDetailStatus},
-            </if>
-            <if test="employeeDetailTitle != null and employeeDetailTitle != ''">
-                employee_detail_title = #{employeeDetailTitle},
             </if>
             <if test="employeeId != null">
                 employee_id = #{employeeId},

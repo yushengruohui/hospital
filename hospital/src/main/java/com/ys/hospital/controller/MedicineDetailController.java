@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * (MedicineDetail)表控制层
  *
  * @author yusheng
- * @since 2019-09-26 10:44:53
+ * @since 2019-09-26 16:16:21
  */
 @Controller
 @RequestMapping("/medicineDetail")

@@ -7,18 +7,18 @@ import lombok.Data;
  * (DiagnosisMedicineDetail)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:45
+ * @since 2019-10-09 09:00:06
  */
 @Data
 public class DiagnosisMedicineDetail implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+    //诊断药品详情id
     private Integer diagnosisMedicineDetailId;
-    
+    //药品Id
     private Integer medicineId;
-    
+    //药品数量
     private Integer medicineNumber;
-    
+    //所属诊断单药品
     private Integer diagnosisMedicineId;
     
 }

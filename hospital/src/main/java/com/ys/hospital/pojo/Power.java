@@ -7,22 +7,16 @@ import lombok.Data;
  * (Power)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:46
+ * @since 2019-10-09 09:00:06
  */
 @Data
 public class Power implements Serializable {
     private static final long serialVersionUID = 1L;
     //权限相关操作都是1：有权限；0：无权限
     private Integer powerId;
-    
-    private Integer powerLogin;
-    
-    private Integer powerUpdate;
-    
-    private Integer powerDetele;
-    
-    private Integer positionId;
-    
-    private Integer employeeDetailStatus;
+    //权限类型：对应某功能模块
+    private String powerType;
+    //是否拥有某功能模块的权限：1：有权限，0：无权限
+    private Integer powerStatus;
     
 }

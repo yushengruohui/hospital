@@ -6,22 +6,32 @@
         <result property="medicineId" column="medicine_id" jdbcType="INTEGER"/>
         <result property="medicineName" column="medicine_name" jdbcType="VARCHAR"/>
         <result property="medicineType" column="medicine_type" jdbcType="VARCHAR"/>
+        <result property="medicineUse" column="medicine_use" jdbcType="VARCHAR"/>
         <result property="medicinePrice" column="medicine_price" jdbcType="NUMERIC"/>
         <result property="medicineInventory" column="medicine_inventory" jdbcType="INTEGER"/>
-        <result property="medicine_ efficacy" column="medicine_ efficacy" jdbcType="VARCHAR"/>
+        <result property="medicineEfficacy" column="medicine_efficacy" jdbcType="VARCHAR"/>
+        <result property="medicineValid" column="medicine_valid" jdbcType="VARCHAR"/>
+        <result property="medicineComponents" column="medicine_components" jdbcType="VARCHAR"/>
+        <result property="medicineProductionDate" column="medicine_production_date" jdbcType="TIMESTAMP"/>
+        <result property="medicineProductionAddress" column="medicine_production_address" jdbcType="VARCHAR"/>
+        <result property="medicineSpecifications" column="medicine_specifications" jdbcType="VARCHAR"/>
+        <result property="medicineCharacter" column="medicine_character" jdbcType="VARCHAR"/>
+        <result property="medicineConfict" column="medicine_confict" jdbcType="VARCHAR"/>
+        <result property="medicineSave" column="medicine_save" jdbcType="VARCHAR"/>
+        <result property="medicineApproval" column="medicine_approval" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询所有Medicine信息-->
     <select id="queryAllMedicine" resultMap="MedicineMap">
         select
-          medicine_id, medicine_name, medicine_type, medicine_price, medicine_inventory, medicine_ efficacy
+          medicine_id, medicine_name, medicine_type, medicine_use, medicine_price, medicine_inventory, medicine_efficacy, medicine_valid, medicine_components, medicine_production_date, medicine_production_address, medicine_specifications, medicine_character, medicine_confict, medicine_save, medicine_approval
         from medicine
     </select>
 
     <!--根据实体类Medicine的相关属性查询实体类Medicine-->
     <select id="queryMedicineByParam" resultMap="MedicineMap">
         select
-          medicine_id, medicine_name, medicine_type, medicine_price, medicine_inventory, medicine_ efficacy
+          medicine_id, medicine_name, medicine_type, medicine_use, medicine_price, medicine_inventory, medicine_efficacy, medicine_valid, medicine_components, medicine_production_date, medicine_production_address, medicine_specifications, medicine_character, medicine_confict, medicine_save, medicine_approval
         from medicine
         <where>
             <if test="medicineId != null">
@@ -33,22 +43,52 @@
             <if test="medicineType != null and medicineType != ''">
                 and medicine_type = #{medicineType}
             </if>
+            <if test="medicineUse != null and medicineUse != ''">
+                and medicine_use = #{medicineUse}
+            </if>
             <if test="medicinePrice != null">
                 and medicine_price = #{medicinePrice}
             </if>
             <if test="medicineInventory != null">
                 and medicine_inventory = #{medicineInventory}
             </if>
-            <if test="medicine_ efficacy != null and medicine_ efficacy != ''">
-                and medicine_ efficacy = #{medicine_ efficacy}
+            <if test="medicineEfficacy != null and medicineEfficacy != ''">
+                and medicine_efficacy = #{medicineEfficacy}
+            </if>
+            <if test="medicineValid != null and medicineValid != ''">
+                and medicine_valid = #{medicineValid}
+            </if>
+            <if test="medicineComponents != null and medicineComponents != ''">
+                and medicine_components = #{medicineComponents}
+            </if>
+            <if test="medicineProductionDate != null">
+                and medicine_production_date = #{medicineProductionDate}
+            </if>
+            <if test="medicineProductionAddress != null and medicineProductionAddress != ''">
+                and medicine_production_address = #{medicineProductionAddress}
+            </if>
+            <if test="medicineSpecifications != null and medicineSpecifications != ''">
+                and medicine_specifications = #{medicineSpecifications}
+            </if>
+            <if test="medicineCharacter != null and medicineCharacter != ''">
+                and medicine_character = #{medicineCharacter}
+            </if>
+            <if test="medicineConfict != null and medicineConfict != ''">
+                and medicine_confict = #{medicineConfict}
+            </if>
+            <if test="medicineSave != null and medicineSave != ''">
+                and medicine_save = #{medicineSave}
+            </if>
+            <if test="medicineApproval != null and medicineApproval != ''">
+                and medicine_approval = #{medicineApproval}
             </if>
         </where>
     </select>
 
     <!--新增Medicine数据-->
     <insert id="insertMedicine" keyProperty="medicineId" useGeneratedKeys="true">
-        insert into medicine(medicine_name, medicine_type, medicine_price, medicine_inventory, medicine_ efficacy)
-        values (#{medicineName}, #{medicineType}, #{medicinePrice}, #{medicineInventory}, #{medicine_ efficacy})
+        insert into medicine(medicine_name, medicine_type, medicine_price, medicine_inventory)
+        values (#{medicineName}, #{medicineType}, #{medicinePrice}, #{medicineInventory})
     </insert>
 
     <!--修改Medicine记录-->
@@ -66,9 +106,6 @@
             </if>
             <if test="medicineInventory != null">
                 medicine_inventory = #{medicineInventory},
-            </if>
-            <if test="medicine_ efficacy != null and medicine_ efficacy != ''">
-                medicine_ efficacy = #{medicine_ efficacy},
             </if>
         </set>
         where medicine_id = #{medicineId}

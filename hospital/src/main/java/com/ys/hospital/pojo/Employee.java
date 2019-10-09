@@ -8,16 +8,16 @@ import lombok.Data;
  * (Employee)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:45
+ * @since 2019-10-09 09:00:06
  */
 @Data
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+    //员工id
     private Integer employeeId;
-    
+    //员工姓名
     private String employeeName;
-    
+    //员工密码
     private String employeePassword;
     //1:在线；0：离线
     private Integer employeeOnline;

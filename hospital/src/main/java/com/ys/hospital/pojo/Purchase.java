@@ -8,7 +8,7 @@ import lombok.Data;
  * (Purchase)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:46
+ * @since 2019-09-26 16:16:22
  */
 @Data
 public class Purchase implements Serializable {

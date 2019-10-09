@@ -8,7 +8,7 @@ import lombok.Data;
  * (Appointment)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:45
+ * @since 2019-10-09 09:00:06
  */
 @Data
 public class Appointment implements Serializable {
@@ -27,8 +27,6 @@ public class Appointment implements Serializable {
     private Integer branchId;
     //预约费用
     private Double appointmentPrice;
-    //1：已支付；0：未支付
-    private Integer appointmentPay;
     //支付时间
     private Date appointmentPayTime;
     

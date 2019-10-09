@@ -7,7 +7,7 @@ import lombok.Data;
  * (WorkTime)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:46
+ * @since 2019-10-09 09:00:07
  */
 @Data
 public class WorkTime implements Serializable {
@@ -42,7 +42,7 @@ public class WorkTime implements Serializable {
     private Integer workTime13;
     //16:30
     private Integer workTime14;
-    
+    //所属工作表
     private Integer workId;
     
 }

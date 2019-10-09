@@ -7,20 +7,20 @@ import lombok.Data;
  * (Admin)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:45
+ * @since 2019-10-09 09:00:06
  */
 @Data
 public class Admin implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+    //管理员id
     private Integer adminId;
-    
+    //管理员姓名
     private String adminName;
-    
+    //管理员联系方式
     private String adminPhone;
-    
+    //管理员登录密码
     private String adminPassword;
-    
+    //管理员邮箱
     private String adminEmail;
     
 }

@@ -8,7 +8,7 @@ import lombok.Data;
  * (InpatientDetail)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:45
+ * @since 2019-10-09 09:00:06
  */
 @Data
 public class InpatientDetail implements Serializable {
@@ -21,7 +21,7 @@ public class InpatientDetail implements Serializable {
     private String inpatientDetailDescription;
     //住院每天的时间
     private Date inpatientDetailDate;
-    
+    //所属住院单
     private Integer inpatientId;
     
 }

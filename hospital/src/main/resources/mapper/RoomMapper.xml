@@ -6,19 +6,20 @@
         <result property="roomId" column="room_id" jdbcType="INTEGER"/>
         <result property="roomName" column="room_name" jdbcType="VARCHAR"/>
         <result property="branchId" column="branch_id" jdbcType="INTEGER"/>
+        <result property="roomAddress" column="room_address" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询所有Room信息-->
     <select id="queryAllRoom" resultMap="RoomMap">
         select
-          room_id, room_name, branch_id
+          room_id, room_name, branch_id, room_address
         from room
     </select>
 
     <!--根据实体类Room的相关属性查询实体类Room-->
     <select id="queryRoomByParam" resultMap="RoomMap">
         select
-          room_id, room_name, branch_id
+          room_id, room_name, branch_id, room_address
         from room
         <where>
             <if test="roomId != null">
@@ -29,6 +30,9 @@
             </if>
             <if test="branchId != null">
                 and branch_id = #{branchId}
+            </if>
+            <if test="roomAddress != null and roomAddress != ''">
+                and room_address = #{roomAddress}
             </if>
         </where>
     </select>

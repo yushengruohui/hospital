@@ -8,7 +8,7 @@ import lombok.Data;
  * (MedicineDetail)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:45
+ * @since 2019-09-26 16:16:21
  */
 @Data
 public class MedicineDetail implements Serializable {

@@ -8,14 +8,14 @@ import lombok.Data;
  * (Diagnosis)实体类
  *
  * @author yusheng
- * @since 2019-09-26 10:43:45
+ * @since 2019-10-09 09:00:06
  */
 @Data
 public class Diagnosis implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private Integer diagnosisId;
-    
+    //诊断时间
     private Date diagnosisTime;
     //初步诊断为某病
     private String diagnosisContent;
@@ -23,7 +23,7 @@ public class Diagnosis implements Serializable {
     private Integer diagnosisIsCheck;
     //1:需要手术；0：不需要手术
     private Integer diagnosisIsOperation;
-    
+    //所属预约单
     private Integer appointmentId;
     
 }
