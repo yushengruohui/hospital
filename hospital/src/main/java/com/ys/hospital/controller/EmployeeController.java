@@ -4,8 +4,10 @@ import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 
@@ -19,15 +21,23 @@ import javax.annotation.Resource;
 @RequestMapping("/employee")
 public class EmployeeController {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
-    
+
     @Resource
     private EmployeeService employeeService;
-    
-    @RequestMapping("/test")
-    public String testDome() {
+    @Resource
+    private RedisTemplate redisTemplate;
+
+    @Cacheable(cacheNames = {"employee"})
+    @RequestMapping("/login")
+    public String login(Employee employee) {
         logger.info("testDome success");
+        if (employee.equals(null)) {
+            redisTemplate.opsForValue().append("msg", "请输入账号和密码");
+            return "pages/login";
+        }
+
         return "redirect:/";
     }
-    
-    
+
+
 }
