@@ -1,9 +1,3 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
-!**/src/test/**
-
 ### STS ###
 .apt_generated
 .classpath
@@ -13,12 +7,17 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
 rebel.xml
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+### IntelliJ IDEA ###
 
 ### NetBeans ###
 /nbproject/private/
