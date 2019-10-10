@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.OperationNotifyMapper">
+
+    <resultMap type="com.ys.hospital.pojo.OperationNotify" id="OperationNotifyMap">
+        <result property="operationNotifyId" column="operation_notify_id" jdbcType="INTEGER"/>
+        <result property="operationNotifyStatus" column="operation_notify_status" jdbcType="INTEGER"/>
+        <result property="diagnosisId" column="diagnosis_id" jdbcType="INTEGER"/>
+        <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询所有OperationNotify信息-->
+    <select id="queryAllOperationNotify" resultMap="OperationNotifyMap">
+        select
+          operation_notify_id, operation_notify_status, diagnosis_id, employee_id
+        from operation_notify
+    </select>
+
+    <!--根据实体类OperationNotify的相关属性查询实体类OperationNotify-->
+    <select id="queryOperationNotifyByParam" resultMap="OperationNotifyMap">
+        select
+          operation_notify_id, operation_notify_status, diagnosis_id, employee_id
+        from operation_notify
+        <where>
+            <if test="operationNotifyId != null">
+                and operation_notify_id = #{operationNotifyId}
+            </if>
+            <if test="operationNotifyStatus != null">
+                and operation_notify_status = #{operationNotifyStatus}
+            </if>
+            <if test="diagnosisId != null">
+                and diagnosis_id = #{diagnosisId}
+            </if>
+            <if test="employeeId != null">
+                and employee_id = #{employeeId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增OperationNotify数据-->
+    <insert id="insertOperationNotify" keyProperty="operationNotifyId" useGeneratedKeys="true">
+        insert into operation_notify(operation_notify_status, diagnosis_id, employee_id)
+        values (#{operationNotifyStatus}, #{diagnosisId}, #{employeeId})
+    </insert>
+
+    <!--修改OperationNotify记录-->
+    <update id="updateOperationNotify">
+        update operation_notify
+        <set>
+            <if test="operationNotifyStatus != null">
+                operation_notify_status = #{operationNotifyStatus},
+            </if>
+            <if test="diagnosisId != null">
+                diagnosis_id = #{diagnosisId},
+            </if>
+            <if test="employeeId != null">
+                employee_id = #{employeeId},
+            </if>
+        </set>
+        where operation_notify_id = #{operationNotifyId}
+    </update>
+
+    <!--通过主键删除一条OperationNotify记录-->
+    <delete id="deleteOperationNotifyById">
+        delete from operation_notify where operation_notify_id = #{operationNotifyId}
+    </delete>
+
+</mapper>

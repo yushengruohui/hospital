@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.DiagnosisMedicineMapper">
+
+    <resultMap type="com.ys.hospital.pojo.DiagnosisMedicine" id="DiagnosisMedicineMap">
+        <result property="diagnosisMedicineId" column="diagnosis_medicine_id" jdbcType="INTEGER"/>
+        <result property="diagnosisMedicinePrice" column="diagnosis_medicine_price" jdbcType="NUMERIC"/>
+        <result property="diagnosisMedicineStatus" column="diagnosis_medicine_status" jdbcType="INTEGER"/>
+        <result property="diagnosisMedicinePayTime" column="diagnosis_medicine_pay_time" jdbcType="TIMESTAMP"/>
+        <result property="diagnosisMedicinePayStatus" column="diagnosis_medicine_pay_status" jdbcType="INTEGER"/>
+        <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+        <result property="diagnosisId" column="diagnosis_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询所有DiagnosisMedicine信息-->
+    <select id="queryAllDiagnosisMedicine" resultMap="DiagnosisMedicineMap">
+        select
+          diagnosis_medicine_id, diagnosis_medicine_price, diagnosis_medicine_status, diagnosis_medicine_pay_time, diagnosis_medicine_pay_status, employee_id, diagnosis_id
+        from diagnosis_medicine
+    </select>
+
+    <!--根据实体类DiagnosisMedicine的相关属性查询实体类DiagnosisMedicine-->
+    <select id="queryDiagnosisMedicineByParam" resultMap="DiagnosisMedicineMap">
+        select
+          diagnosis_medicine_id, diagnosis_medicine_price, diagnosis_medicine_status, diagnosis_medicine_pay_time, diagnosis_medicine_pay_status, employee_id, diagnosis_id
+        from diagnosis_medicine
+        <where>
+            <if test="diagnosisMedicineId != null">
+                and diagnosis_medicine_id = #{diagnosisMedicineId}
+            </if>
+            <if test="diagnosisMedicinePrice != null">
+                and diagnosis_medicine_price = #{diagnosisMedicinePrice}
+            </if>
+            <if test="diagnosisMedicineStatus != null">
+                and diagnosis_medicine_status = #{diagnosisMedicineStatus}
+            </if>
+            <if test="diagnosisMedicinePayTime != null">
+                and diagnosis_medicine_pay_time = #{diagnosisMedicinePayTime}
+            </if>
+            <if test="diagnosisMedicinePayStatus != null">
+                and diagnosis_medicine_pay_status = #{diagnosisMedicinePayStatus}
+            </if>
+            <if test="employeeId != null">
+                and employee_id = #{employeeId}
+            </if>
+            <if test="diagnosisId != null">
+                and diagnosis_id = #{diagnosisId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增DiagnosisMedicine数据-->
+    <insert id="insertDiagnosisMedicine" keyProperty="diagnosisMedicineId" useGeneratedKeys="true">
+        insert into diagnosis_medicine(diagnosis_medicine_price, diagnosis_medicine_status, diagnosis_medicine_pay_time, diagnosis_medicine_pay_status, employee_id, diagnosis_id)
+        values (#{diagnosisMedicinePrice}, #{diagnosisMedicineStatus}, #{diagnosisMedicinePayTime}, #{diagnosisMedicinePayStatus}, #{employeeId}, #{diagnosisId})
+    </insert>
+
+    <!--修改DiagnosisMedicine记录-->
+    <update id="updateDiagnosisMedicine">
+        update diagnosis_medicine
+        <set>
+            <if test="diagnosisMedicinePrice != null">
+                diagnosis_medicine_price = #{diagnosisMedicinePrice},
+            </if>
+            <if test="diagnosisMedicineStatus != null">
+                diagnosis_medicine_status = #{diagnosisMedicineStatus},
+            </if>
+            <if test="diagnosisMedicinePayTime != null">
+                diagnosis_medicine_pay_time = #{diagnosisMedicinePayTime},
+            </if>
+            <if test="diagnosisMedicinePayStatus != null">
+                diagnosis_medicine_pay_status = #{diagnosisMedicinePayStatus},
+            </if>
+            <if test="employeeId != null">
+                employee_id = #{employeeId},
+            </if>
+            <if test="diagnosisId != null">
+                diagnosis_id = #{diagnosisId},
+            </if>
+        </set>
+        where diagnosis_medicine_id = #{diagnosisMedicineId}
+    </update>
+
+    <!--通过主键删除一条DiagnosisMedicine记录-->
+    <delete id="deleteDiagnosisMedicineById">
+        delete from diagnosis_medicine where diagnosis_medicine_id = #{diagnosisMedicineId}
+    </delete>
+
+</mapper>

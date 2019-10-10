@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.PowerMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Power" id="PowerMap">
+        <result property="powerId" column="power_id" jdbcType="INTEGER"/>
+        <result property="powerType" column="power_type" jdbcType="VARCHAR"/>
+        <result property="powerStatus" column="power_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询所有Power信息-->
+    <select id="queryAllPower" resultMap="PowerMap">
+        select
+          power_id, power_type, power_status
+        from power
+    </select>
+
+    <!--根据实体类Power的相关属性查询实体类Power-->
+    <select id="queryPowerByParam" resultMap="PowerMap">
+        select
+          power_id, power_type, power_status
+        from power
+        <where>
+            <if test="powerId != null">
+                and power_id = #{powerId}
+            </if>
+            <if test="powerType != null and powerType != ''">
+                and power_type = #{powerType}
+            </if>
+            <if test="powerStatus != null">
+                and power_status = #{powerStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增Power数据-->
+    <insert id="insertPower" keyProperty="powerId" useGeneratedKeys="true">
+        insert into power(power_type, power_status)
+        values (#{powerType}, #{powerStatus})
+    </insert>
+
+    <!--修改Power记录-->
+    <update id="updatePower">
+        update power
+        <set>
+            <if test="powerType != null and powerType != ''">
+                power_type = #{powerType},
+            </if>
+            <if test="powerStatus != null">
+                power_status = #{powerStatus},
+            </if>
+        </set>
+        where power_id = #{powerId}
+    </update>
+
+    <!--通过主键删除一条Power记录-->
+    <delete id="deletePowerById">
+        delete from power where power_id = #{powerId}
+    </delete>
+
+</mapper>

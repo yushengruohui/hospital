@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.AppointmentMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Appointment" id="AppointmentMap">
+        <result property="appointmentId" column="appointment_id" jdbcType="INTEGER"/>
+        <result property="appointmentTime" column="appointment_time" jdbcType="TIMESTAMP"/>
+        <result property="appointmentStatus" column="appointment_status" jdbcType="INTEGER"/>
+        <result property="patientId" column="patient_id" jdbcType="INTEGER"/>
+        <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+        <result property="branchId" column="branch_id" jdbcType="INTEGER"/>
+        <result property="appointmentPrice" column="appointment_price" jdbcType="NUMERIC"/>
+        <result property="appointmentPayTime" column="appointment_pay_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询所有Appointment信息-->
+    <select id="queryAllAppointment" resultMap="AppointmentMap">
+        select
+          appointment_id, appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price, appointment_pay_time
+        from appointment
+    </select>
+
+    <!--根据实体类Appointment的相关属性查询实体类Appointment-->
+    <select id="queryAppointmentByParam" resultMap="AppointmentMap">
+        select
+          appointment_id, appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price, appointment_pay_time
+        from appointment
+        <where>
+            <if test="appointmentId != null">
+                and appointment_id = #{appointmentId}
+            </if>
+            <if test="appointmentTime != null">
+                and appointment_time = #{appointmentTime}
+            </if>
+            <if test="appointmentStatus != null">
+                and appointment_status = #{appointmentStatus}
+            </if>
+            <if test="patientId != null">
+                and patient_id = #{patientId}
+            </if>
+            <if test="employeeId != null">
+                and employee_id = #{employeeId}
+            </if>
+            <if test="branchId != null">
+                and branch_id = #{branchId}
+            </if>
+            <if test="appointmentPrice != null">
+                and appointment_price = #{appointmentPrice}
+            </if>
+            <if test="appointmentPayTime != null">
+                and appointment_pay_time = #{appointmentPayTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增Appointment数据-->
+    <insert id="insertAppointment" keyProperty="appointmentId" useGeneratedKeys="true">
+        insert into appointment(appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price, appointment_pay_time)
+        values (#{appointmentTime}, #{appointmentStatus}, #{patientId}, #{employeeId}, #{branchId}, #{appointmentPrice}, #{appointmentPayTime})
+    </insert>
+
+    <!--修改Appointment记录-->
+    <update id="updateAppointment">
+        update appointment
+        <set>
+            <if test="appointmentTime != null">
+                appointment_time = #{appointmentTime},
+            </if>
+            <if test="appointmentStatus != null">
+                appointment_status = #{appointmentStatus},
+            </if>
+            <if test="patientId != null">
+                patient_id = #{patientId},
+            </if>
+            <if test="employeeId != null">
+                employee_id = #{employeeId},
+            </if>
+            <if test="branchId != null">
+                branch_id = #{branchId},
+            </if>
+            <if test="appointmentPrice != null">
+                appointment_price = #{appointmentPrice},
+            </if>
+            <if test="appointmentPayTime != null">
+                appointment_pay_time = #{appointmentPayTime},
+            </if>
+        </set>
+        where appointment_id = #{appointmentId}
+    </update>
+
+    <!--通过主键删除一条Appointment记录-->
+    <delete id="deleteAppointmentById">
+        delete from appointment where appointment_id = #{appointmentId}
+    </delete>
+
+</mapper>
