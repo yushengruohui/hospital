@@ -1,7 +1,7 @@
 package com.ys.hospital.service.impl;
 
-import com.ys.hospital.pojo.EmployeeDetail;
 import com.ys.hospital.dao.EmployeeDetailMapper;
+import com.ys.hospital.pojo.EmployeeDetail;
 import com.ys.hospital.service.EmployeeDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import java.util.List;
 @Service("employeeDetailService")
 public class EmployeeDetailServiceImpl implements EmployeeDetailService {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeDetailServiceImpl.class);
-    
+
     @Resource
     private EmployeeDetailMapper employeeDetailMapper;
 
@@ -37,7 +37,7 @@ public class EmployeeDetailServiceImpl implements EmployeeDetailService {
      * 新增EmployeeDetail数据
      *
      * @param employeeDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertEmployeeDetail(EmployeeDetail employeeDetail) {
@@ -48,7 +48,7 @@ public class EmployeeDetailServiceImpl implements EmployeeDetailService {
      * 修改EmployeeDetail数据
      *
      * @param employeeDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateEmployeeDetail(EmployeeDetail employeeDetail) {
@@ -59,10 +59,20 @@ public class EmployeeDetailServiceImpl implements EmployeeDetailService {
      * 通过主键删除EmployeeDetail数据
      *
      * @param employeeDetailId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteEmployeeDetailById(Integer employeeDetailId) {
         return this.employeeDetailMapper.deleteEmployeeDetailById(employeeDetailId);
+    }
+
+    @Override
+    public EmployeeDetail findEmployeeById(Integer employeeId) {
+        if (employeeId == null) {
+            return null;
+        }
+        EmployeeDetail employeeDetail = new EmployeeDetail();
+        employeeDetail.setEmployeeId(employeeId);
+        return this.employeeDetailMapper.queryEmployeeDetailByParam(employeeDetail).get(0);
     }
 }

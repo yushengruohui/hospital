@@ -1,7 +1,7 @@
 package com.ys.hospital.service.impl;
 
-import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.dao.EmployeeMapper;
+import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import java.util.List;
 @Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
-    
+
     @Resource
     private EmployeeMapper employeeMapper;
 
@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * 新增Employee数据
      *
      * @param employee 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertEmployee(Employee employee) {
@@ -48,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * 修改Employee数据
      *
      * @param employee 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateEmployee(Employee employee) {
@@ -59,10 +59,15 @@ public class EmployeeServiceImpl implements EmployeeService {
      * 通过主键删除Employee数据
      *
      * @param employeeId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteEmployeeById(Integer employeeId) {
         return this.employeeMapper.deleteEmployeeById(employeeId);
+    }
+
+    @Override
+    public Employee verifyLogin(Employee employee) {
+        return this.employeeMapper.queryEmployeeByParam(employee);
     }
 }

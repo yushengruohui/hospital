@@ -5,6 +5,13 @@
     <title>医院自动化管理系统</title>
 </head>
 <body>
-
+<form action="/employee/login" method="post">
+    <label for="employeeId">账号:</label><input type="text" name="employeeId" id="employeeId"
+                                              placeholder="请输入你的员工编码"/><br>
+    <label for="employeePassword">密码：</label><input type="text" name="employeePassword" id="employeePassword"
+                                                    placeholder="请输入你的登录密码"/><br>
+    <input type="submit" value="登录"/>
+    <input type="reset" value="重置"/>
+</form>
 </body>
 </html>

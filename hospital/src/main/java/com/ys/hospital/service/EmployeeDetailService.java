@@ -1,6 +1,7 @@
 package com.ys.hospital.service;
 
 import com.ys.hospital.pojo.EmployeeDetail;
+
 import java.util.List;
 
 /**
@@ -38,8 +39,9 @@ public interface EmployeeDetailService {
      * 通过主键删除数据
      *
      * @param employeeDetailId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteEmployeeDetailById(Integer employeeDetailId);
 
+    EmployeeDetail findEmployeeById(Integer employeeId);
 }

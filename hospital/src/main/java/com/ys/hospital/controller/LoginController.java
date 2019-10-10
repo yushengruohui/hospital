@@ -6,13 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @Description:
  * @author: yusheng
- * @create-date: 2019-10-10 09:36
+ * @create-date: 2019-10-10 14:52
  **/
 @Controller
-@RequestMapping("/page")
-public class PageController {
-    @RequestMapping("/login")
-    public String test() {
+public class LoginController {
+    @RequestMapping("")
+    public String initLogin() {
         return "login";
     }
 }

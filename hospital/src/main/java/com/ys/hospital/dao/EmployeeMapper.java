@@ -1,7 +1,7 @@
 package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Employee;
-import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -26,13 +26,13 @@ public interface EmployeeMapper {
      * @param employee 实例对象
      * @return 对象Employee列表
      */
-    List<Employee> queryEmployeeByParam(Employee employee);
+    Employee queryEmployeeByParam(Employee employee);
 
     /**
      * 新增Employee数据
      *
      * @param employee 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertEmployee(Employee employee);
 
@@ -40,7 +40,7 @@ public interface EmployeeMapper {
      * 修改Employee数据
      *
      * @param employee 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateEmployee(Employee employee);
 
@@ -48,7 +48,7 @@ public interface EmployeeMapper {
      * 通过主键删除数据
      *
      * @param employeeId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteEmployeeById(Integer employeeId);
 
