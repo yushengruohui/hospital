@@ -68,6 +68,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee verifyLogin(Employee employee) {
+        if (employee == null) {
+            return null;
+        }
         return this.employeeMapper.queryEmployeeByParam(employee);
     }
 }

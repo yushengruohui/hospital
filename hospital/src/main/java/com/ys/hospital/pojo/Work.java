@@ -7,7 +7,7 @@ import lombok.Data;
  * (Work)实体类
  *
  * @author yusheng
- * @since 2019-10-10 08:09:40
+ * @since 2019-10-12 11:38:03
  */
 @Data
 public class Work implements Serializable {

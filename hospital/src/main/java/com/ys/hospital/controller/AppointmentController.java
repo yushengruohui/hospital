@@ -1,11 +1,10 @@
 package com.ys.hospital.controller;
 
-import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.service.AppointmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -15,19 +14,18 @@ import javax.annotation.Resource;
  * @author yusheng
  * @since 2019-10-10 08:09:39
  */
-@Controller
-@RequestMapping("/appointment")
+@RestController
 public class AppointmentController {
     private static final Logger logger = LoggerFactory.getLogger(AppointmentController.class);
-    
+
     @Resource
     private AppointmentService appointmentService;
-    
-    @RequestMapping("/test")
+
+    @GetMapping("/appointment/appointmentId")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }
