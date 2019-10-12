@@ -1,7 +1,7 @@
 package com.ys.hospital.service.impl;
 
-import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.dao.AppointmentMapper;
+import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.service.AppointmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import java.util.List;
 @Service("appointmentService")
 public class AppointmentServiceImpl implements AppointmentService {
     private static final Logger logger = LoggerFactory.getLogger(AppointmentServiceImpl.class);
-    
+
     @Resource
     private AppointmentMapper appointmentMapper;
 
@@ -37,7 +37,7 @@ public class AppointmentServiceImpl implements AppointmentService {
      * 新增Appointment数据
      *
      * @param appointment 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertAppointment(Appointment appointment) {
@@ -48,7 +48,7 @@ public class AppointmentServiceImpl implements AppointmentService {
      * 修改Appointment数据
      *
      * @param appointment 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateAppointment(Appointment appointment) {
@@ -59,10 +59,21 @@ public class AppointmentServiceImpl implements AppointmentService {
      * 通过主键删除Appointment数据
      *
      * @param appointmentId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteAppointmentById(Integer appointmentId) {
         return this.appointmentMapper.deleteAppointmentById(appointmentId);
+    }
+
+    @Override
+    public List<Appointment> findUntreatedAppointment(Integer employeeId) {
+        if (employeeId == null) {
+            return null;
+        }
+        Appointment appointment = new Appointment();
+        appointment.setEmployeeId(employeeId);
+        appointment.setAppointmentStatus(0);
+        return appointmentMapper.queryAppointmentByParam(appointment);
     }
 }

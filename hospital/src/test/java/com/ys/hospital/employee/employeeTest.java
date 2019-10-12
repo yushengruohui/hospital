@@ -1,6 +1,7 @@
 package com.ys.hospital.employee;
 
 import com.ys.hospital.pojo.Employee;
+import com.ys.hospital.tools.SMSTool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,5 +30,11 @@ public class employeeTest {
         Object o = redisTemplate.opsForValue().get(employee.getEmployeeId());
 
         System.out.println(o);
+    }
+
+    @Test
+    public void test2() throws Exception {
+        SMSTool smsTool = new SMSTool();
+        smsTool.send("13211056387", "验证成功");
     }
 }

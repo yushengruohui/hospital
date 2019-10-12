@@ -13,7 +13,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <table class="layui-table">
+            <table class="layui-table" id="appointmentTable" lay-filter="clickOpt">
                 <tr>
                     <th>预约人</th>
                     <th>预约时间</th>
@@ -22,43 +22,68 @@
                     <th>预约状态</th>
                     <th>操作</th>
                 </tr>
-
-                <tr th:each="appointment:${appointments}">
-                    <th>[[${appointment.patient.patientName}]]</th>
-                    <th>[[${appointment.appointmentTime}]]</th>
-                    <th>[[${appointment.branch.branchName}]]</th>
-                    <th>[[${appointment.employee.employeeName}]]</th>
-                    <th>[[${appointment.appointmentStatus}]]</th>
-                </tr>
+                <script type="text/html" id="optBar">
+                    <a class="layui-btn layui-btn-xs" lay-event="Arrange">摇号</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="diagnosis">填写诊断</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="deal">已处理</a>
+                </script>
             </table>
         </div>
     </div>
 
     <div th:replace="~{com/attending::foot}"></div>
 </div>
+
 <script>
     //JavaScript代码区域
     layui.use(['element', 'table'], function () {
         var element = layui.element;
         var table = layui.table;
         table.render({
-            elem: '#demo'
+            elem: '#appointmentTable'
             , height: 312
             , url: '/appointment/appointments' //数据接口
+            , method: 'get'
             , page: true //开启分页
-            , cols: [[ //表头
-                {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'}
-                , {field: 'username', title: '用户名', width: 80}
-                , {field: 'sex', title: '性别', width: 80, sort: true}
-                , {field: 'city', title: '城市', width: 80}
-                , {field: 'sign', title: '签名', width: 177}
-                , {field: 'experience', title: '积分', width: 80, sort: true}
-                , {field: 'score', title: '评分', width: 80, sort: true}
-                , {field: 'classify', title: '职业', width: 80}
-                , {field: 'wealth', title: '财富', width: 135, sort: true}
-            ]]
+            , cols: [ //表头
+                {field: 'pageInfo.appointment.patient.patientName', title: '预约人', width: 80, fixed: 'left'}
+                , {field: 'pageInfo.appointment.appointmentTime', title: '预约时间', width: 80, sort: true}
+                , {field: 'pageInfo.appointment.branch.branchName', title: '预约科室', width: 80}
+                , {field: 'pageInfo.appointment.employee.employeeName', title: '医师', width: 80}
+                , {field: 'pageInfo.appointment.appointmentStatus', title: '预约状态', width: 177}
+                , {title: '操作', width: 80, fixed: 'right', align: 'center', toolbar: '#optBar'}
+            ]
+        });
+        //监听事件
+        table.on('toolbar(clickOpt)', function (obj) {
+            //获取当前行的数据
+            var rowData = obj.data;
+            switch (obj.event) {
+                case 'Arrange':
+                    $.ajax({
+                        type: "put",
+                        url: "/appointment",
+                        data: {"appointmentId": rowData.appointmentId},
+                        success: function (data) {
+
+                        },
+                        error: function () {
+
+                        }
+                    });
+
+                    break;
+                case 'diagnosis':
+                    layer.msg('诊断');
+                    break;
+                case 'deal':
+                    layer.msg('已处理');
+                    break;
+            }
+            ;
         });
     });
+
 
 </script>
 </body>
