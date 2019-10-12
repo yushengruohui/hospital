@@ -43,7 +43,7 @@ public class AppointmentController {
 
 
     @GetMapping("/appointments")
-    public PageInfo appointments(Integer currentPage, HttpSession session) {
+    public PageInfo appointments(HttpSession session) {
         //获取医师信息
         Employee employee = (Employee) session.getAttribute("employee");
         //根据员工id查询未处理预约记录
@@ -76,7 +76,7 @@ public class AppointmentController {
             appointment.setBranch(branch);
         }
 
-        PageHelper.startPage(currentPage, 8);
+        PageHelper.startPage(1, 8);
         PageInfo pageInfo = new PageInfo(appointments);
         return pageInfo;
     }

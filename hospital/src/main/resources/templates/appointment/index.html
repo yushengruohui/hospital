@@ -42,16 +42,18 @@
         table.render({
             elem: '#appointmentTable'
             , height: 312
-            , url: '/appointment/appointments' //数据接口
+            , url: '/appointments' //数据接口
             , method: 'get'
             , page: true //开启分页
-            , cols: [ //表头
-                {field: 'pageInfo.appointment.patient.patientName', title: '预约人', width: 80, fixed: 'left'}
-                , {field: 'pageInfo.appointment.appointmentTime', title: '预约时间', width: 80, sort: true}
-                , {field: 'pageInfo.appointment.branch.branchName', title: '预约科室', width: 80}
-                , {field: 'pageInfo.appointment.employee.employeeName', title: '医师', width: 80}
-                , {field: 'pageInfo.appointment.appointmentStatus', title: '预约状态', width: 177}
-                , {title: '操作', width: 80, fixed: 'right', align: 'center', toolbar: '#optBar'}
+            , cols: [
+                [
+                    {field: 'patientName', title: '预约人', fixed: 'left'}
+                    , {field: 'appointmentTime', title: '预约时间', sort: true}
+                    , {field: 'branchName', title: '预约科室'}
+                    , {field: 'employeeName', title: '医师'}
+                    , {field: 'appointmentStatus', title: '预约状态', width: 177}
+                    , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                ]
             ]
         });
         //监听事件
