@@ -19,7 +19,7 @@ import java.util.List;
 @Service("patientService")
 public class PatientServiceImpl implements PatientService {
     private static final Logger logger = LoggerFactory.getLogger(PatientServiceImpl.class);
-    
+
     @Resource
     private PatientMapper patientMapper;
 
@@ -37,7 +37,7 @@ public class PatientServiceImpl implements PatientService {
      * 新增Patient数据
      *
      * @param patient 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertPatient(Patient patient) {
@@ -48,7 +48,7 @@ public class PatientServiceImpl implements PatientService {
      * 修改Patient数据
      *
      * @param patient 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updatePatient(Patient patient) {
@@ -59,10 +59,35 @@ public class PatientServiceImpl implements PatientService {
      * 通过主键删除Patient数据
      *
      * @param patientId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deletePatientById(Integer patientId) {
         return this.patientMapper.deletePatientById(patientId);
+    }
+
+    @Override
+    public List<Patient> getPatientListByClientId(int clientId) {
+        return patientMapper.getPatientListByClientId(clientId);
+    }
+
+    @Override
+    public Patient getPatientDetailByPatientId(int patientId) {
+        return patientMapper.getPatientDetailByPatientId(patientId);
+    }
+
+    @Override
+    public Patient getPatientBypatientIdentity(String patientIdentity) {
+        return patientMapper.getPatientBypatientIdentity(patientIdentity);
+    }
+
+    @Override
+    public int addPatient(Patient patient) {
+        return patientMapper.addPatient(patient);
+    }
+
+    @Override
+    public int updatePatientClientId(Patient patient) {
+        return patientMapper.updatePatientClientId(patient);
     }
 }

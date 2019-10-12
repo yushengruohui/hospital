@@ -52,4 +52,11 @@ public interface DepartmentMapper {
      */
     int deleteDepartmentById(Integer departmentId);
 
+    /**
+     * 查询医院所有的科室信息
+     *
+     * @return departmentList
+     */
+     public List<Department> getDepartmentList();
+
 }

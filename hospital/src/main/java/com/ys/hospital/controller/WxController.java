@@ -112,7 +112,7 @@ public class WxController {
             //根据就诊人Id修改就诊人信息
             patientService.updatePatient(patient);
         } else if (patient1.getClientId() == null) {
-            //如果身份证存在且身份证绑定账号,对其进行绑定
+            //如果身份证存在且身份证没绑定账号,对其进行绑定
             patient.setPatientId(patient1.getPatientId());
             patientService.updatePatient(patient);
         } else {
@@ -137,7 +137,7 @@ public class WxController {
         //将其绑定的账号设为null
         patient1.setClientId(null);
         //修改就诊人信息
-        patientService.updatePatient(patient1);
+        patientService.updatePatientClientId(patient1);
         //查询用户绑定的就诊人列表
         List<Patient> list = patientService.getPatientListByClientId(patient.getClientId());
         return list;

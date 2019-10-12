@@ -65,4 +65,9 @@ public class BranchServiceImpl implements BranchService {
     public int deleteBranchById(Integer branchId) {
         return this.branchMapper.deleteBranchById(branchId);
     }
+
+    @Override
+    public List<Branch> getBranchListByDepartmentId(int departmentId) {
+        return branchMapper.getBranchListByDepartmentId(departmentId);
+    }
 }

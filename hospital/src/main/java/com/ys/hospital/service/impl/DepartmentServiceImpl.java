@@ -19,7 +19,7 @@ import java.util.List;
 @Service("departmentService")
 public class DepartmentServiceImpl implements DepartmentService {
     private static final Logger logger = LoggerFactory.getLogger(DepartmentServiceImpl.class);
-    
+
     @Resource
     private DepartmentMapper departmentMapper;
 
@@ -37,7 +37,7 @@ public class DepartmentServiceImpl implements DepartmentService {
      * 新增Department数据
      *
      * @param department 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertDepartment(Department department) {
@@ -48,7 +48,7 @@ public class DepartmentServiceImpl implements DepartmentService {
      * 修改Department数据
      *
      * @param department 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateDepartment(Department department) {
@@ -59,10 +59,18 @@ public class DepartmentServiceImpl implements DepartmentService {
      * 通过主键删除Department数据
      *
      * @param departmentId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteDepartmentById(Integer departmentId) {
         return this.departmentMapper.deleteDepartmentById(departmentId);
+    }
+
+
+    @Override
+    public List<Department> getDepartmentList() {
+
+        return departmentMapper.getDepartmentList();
+
     }
 }

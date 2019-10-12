@@ -1,6 +1,7 @@
 package com.ys.hospital.service;
 
 import com.ys.hospital.pojo.Branch;
+
 import java.util.List;
 
 /**
@@ -38,8 +39,16 @@ public interface BranchService {
      * 通过主键删除数据
      *
      * @param branchId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteBranchById(Integer branchId);
+
+    /**
+     * 根据父科目id查询其所有子科目
+     *
+     * @param departmentId
+     * @return branchList(子科目列表)
+     */
+    public List<Branch> getBranchListByDepartmentId(int departmentId);
 
 }

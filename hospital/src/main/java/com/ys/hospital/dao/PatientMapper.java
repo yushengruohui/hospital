@@ -52,4 +52,44 @@ public interface PatientMapper {
      */
     int deletePatientById(Integer patientId);
 
+    /**
+     * 根据用户的手机号获取绑定的就诊人信息
+     *
+     * @param clientId
+     * @return
+     */
+    public List<Patient> getPatientListByClientId(int clientId);
+
+    /**
+     * 根据就诊人id查询就诊人信息
+     *
+     * @param patientId
+     * @return
+     */
+    public Patient getPatientDetailByPatientId(int patientId);
+
+    /**
+     * 根据身份证号查询就诊人信息
+     *
+     * @param patientIdentity
+     * @return
+     */
+    public Patient getPatientBypatientIdentity(String patientIdentity);
+
+    /**
+     * 添加就诊人信息
+     *
+     * @param patient
+     * @return
+     */
+    public int addPatient(Patient patient);
+
+    /**
+     * 根据就诊人id修改就诊人信息
+     *
+     * @param patient
+     * @return
+     */
+    public int updatePatientClientId(Patient patient);
+
 }

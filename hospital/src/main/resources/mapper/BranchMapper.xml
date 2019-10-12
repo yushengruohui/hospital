@@ -18,7 +18,7 @@
     <!--根据实体类Branch的相关属性查询实体类Branch-->
     <select id="queryBranchByParam" resultMap="BranchMap">
         select
-          branch_id, branch_name, department_id
+        branch_id, branch_name, department_id
         from branch
         <where>
             <if test="branchId != null">
@@ -57,5 +57,17 @@
     <delete id="deleteBranchById">
         delete from branch where branch_id = #{branchId}
     </delete>
+
+    <!--    根据父科目id查询其所有子科目-->
+    <select id="getBranchListByDepartmentId" resultType="com.ys.hospital.pojo.Branch">
+        SELECT
+        branch.branch_id,
+        branch.branch_name,
+        branch.department_id
+        FROM
+        branch
+        WHERE
+        branch.department_id = #{departmentId}
+    </select>
 
 </mapper>

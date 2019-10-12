@@ -52,4 +52,12 @@ public interface BranchMapper {
      */
     int deleteBranchById(Integer branchId);
 
+    /**
+     * 根据父科目id查询其所有子科目
+     *
+     * @param departmentId
+     * @return branchList
+     */
+    public List<Branch> getBranchListByDepartmentId(int departmentId);
+
 }

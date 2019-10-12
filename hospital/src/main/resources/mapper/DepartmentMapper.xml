@@ -29,6 +29,20 @@
         </where>
     </select>
 
+    <select id="getDepartmentList" resultMap="DepartmentMap">
+        SELECT
+        department.department_id,
+        department.department_name,
+        branch.branch_id,
+        branch.branch_name,
+        branch.department_id
+        FROM
+        department ,
+        branch
+        where
+        branch.department_id=department.department_id
+    </select>
+
     <!--新增Department数据-->
     <insert id="insertDepartment" keyProperty="departmentId" useGeneratedKeys="true">
         insert into department(department_name)
