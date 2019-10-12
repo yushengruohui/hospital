@@ -1,7 +1,9 @@
 package com.ys.hospital.pojo;
 
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * (Department)实体类
@@ -16,5 +18,6 @@ public class Department implements Serializable {
     private Integer departmentId;
     //科名
     private String departmentName;
-    
+
+    private List<Branch> branches;
 }

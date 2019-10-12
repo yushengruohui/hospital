@@ -1,7 +1,8 @@
 package com.ys.hospital.pojo;
 
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * (Admin)实体类
@@ -22,5 +23,6 @@ public class Admin implements Serializable {
     private String adminPassword;
     //管理员邮箱
     private String adminEmail;
-    
+
+
 }

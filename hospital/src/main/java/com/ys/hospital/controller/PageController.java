@@ -11,8 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/page")
 public class PageController {
-    @RequestMapping("/login")
-    public String test() {
-        return "login";
+    @RequestMapping("/diagnosis/index")
+    public String diagnosisIndex() {
+        return "diagnosis/index";
+    }
+
+    @RequestMapping("/appointment/index")
+    public String appointmentIndex() {
+        return "appointment/index";
+    }
+
+    @RequestMapping("/employee/index")
+    public String employeeIndex() {
+        return "employee/index";
     }
 }
