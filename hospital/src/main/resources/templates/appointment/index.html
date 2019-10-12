@@ -12,16 +12,81 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">预约主页</div>
+        <div style="padding: 15px;">
+            <table class="layui-table" id="appointmentTable" lay-filter="clickOpt">
+                <tr>
+                    <th>预约人</th>
+                    <th>预约时间</th>
+                    <th>预约科室</th>
+                    <th>预约医师</th>
+                    <th>预约状态</th>
+                    <th>操作</th>
+                </tr>
+                <script type="text/html" id="optBar">
+                    <a class="layui-btn layui-btn-xs" lay-event="Arrange">摇号</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="diagnosis">填写诊断</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="deal">已处理</a>
+                </script>
+            </table>
+        </div>
     </div>
 
     <div th:replace="~{com/attending::foot}"></div>
 </div>
+
 <script>
     //JavaScript代码区域
-    layui.use('element', function () {
+    layui.use(['element', 'table'], function () {
         var element = layui.element;
+        var table = layui.table;
+        table.render({
+            elem: '#appointmentTable'
+            , height: 312
+            , url: '/appointments' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {field: 'patientName', title: '预约人', fixed: 'left'}
+                    , {field: 'appointmentTime', title: '预约时间', sort: true}
+                    , {field: 'branchName', title: '预约科室'}
+                    , {field: 'employeeName', title: '医师'}
+                    , {field: 'appointmentStatus', title: '预约状态', width: 177}
+                    , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                ]
+            ]
+        });
+        //监听事件
+        table.on('toolbar(clickOpt)', function (obj) {
+            //获取当前行的数据
+            var rowData = obj.data;
+            switch (obj.event) {
+                case 'Arrange':
+                    $.ajax({
+                        type: "put",
+                        url: "/appointment",
+                        data: {"appointmentId": rowData.appointmentId},
+                        success: function (data) {
+
+                        },
+                        error: function () {
+
+                        }
+                    });
+
+                    break;
+                case 'diagnosis':
+                    layer.msg('诊断');
+                    break;
+                case 'deal':
+                    layer.msg('已处理');
+                    break;
+            }
+            ;
+        });
     });
+
+
 </script>
 </body>
 </html>
