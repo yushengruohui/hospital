@@ -7,55 +7,16 @@
         <result property="aiguideKey" column="AIguide_key" jdbcType="VARCHAR"/>
         <result property="aiguideContent" column="AIguide_content" jdbcType="VARCHAR"/>
     </resultMap>
-
-    <!--查询所有AiGuide信息-->
-    <select id="queryAllAiGuide" resultMap="AiGuideMap">
-        select
-          AIguide_id, AIguide_key, AIguide_content
-        from ai_guide
+    <!--    查找智能回复内容-->
+    <select id="guide" resultType="com.ys.hospital.pojo.AiGuide">
+        SELECT
+        ai_guide.AIguide_id,
+        ai_guide.AIguide_key,
+        ai_guide.AIguide_content
+        FROM
+        ai_guide
+        WHERE
+        ai_guide.AIguide_key LIKE CONCAT(CONCAT('%',#{key}),'%')
     </select>
-
-    <!--根据实体类AiGuide的相关属性查询实体类AiGuide-->
-    <select id="queryAiGuideByParam" resultMap="AiGuideMap">
-        select
-          AIguide_id, AIguide_key, AIguide_content
-        from ai_guide
-        <where>
-            <if test="aiguideId != null">
-                and AIguide_id = #{aiguideId}
-            </if>
-            <if test="aiguideKey != null and aiguideKey != ''">
-                and AIguide_key = #{aiguideKey}
-            </if>
-            <if test="aiguideContent != null and aiguideContent != ''">
-                and AIguide_content = #{aiguideContent}
-            </if>
-        </where>
-    </select>
-
-    <!--新增AiGuide数据-->
-    <insert id="insertAiGuide" keyProperty="aiguideId" useGeneratedKeys="true">
-        insert into ai_guide(AIguide_key, AIguide_content)
-        values (#{aiguideKey}, #{aiguideContent})
-    </insert>
-
-    <!--修改AiGuide记录-->
-    <update id="updateAiGuide">
-        update ai_guide
-        <set>
-            <if test="aiguideKey != null and aiguideKey != ''">
-                AIguide_key = #{aiguideKey},
-            </if>
-            <if test="aiguideContent != null and aiguideContent != ''">
-                AIguide_content = #{aiguideContent},
-            </if>
-        </set>
-        where AIguide_id = #{aiguideId}
-    </update>
-
-    <!--通过主键删除一条AiGuide记录-->
-    <delete id="deleteAiGuideById">
-        delete from ai_guide where AIguide_id = #{aiguideId}
-    </delete>
 
 </mapper>

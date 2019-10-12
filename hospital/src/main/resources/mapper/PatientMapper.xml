@@ -11,79 +11,67 @@
         <result property="patientAddress" column="patient_address" jdbcType="VARCHAR"/>
         <result property="clientId" column="client_id" jdbcType="INTEGER"/>
     </resultMap>
-
-    <!--查询所有Patient信息-->
-    <select id="queryAllPatient" resultMap="PatientMap">
-        select
-          patient_id, patient_phone, patient_name, patient_gender, patient_identity, patient_address, client_id
-        from patient
-    </select>
-
-    <!--根据实体类Patient的相关属性查询实体类Patient-->
-    <select id="queryPatientByParam" resultMap="PatientMap">
-        select
-          patient_id, patient_phone, patient_name, patient_gender, patient_identity, patient_address, client_id
-        from patient
-        <where>
-            <if test="patientId != null">
-                and patient_id = #{patientId}
-            </if>
-            <if test="patientPhone != null and patientPhone != ''">
-                and patient_phone = #{patientPhone}
-            </if>
-            <if test="patientName != null and patientName != ''">
-                and patient_name = #{patientName}
-            </if>
-            <if test="patientGender != null and patientGender != ''">
-                and patient_gender = #{patientGender}
-            </if>
-            <if test="patientIdentity != null and patientIdentity != ''">
-                and patient_identity = #{patientIdentity}
-            </if>
-            <if test="patientAddress != null and patientAddress != ''">
-                and patient_address = #{patientAddress}
-            </if>
-            <if test="clientId != null">
-                and client_id = #{clientId}
-            </if>
-        </where>
-    </select>
-
-    <!--新增Patient数据-->
-    <insert id="insertPatient" keyProperty="patientId" useGeneratedKeys="true">
-        insert into patient(patient_phone, patient_name, patient_gender, patient_identity, patient_address, client_id)
-        values (#{patientPhone}, #{patientName}, #{patientGender}, #{patientIdentity}, #{patientAddress}, #{clientId})
+    <!--    添加就诊人信息-->
+    <insert id="addPatient">
+        insert into patient(patient_phone, patient_name, patient_gender, patient_identity, patient_address, client_id) values (#{patientPhone},#{patientName},#{patientGender},#{patientIdentity},#{patientAddress},#{clientId})
     </insert>
-
-    <!--修改Patient记录-->
+    <!--    根据就诊人id修改就诊人信息-->
     <update id="updatePatient">
-        update patient
-        <set>
-            <if test="patientPhone != null and patientPhone != ''">
-                patient_phone = #{patientPhone},
-            </if>
-            <if test="patientName != null and patientName != ''">
-                patient_name = #{patientName},
-            </if>
-            <if test="patientGender != null and patientGender != ''">
-                patient_gender = #{patientGender},
-            </if>
-            <if test="patientIdentity != null and patientIdentity != ''">
-                patient_identity = #{patientIdentity},
-            </if>
-            <if test="patientAddress != null and patientAddress != ''">
-                patient_address = #{patientAddress},
-            </if>
-            <if test="clientId != null">
-                client_id = #{clientId},
-            </if>
-        </set>
-        where patient_id = #{patientId}
+        UPDATE patient
+        SET
+        patient_name = #{patientName},
+        patient_phone = #{patientPhone},
+        patient_gender = #{patientGender},
+        patient_address = #{patientAddress},
+        patient_identity = #{patientIdentity},
+        client_id=#{clientId}
+        WHERE
+        patient_id = #{patientId}
     </update>
-
-    <!--通过主键删除一条Patient记录-->
-    <delete id="deletePatientById">
-        delete from patient where patient_id = #{patientId}
-    </delete>
+    <!--    查询用户绑定下的所有就诊人信息-->
+    <select id="getPatientListByClientId" resultType="com.ys.hospital.pojo.Patient">
+        SELECT
+        patient.patient_id,
+        patient.patient_phone,
+        patient.patient_name,
+        patient.patient_gender,
+        patient.patient_identity,
+        patient.patient_address,
+        patient.client_id
+        FROM
+        patient
+        WHERE
+        patient.client_id=#{clientId}
+    </select>
+    <!--    根据就诊编号查询就就诊人详细信息-->
+    <select id="getPatientDetailByPatientId" resultType="com.ys.hospital.pojo.Patient">
+        SELECT
+        patient.patient_id,
+        patient.patient_phone,
+        patient.patient_name,
+        patient.patient_gender,
+        patient.patient_identity,
+        patient.patient_address,
+        patient.client_id
+        FROM
+        patient
+        WHERE
+        patient.patient_id = #{patientId}
+    </select>
+    <!--    根据身份证信息查询就诊人-->
+    <select id="getPatientBypatientIdentity" resultType="com.ys.hospital.pojo.Patient">
+        SELECT
+        patient.patient_id,
+        patient.patient_phone,
+        patient.patient_name,
+        patient.patient_gender,
+        patient.patient_identity,
+        patient.patient_address,
+        patient.client_id
+        FROM
+        patient
+        WHERE
+        patient.patient_identity = #{patientIdentity}
+    </select>
 
 </mapper>

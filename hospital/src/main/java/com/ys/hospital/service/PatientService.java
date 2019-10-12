@@ -1,45 +1,54 @@
 package com.ys.hospital.service;
 
+
 import com.ys.hospital.pojo.Patient;
+
 import java.util.List;
 
 /**
  * (Patient)表服务接口
  *
- * @author yusheng
- * @since 2019-10-10 08:09:40
+ * @author makejava
+ * @since 2019-10-07 15:14:52
  */
 public interface PatientService {
+    /**
+     * 根据用户的手机号获取绑定的就诊人信息
+     *
+     * @param clientId
+     * @return
+     */
+    public List<Patient> getPatientListByClientId(int clientId);
 
     /**
-     * 查询所有Patient信息
+     * 根据就诊人id查询就诊人信息
      *
-     * @return 实例对象
+     * @param patientId
+     * @return
      */
-    List<Patient> queryAllPatient();
+    public Patient getPatientDetailByPatientId(int patientId);
 
     /**
-     * 新增数据
+     * 根据身份证号查询就诊人信息
      *
-     * @param patient 实例对象
-     * @return 实例对象
+     * @param patientIdentity
+     * @return
      */
-    int insertPatient(Patient patient);
+    public Patient getPatientBypatientIdentity(String patientIdentity);
 
     /**
-     * 修改数据
+     * 添加就诊人信息
      *
-     * @param patient 实例对象
-     * @return 实例对象
+     * @param patient
+     * @return
      */
-    int updatePatient(Patient patient);
+    public int addPatient(Patient patient);
 
     /**
-     * 通过主键删除数据
+     * 根据就诊人id修改就诊人信息
      *
-     * @param patientId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @param patient
+     * @return
      */
-    int deletePatientById(Integer patientId);
-
+    public int updatePatient(Patient patient);
 }

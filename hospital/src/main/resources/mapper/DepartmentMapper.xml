@@ -2,53 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ys.hospital.dao.DepartmentMapper">
 
+
     <resultMap type="com.ys.hospital.pojo.Department" id="DepartmentMap">
         <result property="departmentId" column="department_id" jdbcType="INTEGER"/>
         <result property="departmentName" column="department_name" jdbcType="VARCHAR"/>
+        <collection property="branches" ofType="com.ys.hospital.pojo.Branch">
+            <result column="branch_id" property="branchId"/>
+            <result column="branch_name" property="branchName"/>
+            <result column="department_id" property="departmentId"/>
+        </collection>
+
     </resultMap>
-
-    <!--查询所有Department信息-->
-    <select id="queryAllDepartment" resultMap="DepartmentMap">
-        select
-          department_id, department_name
-        from department
+    <select id="getDepartmentList" resultMap="DepartmentMap">
+        SELECT
+        department.department_id,
+        department.department_name,
+        branch.branch_id,
+        branch.branch_name,
+        branch.department_id
+        FROM
+        department ,
+        branch
+        where
+        branch.department_id=department.department_id
     </select>
-
-    <!--根据实体类Department的相关属性查询实体类Department-->
-    <select id="queryDepartmentByParam" resultMap="DepartmentMap">
-        select
-          department_id, department_name
-        from department
-        <where>
-            <if test="departmentId != null">
-                and department_id = #{departmentId}
-            </if>
-            <if test="departmentName != null and departmentName != ''">
-                and department_name = #{departmentName}
-            </if>
-        </where>
-    </select>
-
-    <!--新增Department数据-->
-    <insert id="insertDepartment" keyProperty="departmentId" useGeneratedKeys="true">
-        insert into department(department_name)
-        values (#{departmentName})
-    </insert>
-
-    <!--修改Department记录-->
-    <update id="updateDepartment">
-        update department
-        <set>
-            <if test="departmentName != null and departmentName != ''">
-                department_name = #{departmentName},
-            </if>
-        </set>
-        where department_id = #{departmentId}
-    </update>
-
-    <!--通过主键删除一条Department记录-->
-    <delete id="deleteDepartmentById">
-        delete from department where department_id = #{departmentId}
-    </delete>
 
 </mapper>

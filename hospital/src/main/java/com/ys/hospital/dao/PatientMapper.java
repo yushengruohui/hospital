@@ -1,55 +1,56 @@
 package com.ys.hospital.dao;
 
+
 import com.ys.hospital.pojo.Patient;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
  * (Patient)表数据库访问层
  *
- * @author yusheng
- * @since 2019-10-10 08:09:40
+ * @author makejava
+ * @since 2019-10-07 15:14:52
  */
 public interface PatientMapper {
 
     /**
-     * 查询所有Patient信息
+     * 根据用户的手机号获取绑定的就诊人信息
      *
-     * @return 对象Patient列表
+     * @param clientId
+     * @return
      */
-    List<Patient> queryAllPatient();
-
+    public List<Patient> getPatientListByClientId(int clientId);
 
     /**
-     * 根据实体类Patient的相关属性查询实体类Patient
+     * 根据就诊人id查询就诊人信息
      *
-     * @param patient 实例对象
-     * @return 对象Patient列表
+     * @param patientId
+     * @return
      */
-    List<Patient> queryPatientByParam(Patient patient);
+    public Patient getPatientDetailByPatientId(int patientId);
 
     /**
-     * 新增Patient数据
+     * 根据身份证号查询就诊人信息
      *
-     * @param patient 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @param patientIdentity
+     * @return
      */
-    int insertPatient(Patient patient);
+    public Patient getPatientBypatientIdentity(String patientIdentity);
 
     /**
-     * 修改Patient数据
+     * 添加就诊人信息
      *
-     * @param patient 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @param patient
+     * @return
      */
-    int updatePatient(Patient patient);
+    public int addPatient(Patient patient);
 
     /**
-     * 通过主键删除数据
+     * 根据就诊人id修改就诊人信息
      *
-     * @param patientId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @param patient
+     * @return
      */
-    int deletePatientById(Integer patientId);
-
+    public int updatePatient(Patient patient);
 }
