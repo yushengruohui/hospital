@@ -5,6 +5,11 @@
     <resultMap type="com.ys.hospital.pojo.Department" id="DepartmentMap">
         <result property="departmentId" column="department_id" jdbcType="INTEGER"/>
         <result property="departmentName" column="department_name" jdbcType="VARCHAR"/>
+        <collection property="branches" ofType="com.ys.hospital.pojo.Branch">
+            <result column="branch_id" property="branchId"/>
+            <result column="branch_name" property="branchName"/>
+            <result column="department_id" property="departmentId"/>
+        </collection>
     </resultMap>
 
     <!--查询所有Department信息-->
@@ -17,7 +22,7 @@
     <!--根据实体类Department的相关属性查询实体类Department-->
     <select id="queryDepartmentByParam" resultMap="DepartmentMap">
         select
-          department_id, department_name
+        department_id, department_name
         from department
         <where>
             <if test="departmentId != null">
