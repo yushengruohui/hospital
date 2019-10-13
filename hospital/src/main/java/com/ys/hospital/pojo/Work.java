@@ -1,5 +1,6 @@
 package com.ys.hospital.pojo;
 
+import java.util.Date;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -7,7 +8,7 @@ import lombok.Data;
  * (Work)实体类
  *
  * @author yusheng
- * @since 2019-10-12 11:38:03
+ * @since 2019-10-13 12:13:44
  */
 @Data
 public class Work implements Serializable {
@@ -26,5 +27,7 @@ public class Work implements Serializable {
     private Integer roomId;
     //可预约人数
     private Integer workDeal;
+    //工作日期
+    private Date workDate;
     
 }
