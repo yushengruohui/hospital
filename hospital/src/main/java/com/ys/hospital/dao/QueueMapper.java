@@ -58,6 +58,6 @@ public interface QueueMapper {
      * @param queue 当天日期和医师id
      * @return
      */
-    int findMaxNumberByParam(Queue queue);
+    Integer findMaxNumberByParam(Queue queue);
 
 }

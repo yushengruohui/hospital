@@ -16,6 +16,11 @@ public class PageController {
         return "diagnosis/index";
     }
 
+    @RequestMapping("/diagnosis/add")
+    public String diagnosisAdd() {
+        return "diagnosis/add";
+    }
+
     @RequestMapping("/appointment/index")
     public String appointmentIndex() {
         return "appointment/index";

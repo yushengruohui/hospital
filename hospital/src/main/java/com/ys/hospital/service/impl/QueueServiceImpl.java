@@ -68,6 +68,10 @@ public class QueueServiceImpl implements QueueService {
 
     @Override
     public int findMaxNumber(Queue queue) {
-        return queueMapper.findMaxNumberByParam(queue);
+        Integer max = queueMapper.findMaxNumberByParam(queue);
+        if (max == null) {
+            return 0;
+        }
+        return max;
     }
 }

@@ -47,7 +47,7 @@ public class QueueController {
 
         int flag = queueService.insertQueue(queue);
         if (flag == 1) {
-            return "success";
+            return "该患者排在第" + (maxNumber + 1) + "号";
         } else {
             return "error";
         }
