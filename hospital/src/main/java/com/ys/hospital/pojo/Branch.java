@@ -18,5 +18,26 @@ public class Branch implements Serializable {
     private String branchName;
     //所属科
     private Integer departmentId;
+	public Integer getBranchId() {
+		return branchId;
+	}
+	public void setBranchId(Integer branchId) {
+		this.branchId = branchId;
+	}
+	public String getBranchName() {
+		return branchName;
+	}
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
     
 }
