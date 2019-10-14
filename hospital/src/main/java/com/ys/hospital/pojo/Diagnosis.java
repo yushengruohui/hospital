@@ -1,8 +1,9 @@
 package com.ys.hospital.pojo;
 
-import java.util.Date;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * (Diagnosis)实体类
@@ -13,7 +14,7 @@ import lombok.Data;
 @Data
 public class Diagnosis implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer diagnosisId;
     //诊断时间
     private Date diagnosisTime;
@@ -25,5 +26,7 @@ public class Diagnosis implements Serializable {
     private Integer diagnosisIsOperation;
     //所属预约单
     private Integer appointmentId;
-    
+
+    private Appointment appointment;
+
 }

@@ -80,7 +80,17 @@
                     });
                     break;
                 case 'diagnosis':
-                    layer.msg('诊断');
+                    $.ajax({
+                        type: "post",
+                        url: "/page/diagnosis/add",
+                        data: {"appointmentId": rowData.appointmentId},
+                        success: function (data) {
+                            layer.msg(data);
+                        },
+                        error: function () {
+                            layer.msg("连接后台失败");
+                        }
+                    });
                     break;
                 case 'deal':
                     layer.msg('已处理');

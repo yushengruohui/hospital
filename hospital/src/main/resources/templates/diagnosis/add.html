@@ -12,7 +12,65 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
+        <div style="padding: 15px;">
+            <form th:action="@{/diagnosis}" th:method="post" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">医院处方笺</label>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="patientId">医疗卡/医保卡号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="patientId" id="patientId" autocomplete="off"
+                               class="layui-input"
+                               th:value="${appointment.patient.patientId}"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="patientName">性别：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="patientName" id="patientName" autocomplete="off"
+                               class="layui-input"
+                               th:value="${appointment.patient.patientName}"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="patientGender">性别：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="patientGender" id="patientGender" autocomplete="off"
+                               class="layui-input"
+                               th:value="${appointment.patient.patientGender}"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="patientAddress">地址：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="patientAddress" id="patientAddress" autocomplete="off"
+                               class="layui-input"
+                               th:value="${appointment.patient.patientAddress}"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="diagnosisContent">临床诊断：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="diagnosisContent" id="diagnosisContent" autocomplete="off"
+                               class="layui-input" required="required"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="diagnosisContent">是否需要检查：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="diagnosisIsCheck" lay-skin="switch">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="diagnosisContent">是否需要手术：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="diagnosisIsOperation" lay-skin="switch">
+                    </div>
+                </div>
+
+            </form>
+        </div>
     </div>
 
     <div th:replace="~{com/attending::foot}"></div>

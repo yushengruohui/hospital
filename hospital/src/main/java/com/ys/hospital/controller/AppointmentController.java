@@ -80,19 +80,20 @@ public class AppointmentController {
             appointment.setBranch(branch);
         }
 
-        System.out.println("=====" + appointments + "=====");
-
+        //System.out.println("=====" + appointments + "=====");
 
         //处理分页信息
         myPageInfo.setData(appointments);
-        //PageInfo pageInfo = new PageInfo(appointments);
         //将用户数据封装到PageInfo 中
         PageInfo page = new PageInfo(myPageInfo.getData());
-        System.out.println("=====" + page + "=====");
         //设置成功代码
         myPageInfo.setCode("0");
         //设置数据数量
         myPageInfo.setCount(page.getPageSize());
+
+        //System.out.println("=====" + myPageInfo + "=====");
+
+
         return myPageInfo;
     }
 
