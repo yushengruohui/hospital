@@ -1,8 +1,10 @@
 package com.ys.hospital.pojo;
 
-import java.util.Date;
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * (EmployeeDetail)实体类
@@ -13,11 +15,12 @@ import lombok.Data;
 @Data
 public class EmployeeDetail implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer employeeDetailId;
     //员工性别
     private String employeeDetailGender;
     //员工出生日期
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date employeeDetailBirthday;
     //员工详细地址
     private String employeeDetailAddress;
@@ -41,5 +44,5 @@ public class EmployeeDetail implements Serializable {
     private Integer branchId;
     //职称id
     private Integer titleId;
-    
+
 }

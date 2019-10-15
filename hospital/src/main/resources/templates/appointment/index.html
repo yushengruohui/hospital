@@ -81,11 +81,50 @@
                     break;
                 case 'diagnosis':
                     $.ajax({
+                        url: "/page/diagnosis/addReady",
                         type: "post",
-                        url: "/page/diagnosis/add",
-                        data: {"appointmentId": rowData.appointmentId},
-                        success: function (data) {
-                            layer.msg(data);
+                        data: {
+                            "appointmentId": rowData.appointmentId,
+                            "appointmentTime": rowData.appointmentTime,
+                            "appointmentStatus": rowData.appointmentStatus,
+                            "patientId": rowData.patientId,
+                            "employeeId": rowData.employeeId,
+                            "branchId": rowData.branchId,
+                            "appointmentPrice": rowData.appointmentPrice,
+                            "appointmentPayTime": rowData.appointmentPayTime,
+                            "patient.patientId": rowData.patient.patientId,
+                            "patient.patientPhone": rowData.patient.patientPhone,
+                            "patient.patientName": rowData.patient.patientName,
+                            "patient.patientGender": rowData.patient.patientGender,
+                            "patient.patientIdentity": rowData.patient.patientIdentity,
+                            "patient.patientAddress": rowData.patient.patientAddress,
+                            "patient.clientId": rowData.patient.clientId,
+                            "employee.employeeId": rowData.employee.employeeId,
+                            "employee.employeeName": rowData.employee.employeeName,
+                            "employee.employeePassword": rowData.employee.employeePassword,
+                            "employee.employeeOnline": rowData.employee.employeeOnline,
+                            "employee.employeeLastLoginTime": rowData.employee.employeeLastLoginTime,
+                            "employee.employeeDetail.employeeDetailId": rowData.employee.employeeDetail.employeeDetailId,
+                            "employee.employeeDetail.employeeDetailGender": rowData.employee.employeeDetail.employeeDetailGender,
+                            "employee.employeeDetail.employeeDetailBirthday": rowData.employee.employeeDetail.employeeDetailBirthday,
+                            "employee.employeeDetail.employeeDetailAddress": rowData.employee.employeeDetail.employeeDetailAddress,
+                            "employee.employeeDetail.employeeDetailPhone": rowData.employee.employeeDetail.employeeDetailPhone,
+                            "employee.employeeDetail.employeeDetailIdentity": rowData.employee.employeeDetail.employeeDetailIdentity,
+                            "employee.employeeDetail.employeeDetailEntryTime": rowData.employee.employeeDetail.employeeDetailEntryTime,
+                            "employee.employeeDetail.employeeDetailEmail": rowData.employee.employeeDetail.employeeDetailEmail,
+                            "employee.employeeDetail.employeeDetailDescript": rowData.employee.employeeDetail.employeeDetailDescript,
+                            "employee.employeeDetail.employeeDetailStatus": rowData.employee.employeeDetail.employeeDetailStatus,
+                            "employee.employeeDetail.employeeId": rowData.employee.employeeDetail.employeeId,
+                            "employee.employeeDetail.positionId": rowData.employee.employeeDetail.positionId,
+                            "employee.employeeDetail.branchId": rowData.employee.employeeDetail.branchId,
+                            "employee.employeeDetail.titleId": rowData.employee.employeeDetail.titleId,
+                            "branch.branchId": rowData.branch.branchId,
+                            "branch.branchName": rowData.branch.branchName,
+                            "branch.departmentId": rowData.branch.departmentId
+                        },
+                        success: function () {
+
+                            window.location.href = '/page/diagnosis/add';
                         },
                         error: function () {
                             layer.msg("连接后台失败");
@@ -93,10 +132,24 @@
                     });
                     break;
                 case 'deal':
-                    layer.msg('已处理');
+                    console.info(rowData.employee.employeeDetail.employeeDetailEntryTime);
+                    console.info(rowData.appointmentTime);
+                    $.ajax({
+                        type: "post",
+                        url: "/page/test",
+                        data: {
+                            "id": "1000",
+                            "age": 18,
+                            "name": rowData.branch.branchName,
+                            "password": "123456",
+                            "date": rowData.appointmentTime
+                        },
+                        error: function () {
+                            layer.msg("连接后台失败");
+                        }
+                    });
                     break;
             }
-            ;
         });
     });
 

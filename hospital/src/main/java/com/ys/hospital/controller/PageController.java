@@ -2,8 +2,11 @@ package com.ys.hospital.controller;
 
 import com.ys.hospital.pojo.Appointment;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @Description:
@@ -18,11 +21,17 @@ public class PageController {
         return "diagnosis/index";
     }
 
-    @RequestMapping("/diagnosis/add")
-    public String diagnosisAdd(Model session, Appointment appointment) {
-        System.out.println("=====" + appointment + "=====");
-        session.addAttribute("appointment", appointment);
+    @PostMapping("/diagnosis/addReady")
+    @ResponseBody
+    public String diagnosisAddReady(Appointment appointment, HttpSession session) {
 
+        session.setAttribute("appointment", appointment);
+
+        return "/page/diagnosis/add";
+    }
+
+    @RequestMapping("/diagnosis/add")
+    public String diagnosisAdd() {
         return "diagnosis/add";
     }
 
@@ -35,4 +44,5 @@ public class PageController {
     public String employeeIndex() {
         return "employee/index";
     }
+
 }

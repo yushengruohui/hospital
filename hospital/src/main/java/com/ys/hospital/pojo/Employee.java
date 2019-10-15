@@ -3,7 +3,7 @@ package com.ys.hospital.pojo;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * (Employee)实体类
@@ -24,7 +24,6 @@ public class Employee implements Serializable {
     private Integer employeeOnline;
     //离线时，自动更新最后登录时间
     private Date employeeLastLoginTime;
-
     private EmployeeDetail employeeDetail;
 
 }

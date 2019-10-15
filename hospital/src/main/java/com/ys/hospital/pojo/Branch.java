@@ -18,5 +18,5 @@ public class Branch implements Serializable {
     private String branchName;
     //所属科
     private Integer departmentId;
-    
+
 }
