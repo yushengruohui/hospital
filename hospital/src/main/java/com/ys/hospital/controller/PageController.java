@@ -17,8 +17,35 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/page")
 public class PageController {
+
+    @RequestMapping("/employee/index")
+    public String toEmployeeIndex() {
+        return "employee/index";
+    }
+
+    @RequestMapping("/appointment/index")
+    public String toAppointmentIndex() {
+        return "appointment/index";
+    }
+
+    @RequestMapping("/appointment/deal")
+    public String toAppointmentDeal() {
+        return "appointment/deal";
+    }
+
+
+    @RequestMapping("/diagnosis/dealing")
+    public String toDiagnosisDealing() {
+        return "diagnosis/dealing";
+    }
+
+    @RequestMapping("/diagnosis/record")
+    public String toDiagnosisRecord() {
+        return "diagnosis/record";
+    }
+
     @RequestMapping("/diagnosis/index")
-    public String diagnosisIndex() {
+    public String toDiagnosisIndex() {
         return "diagnosis/index";
     }
 
@@ -33,18 +60,7 @@ public class PageController {
     }
 
     @RequestMapping("/diagnosis/add")
-    public String diagnosisAdd() {
+    public String toDiagnosisAdd() {
         return "diagnosis/add";
     }
-
-    @RequestMapping("/appointment/index")
-    public String appointmentIndex() {
-        return "appointment/index";
-    }
-
-    @RequestMapping("/employee/index")
-    public String employeeIndex() {
-        return "employee/index";
-    }
-
 }

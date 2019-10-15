@@ -44,4 +44,6 @@ public interface AppointmentService {
     int deleteAppointmentById(Integer appointmentId);
 
     List<Appointment> findUntreatedAppointment(Integer employeeId);
+
+    List<Appointment> findTreatedAppointment(Integer employeeId);
 }

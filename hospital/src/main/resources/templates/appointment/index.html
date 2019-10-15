@@ -34,7 +34,7 @@
         table.render({
             elem: '#appointmentTable'
             , height: 312
-            , url: '/appointments' //数据接口
+            , url: '/untreatedAppointments' //数据接口
             , method: 'get'
             , page: true //开启分页
             , cols: [
@@ -83,7 +83,7 @@
                     $.ajax({
                             url: "/page/diagnosis/addReady",
                             type: "post",
-                            contentType: "application/json;charset=UTF-8",
+                            contentType: "application/json",
                             data: JSON.stringify({
                                 "appointmentId":
                                 rowData.appointmentId,

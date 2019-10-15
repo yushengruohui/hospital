@@ -20,7 +20,7 @@
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
-                    <a th:href="@{/page/employee/index}">主治医师</a>
+                    <a th:href="@{/page/employee/index}">[[${session.employee.employeeName}]]</a>
                 </li>
                 <li class="layui-nav-item"><a th:href="@{/employee/out}">退出登录</a></li>
             </ul>
@@ -33,13 +33,13 @@
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;">添加诊断</a>
+                        <a href="/page/diagnosis/add">添加诊断</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">正在诊断</a>
+                        <a href="/page/diagnosis/dealing">正在诊断</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">诊断记录</a>
+                        <a href="/page/diagnosis/record">诊断记录</a>
                     </li>
                 </ul>
             </div>
@@ -68,10 +68,10 @@
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;">待处理预约</a>
+                        <a href="/page/appointment/index">待处理预约</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">已处理预约</a>
+                        <a href="/page/appointment/deal">已处理预约</a>
                     </li>
                 </ul>
             </div>

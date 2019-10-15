@@ -43,7 +43,7 @@ public class AppointmentController {
     private BranchMapper branchMapper;
 
 
-    @GetMapping("/appointments")
+    @GetMapping("/untreatedAppointments")
     public MyPageInfo<Appointment> appointments(MyPageInfo<Appointment> myPageInfo, HttpSession session) {
         //获取医师信息
         Employee employee = (Employee) session.getAttribute("employee");
@@ -51,8 +51,80 @@ public class AppointmentController {
         List<Appointment> appointments = appointmentService.findUntreatedAppointment(employee.getEmployeeId());
 
         //没有预约记录，返回空
-        if (appointments == null) {
-            return null;
+        if (appointments.isEmpty()) {
+            PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
+            //处理分页信息
+            myPageInfo.setData(appointments);
+            //将用户数据封装到PageInfo 中
+            PageInfo page = new PageInfo(myPageInfo.getData());
+            //设置成功代码
+            myPageInfo.setCode("0");
+            //设置数据数量
+            myPageInfo.setCount(0);
+            return myPageInfo;
+        }
+        //开启分页
+        PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
+
+        //获取科室信息
+        Branch branch = new Branch();
+        branch.setBranchId(appointments.get(0).getBranchId());
+        branch = branchMapper.queryBranchByParam(branch).get(0);
+
+        //获取预约记录所有相关属性
+        for (int i = 0; i < appointments.size(); i++) {
+            //遍历每一个未处理的预约记录
+            Appointment appointment = appointments.get(i);
+
+            //所有未处理预约归当前医师管理
+            appointment.setEmployee(employee);
+
+            //获取患者信息
+            Patient patient = new Patient();
+            patient.setPatientId(appointment.getPatientId());
+            patient = patientMapper.queryPatientByParam(patient).get(0);
+            appointment.setPatient(patient);
+
+            //获取科室信息
+            appointment.setBranch(branch);
+        }
+
+        //System.out.println("=====" + appointments + "=====");
+
+        //处理分页信息
+        myPageInfo.setData(appointments);
+        //将用户数据封装到PageInfo 中
+        PageInfo page = new PageInfo(myPageInfo.getData());
+        //设置成功代码
+        myPageInfo.setCode("0");
+        //设置数据数量
+        myPageInfo.setCount(page.getPageSize());
+
+        //System.out.println("=====" + myPageInfo + "=====");
+
+
+        return myPageInfo;
+    }
+
+    @GetMapping("/treatedAppointments")
+    public MyPageInfo<Appointment> untreatedAppointments(MyPageInfo<Appointment> myPageInfo, HttpSession session) {
+        //获取医师信息
+        Employee employee = (Employee) session.getAttribute("employee");
+        //根据员工id查询未处理预约记录
+        List<Appointment> appointments = appointmentService.findTreatedAppointment(employee.getEmployeeId());
+
+        //没有预约记录，返回空
+        if (appointments.isEmpty()) {
+            PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
+            //处理分页信息
+            myPageInfo.setData(appointments);
+            //将用户数据封装到PageInfo 中
+            PageInfo page = new PageInfo(myPageInfo.getData());
+            //设置成功代码
+            myPageInfo.setCode("0");
+            //设置数据数量
+            myPageInfo.setCount(0);
+            return myPageInfo;
         }
         //开启分页
         PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());

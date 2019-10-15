@@ -76,4 +76,15 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setAppointmentStatus(0);
         return appointmentMapper.queryAppointmentByParam(appointment);
     }
+
+    @Override
+    public List<Appointment> findTreatedAppointment(Integer employeeId) {
+        if (employeeId == null) {
+            return null;
+        }
+        Appointment appointment = new Appointment();
+        appointment.setEmployeeId(employeeId);
+        appointment.setAppointmentStatus(1);
+        return appointmentMapper.queryAppointmentByParam(appointment);
+    }
 }
