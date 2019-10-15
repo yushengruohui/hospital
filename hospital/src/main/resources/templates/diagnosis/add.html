@@ -3,11 +3,7 @@
 <head>
     <div th:replace="~{com/attending::title}"></div>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script>
-        $(function () {
-            console.info(${appointment.patient.patientId})
-        });
-    </script>
+
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -23,11 +19,11 @@
                     <label class="layui-form-label">医院处方笺</label>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" for="patientId">医疗卡/医保卡号：</label>
+                    <label class="layui-form-label" for="patientId">病历号：</label>
                     <div class="layui-input-block">
                         <input type="text" name="patientId" id="patientId" autocomplete="off"
                                class="layui-input"
-                               th:value="${appointment.patient.patientId}"/>
+                               th:value="${session.appointment.patient.patientId}"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -35,7 +31,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientName" id="patientName" autocomplete="off"
                                class="layui-input"
-                               th:value="${appointment.patient.patientName}"/>
+                               th:value="${session.appointment.patient.patientName}"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -43,7 +39,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientGender" id="patientGender" autocomplete="off"
                                class="layui-input"
-                               th:value="${appointment.patient.patientGender}"/>
+                               th:value="${session.appointment.patient.patientGender}"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -51,7 +47,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientAddress" id="patientAddress" autocomplete="off"
                                class="layui-input"
-                               th:value="${appointment.patient.patientAddress}"/>
+                               th:value="${session.appointment.patient.patientAddress}"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -62,13 +58,13 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" for="diagnosisContent">是否需要检查：</label>
+                    <label class="layui-form-label" for="diagnosisContent">是否检查：</label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="diagnosisIsCheck" lay-skin="switch">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" for="diagnosisContent">是否需要手术：</label>
+                    <label class="layui-form-label" for="diagnosisContent">是否手术：</label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="diagnosisIsOperation" lay-skin="switch">
                     </div>

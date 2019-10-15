@@ -81,57 +81,116 @@
                     break;
                 case 'diagnosis':
                     $.ajax({
-                        url: "/page/diagnosis/addReady",
-                        type: "post",
-                        data: {
-                            "appointmentId": rowData.appointmentId,
-                            "appointmentTime": rowData.appointmentTime,
-                            "appointmentStatus": rowData.appointmentStatus,
-                            "patientId": rowData.patientId,
-                            "employeeId": rowData.employeeId,
-                            "branchId": rowData.branchId,
-                            "appointmentPrice": rowData.appointmentPrice,
-                            "appointmentPayTime": rowData.appointmentPayTime,
-                            "patient.patientId": rowData.patient.patientId,
-                            "patient.patientPhone": rowData.patient.patientPhone,
-                            "patient.patientName": rowData.patient.patientName,
-                            "patient.patientGender": rowData.patient.patientGender,
-                            "patient.patientIdentity": rowData.patient.patientIdentity,
-                            "patient.patientAddress": rowData.patient.patientAddress,
-                            "patient.clientId": rowData.patient.clientId,
-                            "employee.employeeId": rowData.employee.employeeId,
-                            "employee.employeeName": rowData.employee.employeeName,
-                            "employee.employeePassword": rowData.employee.employeePassword,
-                            "employee.employeeOnline": rowData.employee.employeeOnline,
-                            "employee.employeeLastLoginTime": rowData.employee.employeeLastLoginTime,
-                            "employee.employeeDetail.employeeDetailId": rowData.employee.employeeDetail.employeeDetailId,
-                            "employee.employeeDetail.employeeDetailGender": rowData.employee.employeeDetail.employeeDetailGender,
-                            "employee.employeeDetail.employeeDetailBirthday": rowData.employee.employeeDetail.employeeDetailBirthday,
-                            "employee.employeeDetail.employeeDetailAddress": rowData.employee.employeeDetail.employeeDetailAddress,
-                            "employee.employeeDetail.employeeDetailPhone": rowData.employee.employeeDetail.employeeDetailPhone,
-                            "employee.employeeDetail.employeeDetailIdentity": rowData.employee.employeeDetail.employeeDetailIdentity,
-                            "employee.employeeDetail.employeeDetailEntryTime": rowData.employee.employeeDetail.employeeDetailEntryTime,
-                            "employee.employeeDetail.employeeDetailEmail": rowData.employee.employeeDetail.employeeDetailEmail,
-                            "employee.employeeDetail.employeeDetailDescript": rowData.employee.employeeDetail.employeeDetailDescript,
-                            "employee.employeeDetail.employeeDetailStatus": rowData.employee.employeeDetail.employeeDetailStatus,
-                            "employee.employeeDetail.employeeId": rowData.employee.employeeDetail.employeeId,
-                            "employee.employeeDetail.positionId": rowData.employee.employeeDetail.positionId,
-                            "employee.employeeDetail.branchId": rowData.employee.employeeDetail.branchId,
-                            "employee.employeeDetail.titleId": rowData.employee.employeeDetail.titleId,
-                            "branch.branchId": rowData.branch.branchId,
-                            "branch.branchName": rowData.branch.branchName,
-                            "branch.departmentId": rowData.branch.departmentId
-                        },
-                        success: function () {
+                            url: "/page/diagnosis/addReady",
+                            type: "post",
+                            contentType: "application/json;charset=UTF-8",
+                            data: JSON.stringify({
+                                "appointmentId":
+                                rowData.appointmentId,
+                                "appointmentTime":
+                                rowData.appointmentTime,
+                                "appointmentStatus":
+                                rowData.appointmentStatus,
+                                "patientId":
+                                rowData.patientId,
+                                "employeeId":
+                                rowData.employeeId,
+                                "branchId":
+                                rowData.branchId,
+                                "appointmentPrice":
+                                rowData.appointmentPrice,
+                                "appointmentPayTime":
+                                rowData.appointmentPayTime,
+                                "patient":
+                                    {
+                                        "patientId":
+                                        rowData.patient.patientId,
+                                        "patientPhone":
+                                        rowData.patient.patientPhone,
+                                        "patientName":
+                                        rowData.patient.patientName,
+                                        "patientGender":
+                                        rowData.patient.patientGender,
+                                        "patientIdentity":
+                                        rowData.patient.patientIdentity,
+                                        "patientAddress":
+                                        rowData.patient.patientAddress,
+                                        "clientId":
+                                        rowData.patient.clientId
+                                    }
+                                ,
+                                "employee":
+                                    {
+                                        "employeeId":
+                                        rowData.employee.employeeId,
+                                        "employeeName":
+                                        rowData.employee.employeeName,
+                                        "employeePassword":
+                                        rowData.employee.employeePassword,
+                                        "employeeOnline":
+                                        rowData.employee.employeeOnline,
+                                        "employeeLastLoginTime":
+                                        rowData.employee.employeeLastLoginTime,
+                                        "employeeDetail":
+                                            {
+                                                "employeeDetailId":
+                                                rowData.employee.employeeDetail.employeeDetailId,
+                                                "employeeDetailGender":
+                                                rowData.employee.employeeDetail.employeeDetailGender,
+                                                "employeeDetailBirthday":
+                                                rowData.employee.employeeDetail.employeeDetailBirthday,
+                                                "employeeDetailAddress":
+                                                rowData.employee.employeeDetail.employeeDetailAddress,
+                                                "employeeDetailPhone":
+                                                rowData.employee.employeeDetail.employeeDetailPhone,
+                                                "employeeDetailIdentity":
+                                                rowData.employee.employeeDetail.employeeDetailIdentity,
+                                                "employeeDetailEntryTime":
+                                                rowData.employee.employeeDetail.employeeDetailEntryTime,
+                                                "employeeDetailEmail":
+                                                rowData.employee.employeeDetail.employeeDetailEmail,
+                                                "employeeDetailDescript":
+                                                rowData.employee.employeeDetail.employeeDetailDescript,
+                                                "employeeDetailStatus":
+                                                rowData.employee.employeeDetail.employeeDetailStatus,
+                                                "employeeId":
+                                                rowData.employee.employeeDetail.employeeId,
+                                                "positionId":
+                                                rowData.employee.employeeDetail.positionId,
+                                                "branchId":
+                                                rowData.employee.employeeDetail.branchId,
+                                                "titleId":
+                                                rowData.employee.employeeDetail.titleId
+                                            }
+                                    }
+                                ,
+                                "branch":
+                                    {
+                                        "branchId":
+                                        rowData.branch.branchId,
+                                        "branchName":
+                                        rowData.branch.branchName,
+                                        "departmentId":
+                                        rowData.branch.departmentId
+                                    }
+                            })
 
-                            window.location.href = '/page/diagnosis/add';
-                        },
-                        error: function () {
-                            layer.msg("连接后台失败");
+                            ,
+                            success: function () {
+
+                                window.location.href = '/page/diagnosis/add';
+                            }
+                            ,
+                            error: function () {
+                                layer.msg("连接后台失败");
+                            }
                         }
-                    });
+                    )
+                    ;
                     break;
-                case 'deal':
+                case
+                'deal'
+                :
                     console.info(rowData.employee.employeeDetail.employeeDetailEntryTime);
                     console.info(rowData.appointmentTime);
                     $.ajax({

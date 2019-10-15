@@ -3,7 +3,7 @@ package com.ys.hospital.pojo;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * (Employee)实体类
