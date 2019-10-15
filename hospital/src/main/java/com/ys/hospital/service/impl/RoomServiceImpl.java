@@ -19,7 +19,7 @@ import java.util.List;
 @Service("roomService")
 public class RoomServiceImpl implements RoomService {
     private static final Logger logger = LoggerFactory.getLogger(RoomServiceImpl.class);
-    
+
     @Resource
     private RoomMapper roomMapper;
 
@@ -37,7 +37,7 @@ public class RoomServiceImpl implements RoomService {
      * 新增Room数据
      *
      * @param room 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertRoom(Room room) {
@@ -48,7 +48,7 @@ public class RoomServiceImpl implements RoomService {
      * 修改Room数据
      *
      * @param room 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateRoom(Room room) {
@@ -59,10 +59,21 @@ public class RoomServiceImpl implements RoomService {
      * 通过主键删除Room数据
      *
      * @param roomId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteRoomById(Integer roomId) {
         return this.roomMapper.deleteRoomById(roomId);
+    }
+
+    /**
+     * 根据实体类Room的相关属性查询实体类Room
+     *
+     * @param room 实例对象
+     * @return 对象Room列表
+     */
+    @Override
+    public List<Room> queryRoomByParam(Room room) {
+        return this.roomMapper.queryRoomByParam(room);
     }
 }

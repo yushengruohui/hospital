@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -13,7 +14,7 @@ import lombok.Data;
 @Data
 public class EmployeeDetail implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer employeeDetailId;
     //员工性别
     private String employeeDetailGender;
@@ -41,5 +42,8 @@ public class EmployeeDetail implements Serializable {
     private Integer branchId;
     //职称id
     private Integer titleId;
-    
+
+    private Title title;
+
+
 }

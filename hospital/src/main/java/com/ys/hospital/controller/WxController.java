@@ -27,6 +27,14 @@ public class WxController {
     private DepartmentService departmentService;
     @Resource
     private BranchService branchService;
+    @Resource
+    private RoomService roomService;
+    @Resource
+    private WorkService workService;
+    @Resource
+    private EmployeeService employeeService;
+    @Resource
+    private TitleService titleService;
 
     /**
      * 登录(返回登陆后的信息)
@@ -161,10 +169,54 @@ public class WxController {
      * @return branchList(子科目列表)
      */
     @RequestMapping("/getBranchListByDepartmentId")
-    public List<Branch> getBranchListByDepartmentId(int departmentId) {
+    public List<Branch> getBranchListByDepartmentId(Integer departmentId) {
 
         List<Branch> branchList = branchService.getBranchListByDepartmentId(departmentId);
         return branchList;
+    }
+
+    /**
+     * 根据用户所选科室与日期查找值班医生
+     *
+     * @param branchId(科室id)
+     * @param time(所选日期)
+     * @return employeeList(值班医师列表)
+     */
+    @RequestMapping("/getDoctorListByWorkDateAndBranchId")
+    public List<Employee> getDoctorListByWorkDate(Integer branchId, String time) {
+        //根据科室Id与选择的时间，查询当天的值班情况
+        List<Work> works = workService.findWorksByBranchIdAndTime(branchId, time);
+        //存储值班医师信息的列表
+        List<Employee> employees = new ArrayList<>();
+        //存储医师信息对象
+        Employee employee;
+        //存储职称ID
+        Integer titleId;
+        //根据查询出来的值班医师id查询医师信息，并将其加入医师信息列表中
+        for (int i = 0; i < works.size(); i++) {
+            //根据查询出来的值班医师id查询医师信息
+            employee = employeeService.getEmployeeByEmployeeId(works.get(i).getEmployeeId());
+            //获取每个医师的职称Id
+            titleId = employee.getEmployeeDetail().getTitleId();
+            //将医师的职称对象加入到医师的信息中
+            employee.getEmployeeDetail().setTitle(titleService.getTitleByTitleId(titleId));
+            //将医师信息加入到医师信息列表中
+            employees.add(employee);
+        }
+        return employees;
+    }
+
+    //根据值班医师Id和值班时间查询医师值班信息
+    @RequestMapping("/getWorkTimeByEmployeeIdAndWorkDate")
+    public Work getWorkTimeByEmployeeIdAndWorkDate(Integer employeeId, String workDate) {
+//        employeeId = 2019001;
+//        workDate = "2019-10-14";
+//        System.out.println(employeeId + workDate);
+        //获取值班表详情
+        Work work = workService.findWorkByEmployeeIdAndWorkDate(employeeId, workDate);
+        //查询诊室信息并将其赋值给医师值班信息
+        work.setRoom(roomService.queryRoomByParam(work.getRoom()).get(0));
+        return work;
     }
 
 }

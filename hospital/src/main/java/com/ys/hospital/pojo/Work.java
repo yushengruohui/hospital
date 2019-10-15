@@ -29,5 +29,8 @@ public class Work implements Serializable {
     private Integer workDeal;
     //工作日期
     private Date workDate;
-    
+    //所在的就诊室
+    private Room room;
+    //所拥有的时间段
+    private WorkTime workTime;
 }

@@ -8,6 +8,7 @@
         <result property="employeePassword" column="employee_password" jdbcType="VARCHAR"/>
         <result property="employeeOnline" column="employee_online" jdbcType="INTEGER"/>
         <result property="employeeLastLoginTime" column="employee_last_login_time" jdbcType="TIMESTAMP"/>
+        <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail"/>
     </resultMap>
 
     <!--查询所有Employee信息-->
@@ -20,7 +21,7 @@
     <!--根据实体类Employee的相关属性查询实体类Employee-->
     <select id="queryEmployeeByParam" resultMap="EmployeeMap">
         select
-          employee_id, employee_name, employee_password, employee_online, employee_last_login_time
+        employee_id, employee_name, employee_password, employee_online, employee_last_login_time
         from employee
         <where>
             <if test="employeeId != null">
@@ -39,6 +40,35 @@
                 and employee_last_login_time = #{employeeLastLoginTime}
             </if>
         </where>
+    </select>
+    <!--    根据主键查询员工信息（包括员工详情）-->
+    <select id="getEmployeeByEmployeeId" resultMap="EmployeeMap">
+        SELECT
+        employee.employee_id,
+        employee.employee_name,
+        employee.employee_password,
+        employee.employee_online,
+        employee.employee_last_login_time,
+        employee_detail.employee_detail_id,
+        employee_detail.employee_detail_gender,
+        employee_detail.employee_detail_birthday,
+        employee_detail.employee_detail_address,
+        employee_detail.employee_detail_phone,
+        employee_detail.employee_detail_identity,
+        employee_detail.employee_detail_entry_time,
+        employee_detail.employee_detail_email,
+        employee_detail.employee_detail_descript,
+        employee_detail.employee_detail_status,
+        employee_detail.employee_id,
+        employee_detail.position_id,
+        employee_detail.branch_id,
+        employee_detail.title_id
+        FROM
+        employee ,
+        employee_detail
+        WHERE
+        employee.employee_id = employee_detail.employee_id AND
+        employee_detail.employee_id = #{employeeId}
     </select>
 
     <!--新增Employee数据-->
