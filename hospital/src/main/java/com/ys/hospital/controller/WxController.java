@@ -1,9 +1,15 @@
 package com.ys.hospital.controller;
+import com.ys.hospital.pojo.Patient;
+import com.ys.hospital.pojo.Employee;
+import java.util.Date;
+import com.ys.hospital.pojo.Branch;
 
 
 import com.ys.hospital.pojo.*;
 import com.ys.hospital.service.*;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -35,6 +41,8 @@ public class WxController {
     private EmployeeService employeeService;
     @Resource
     private TitleService titleService;
+    @Resource
+    private AppointmentService appointmentService;
 
     /**
      * 登录(返回登陆后的信息)
@@ -217,6 +225,21 @@ public class WxController {
         //查询诊室信息并将其赋值给医师值班信息
         work.setRoom(roomService.queryRoomByParam(work.getRoom()).get(0));
         return work;
+    }
+
+    //完成支付后，生成预约单
+    @RequestMapping("/addAppointemt")
+    public Integer addAppointment(@RequestBody Appointment appointment1){
+        //预约单记录存入到数据库中
+        appointment1.setAppointmentId(0);
+
+        appointment1.setAppointmentStatus(0);
+        appointment1.setPatientId(201924001);
+        appointment1.setEmployeeId(2019001);
+        appointment1.setBranchId(1);
+        appointment1.setAppointmentPrice(25.00);
+        appointmentService.insertAppointment(appointment1);
+        return null;
     }
 
 }
