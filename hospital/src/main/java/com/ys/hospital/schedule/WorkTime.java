@@ -10,6 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class WorkTime {
     @Scheduled(cron = ("0 0 0 * * Mon-Sun"))
     public void work() {
-
+        System.out.println("该睡觉了");
     }
 }

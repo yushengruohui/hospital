@@ -1,5 +1,7 @@
 package com.ys.hospital.tools;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  * @author: yusheng
  * @create-date: 2019-10-12 16:44
  **/
+@Data
 public class MyPageInfo<T> implements Serializable {
     int page;//起始页
     int limit;//页数大小

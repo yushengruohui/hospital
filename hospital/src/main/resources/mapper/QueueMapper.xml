@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.hospital.dao.QueueMapper">
+
+    <resultMap type="com.ys.hospital.pojo.Queue" id="QueueMap">
+        <result property="queue_Id" column="queue__id" jdbcType="INTEGER"/>
+        <result property="queueNumber" column="queue_number" jdbcType="INTEGER"/>
+        <result property="queueTime" column="queue_time"/>
+        <result property="patientId" column="patient_id" jdbcType="INTEGER"/>
+        <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询所有Queue信息-->
+    <select id="queryAllQueue" resultMap="QueueMap">
+        select
+          queue__id, queue_number, queue_time, patient_id, employee_id
+        from queue
+    </select>
+
+    <!--根据实体类Queue的相关属性查询实体类Queue-->
+    <select id="queryQueueByParam" resultMap="QueueMap">
+        select
+        queue__id, queue_number, queue_time, patient_id, employee_id
+        from queue
+        <where>
+            <if test="queue_Id != null">
+                and queue__id = #{queue_Id}
+            </if>
+            <if test="queueNumber != null">
+                and queue_number = #{queueNumber}
+            </if>
+            <if test="queueTime != null">
+                and queue_time = #{queueTime}
+            </if>
+            <if test="patientId != null">
+                and patient_id = #{patientId}
+            </if>
+            <if test="employeeId != null">
+                and employee_id = #{employeeId}
+            </if>
+        </where>
+    </select>
+    <select id="findMaxNumberByParam" resultType="java.lang.Integer">
+        select MAX(queue_number)
+        from queue
+        where queue_time=#{queueTime} and employee_id=#{employeeId}
+    </select>
+
+    <!--新增Queue数据-->
+    <insert id="insertQueue" keyProperty="queue_Id" useGeneratedKeys="true">
+        insert into queue(queue_number, queue_time, patient_id, employee_id)
+        values (#{queueNumber}, #{queueTime}, #{patientId}, #{employeeId})
+    </insert>
+
+    <!--修改Queue记录-->
+    <update id="updateQueue">
+        update queue
+        <set>
+            <if test="queueNumber != null">
+                queue_number = #{queueNumber},
+            </if>
+            <if test="queueTime != null">
+                queue_time = #{queueTime},
+            </if>
+            <if test="patientId != null">
+                patient_id = #{patientId},
+            </if>
+            <if test="employeeId != null">
+                employee_id = #{employeeId},
+            </if>
+        </set>
+        where queue__id = #{queue_Id}
+    </update>
+
+    <!--通过主键删除一条Queue记录-->
+    <delete id="deleteQueueById">
+        delete from queue where queue__id = #{queue_Id}
+    </delete>
+
+</mapper>

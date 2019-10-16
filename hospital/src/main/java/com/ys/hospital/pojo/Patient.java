@@ -26,5 +26,5 @@ public class Patient implements Serializable {
     private String patientAddress;
     //所属用户id
     private Integer clientId;
-    
+
 }
