@@ -30,4 +30,9 @@ public class PageController {
     public String employeeIndex() {
         return "employee/index";
     }
+    
+    @RequestMapping("check/index")
+    public String checkIndex() {
+    	return "check/index";
+    }
 }
