@@ -13,7 +13,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
+        <div style="padding: 15px;" th:if="${session.appointment}!=null">
             <form th:action="@{/diagnosis}" th:method="post" class="layui-form">
                 <div class="layui-form-item">
                     <label class="layui-form-label">医院处方笺</label>
@@ -23,7 +23,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientId" id="patientId" autocomplete="off"
                                class="layui-input"
-                               th:value="${session.appointment.patient.patientId}"/>
+                               th:value="${session.appointment.patient.patientId}" readonly="readonly"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -31,7 +31,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientName" id="patientName" autocomplete="off"
                                class="layui-input"
-                               th:value="${session.appointment.patient.patientName}"/>
+                               th:value="${session.appointment.patient.patientName}" readonly="readonly"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -39,7 +39,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientGender" id="patientGender" autocomplete="off"
                                class="layui-input"
-                               th:value="${session.appointment.patient.patientGender}"/>
+                               th:value="${session.appointment.patient.patientGender}" readonly="readonly"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -47,7 +47,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientAddress" id="patientAddress" autocomplete="off"
                                class="layui-input"
-                               th:value="${session.appointment.patient.patientAddress}"/>
+                               th:value="${session.appointment.patient.patientAddress}" readonly="readonly"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -58,31 +58,89 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" for="diagnosisContent">是否检查：</label>
+                    <label class="layui-form-label" for="diagnosisContent">处方：</label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="diagnosisIsCheck" lay-skin="switch">
+                        <textarea name="diagnosisPrescription" placeholder="药品名 数量
+                        药品名 数量" class="layui-textarea"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" for="diagnosisContent">是否手术：</label>
+                    <label class="layui-form-label" for="diagnosisContent">药名提醒：</label>
+                    <input type="text" id="medicineTip" placeholder="请输入药名" class="layui-input"/>
+                    <span id="medicineMsg"></span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否检查：</label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="diagnosisIsOperation" lay-skin="switch">
+                        <input type="radio" name="diagnosisIsCheck" value="1" title="是">
+                        <input type="radio" name="diagnosisIsCheck" value="0" title="否" checked>
                     </div>
                 </div>
-
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否手术：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="diagnosisIsOperation" value="1" title="是">
+                        <input type="radio" name="diagnosisIsOperation" value="0" title="否" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item" hidden="hidden">
+                    <input type="text" name="appointmentId" th:value="${session.appointment.appointmentId}"/>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formSubmit">提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
             </form>
         </div>
+        <div style="padding: 15px;" th:if="${session.appointment}==null">
+            当前没有相关预约记录，你不能直接添加诊断单记录，请按照正常操作使用该系统
+        </div>
     </div>
+</div>
 
-    <div th:replace="~{com/attending::foot}"></div>
+<div th:replace="~{com/attending::foot}"></div>
 </div>
 <script>
     //JavaScript代码区域
-    layui.use('element', function () {
+    layui.use(['element', 'form'], function () {
         var element = layui.element;
+        var form = layui.form;
+        //药名提示
+        $("#medicineTip").live('input propertychange', function () {
+            var medicineTip = $("#medicineTip").val().toString();
+            $.ajax({
+                type: "get",
+                url: "/medicine",
+                data: {"medicineTip": medicineTip},
+                success: function (data) {
+                    $("#medicineMsg").val(data);
+                },
+                error: function () {
+                    $("#medicineMsg").val("");
+                }
+            });
+        });
+        //监听提交
+        form.on('submit(formSubmit)', function (data) {
+            var send_diagnosis_data = data.field;
+            $.ajax({
+                type: "post",
+                url: "/diagnosis",
+                data: send_diagnosis_data,
+                success: function (data) {
+                    layer.msg(data);
+                    window.location.href = "/page/appointment/index"
+                },
+                error: function () {
+                    layer.msg("连接后台失败");
+                }
+            });
+            return false;
+        });
 
     });
-
 </script>
 </body>
 </html>

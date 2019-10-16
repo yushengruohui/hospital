@@ -15,12 +15,15 @@
             <div class="layui-logo">医院自动化管理系统</div>
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item"><a th:href="@{/page/appointment/index}">预约处理</a></li>
-                <li class="layui-nav-item"><a th:href="@{/page/diagnosis/index}">诊断处理</a></li>
+                <li class="layui-nav-item"><a th:href="@{/page/diagnosis/dealing}">诊断处理</a></li>
                 <li class="layui-nav-item"><a th:href="@{/page/employee/index}">个人中心</a></li>
             </ul>
             <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" th:if="${session.employee}!=null">
                     <a th:href="@{/page/employee/index}">[[${session.employee.employeeName}]]</a>
+                </li>
+                <li class="layui-nav-item" th:if="${session.employee}==null">
+                    <a th:href="@{/}">你还没登录，请登录</a>
                 </li>
                 <li class="layui-nav-item"><a th:href="@{/employee/out}">退出登录</a></li>
             </ul>

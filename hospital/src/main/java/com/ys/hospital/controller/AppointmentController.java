@@ -43,7 +43,7 @@ public class AppointmentController {
     private BranchMapper branchMapper;
 
 
-    @GetMapping("/untreatedAppointments")
+    @GetMapping("/appointment/untreatedAppointments")
     public MyPageInfo<Appointment> appointments(MyPageInfo<Appointment> myPageInfo, HttpSession session) {
         //获取医师信息
         Employee employee = (Employee) session.getAttribute("employee");
@@ -106,7 +106,7 @@ public class AppointmentController {
         return myPageInfo;
     }
 
-    @GetMapping("/treatedAppointments")
+    @GetMapping("/appointment/treatedAppointments")
     public MyPageInfo<Appointment> untreatedAppointments(MyPageInfo<Appointment> myPageInfo, HttpSession session) {
         //获取医师信息
         Employee employee = (Employee) session.getAttribute("employee");
