@@ -60,4 +60,12 @@ public interface WorkService {
      * @return work(值班安排表信息)
      */
     Work findWorkByEmployeeIdAndWorkDate(Integer employeeId, String workDate);
+
+    /**
+     * 根据实体类Work的相关属性查询实体类Work
+     *
+     * @param work 实例对象
+     * @return 对象Work列表
+     */
+    List<Work> queryWorkByParam(Work work);
 }

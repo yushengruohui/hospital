@@ -10,7 +10,7 @@
         <result property="workAfternoon" column="work_afternoon" jdbcType="INTEGER"/>
         <result property="roomId" column="room_id" jdbcType="INTEGER"/>
         <result property="workDeal" column="work_deal" jdbcType="INTEGER"/>
-        <result property="workDate" column="work_date" jdbcType="TIMESTAMP"/>
+        <result property="workDate" column="work_date"/>
         <association property="room" javaType="com.ys.hospital.pojo.Room"/>
         <association property="workTime" javaType="com.ys.hospital.pojo.WorkTime"/>
     </resultMap>
@@ -19,14 +19,14 @@
     <select id="queryAllWork" resultMap="WorkMap">
         select
           work_id, work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date
-        from work
+        from `work`
     </select>
 
     <!--根据实体类Work的相关属性查询实体类Work-->
     <select id="queryWorkByParam" resultMap="WorkMap">
         select
         work_id, work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date
-        from work
+        from `work`
         <where>
             <if test="workId != null">
                 and work_id = #{workId}
@@ -50,7 +50,7 @@
                 and work_deal = #{workDeal}
             </if>
             <if test="workDate != null">
-                and work_date = #{workDate}
+                and work_date = DATE_FORMAT(#{workDate}, '%Y-%m-%d')
             </if>
         </where>
     </select>
@@ -121,7 +121,7 @@
 
     <!--修改Work记录-->
     <update id="updateWork">
-        update work
+        update `work`
         <set>
             <if test="workWeek != null">
                 work_week = #{workWeek},
@@ -150,7 +150,7 @@
 
     <!--通过主键删除一条Work记录-->
     <delete id="deleteWorkById">
-        delete from work where work_id = #{workId}
+        delete from `work` where work_id = #{workId}
     </delete>
 
 </mapper>

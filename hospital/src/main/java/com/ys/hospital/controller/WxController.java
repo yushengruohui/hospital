@@ -1,20 +1,21 @@
 package com.ys.hospital.controller;
+
 import com.ys.hospital.pojo.Patient;
 import com.ys.hospital.pojo.Employee;
-import java.util.Date;
+
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import com.ys.hospital.pojo.Branch;
 
 
 import com.ys.hospital.pojo.*;
 import com.ys.hospital.service.*;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 微信小程序controller
@@ -43,6 +44,8 @@ public class WxController {
     private TitleService titleService;
     @Resource
     private AppointmentService appointmentService;
+    @Resource
+    private WorkTimeService workTimeService;
 
     /**
      * 登录(返回登陆后的信息)
@@ -120,7 +123,6 @@ public class WxController {
         if (patient1 == null) {
             //新增
             patientService.addPatient(patient);
-
             //根据就身份证存在且clientId与传过来的clientId相同，修改
         } else if (patient1.getClientId() == patient.getClientId()) {
             //将查询到的就诊人的编号赋值给修改的就诊人
@@ -137,6 +139,7 @@ public class WxController {
         }
         //返回用户绑定就诊人列表
         list = patientService.getPatientListByClientId(patient.getClientId());
+        System.out.println(list.size());
         return list;
     }
 
@@ -156,6 +159,7 @@ public class WxController {
         patientService.updatePatientClientId(patient1);
         //查询用户绑定的就诊人列表
         List<Patient> list = patientService.getPatientListByClientId(patient.getClientId());
+        System.out.println(list.size());
         return list;
     }
 
@@ -227,19 +231,149 @@ public class WxController {
         return work;
     }
 
-    //完成支付后，生成预约单
-    @RequestMapping("/addAppointemt")
-    public Integer addAppointment(@RequestBody Appointment appointment1){
+    /**
+     * 完成支付后，生成预约单
+     *
+     * @param appointment(预约单内容)
+     * @param time（预约时间）
+     * @return 1：成功 0：失败
+     */
+    @RequestMapping("/addAppointment")
+    public Integer addAppointment(Appointment appointment, String time) {
+        //将当前时间存入支付时间属性中
+        appointment.setAppointmentPayTime(new Date());
         //预约单记录存入到数据库中
-        appointment1.setAppointmentId(0);
+        int flag = appointmentService.insertAppointment(appointment);
+        //如果支付成功，将当天的余号-1
+        if (flag > 0) {
+            //获取日期和时间
+            String day = time.substring(0, 10);
+            System.out.println(appointment.getEmployeeId() + day);
+            //根据日期与值班医师id查询值班表
+            Work work = workService.findWorkByEmployeeIdAndWorkDate(appointment.getEmployeeId(), day);
+            //获取当天时间段挂号详情
+            WorkTime workTime = work.getWorkTime();
+            System.out.println(workTime);
+            //获取时间段
+            String workDetail = time.substring(11, 16);
+            System.out.println(workDetail);
 
-        appointment1.setAppointmentStatus(0);
-        appointment1.setPatientId(201924001);
-        appointment1.setEmployeeId(2019001);
-        appointment1.setBranchId(1);
-        appointment1.setAppointmentPrice(25.00);
-        appointmentService.insertAppointment(appointment1);
-        return null;
+            //根据传入的时间段决定对那个时间段的余号进行-1
+            switch (workDetail) {
+                case "08:00":
+                    workTime.setWorkTime1((workTime.getWorkTime1() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "08:30":
+
+                    workTime.setWorkTime2((workTime.getWorkTime2() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "09:00":
+                    workTime.setWorkTime3((workTime.getWorkTime3() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "09:30":
+                    workTime.setWorkTime4((workTime.getWorkTime4() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "10:00":
+                    workTime.setWorkTime5((workTime.getWorkTime5() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "10:30":
+                    workTime.setWorkTime6((workTime.getWorkTime6() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "11:00":
+                    workTime.setWorkTime7((workTime.getWorkTime7() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "11:30":
+                    workTime.setWorkTime8((workTime.getWorkTime8() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "14:00":
+                    workTime.setWorkTime9((workTime.getWorkTime9() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "14:30":
+                    workTime.setWorkTime10((workTime.getWorkTime10() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "15:00":
+                    workTime.setWorkTime11((workTime.getWorkTime11() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "15:30":
+                    workTime.setWorkTime12((workTime.getWorkTime12() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "16:00":
+                    workTime.setWorkTime13((workTime.getWorkTime13() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+                case "16:30":
+                    workTime.setWorkTime14((workTime.getWorkTime14() - 1));
+                    workTimeService.updateWorkTime(workTime);
+                    break;
+            }
+            return 1;
+        } else {
+            return 0;
+        }
     }
+
+    /**
+     * 查询患者的预约记录
+     *
+     * @param patientId（患者Id）
+     * @return appointments(患者的预约记录)
+     */
+    @RequestMapping("/getAppointmentListByPatientId")
+    public List<Appointment> getAppointmentListByPatientId(Integer patientId) {
+        //查询患者的所有预约记录
+        List<Appointment> appointments = appointmentService.getAppointmentListByPatientId(patientId);
+        return appointments;
+    }
+
+    /**
+     * 根据预约单id查询预约单信息（级联查询）
+     *
+     * @param appointmentId
+     * @return 预约单信息
+     */
+    @RequestMapping("/getAppointmentByAppointmentId")
+    public Map<String, Object> getAppointmentByAppointmentId(Integer appointmentId) throws ParseException {
+        System.out.println("=====" + appointmentId + "=====");
+
+        //创建一个封装HashMap用来封装Appointment和Room
+        Map<String, Object> map = new HashMap<>();
+        //查询预约单的信息
+        Appointment appointment = appointmentService.getAppointmentByAppointmentId(appointmentId);
+        //查询出所在诊室名字
+
+        //根据患者ID跟预约日期查找值班信息表
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String time = simpleDateFormat.format(appointment.getAppointmentTime());
+        Integer employeeId = appointment.getEmployeeId();
+        Work work = new Work();
+        work.setWorkDate(appointment.getAppointmentTime());
+        work.setEmployeeId(employeeId);
+        //值班信息
+        List<Work> works = workService.queryWorkByParam(work);
+        System.out.println(works);
+        //根据值班信息表Id获取诊室信息
+        Room room = new Room();
+        room.setRoomId(works.get(0).getRoomId());
+        List<Room> rooms = roomService.queryRoomByParam(room);
+        System.out.println(appointment);
+        System.out.println("发工" + rooms.get(0));
+        //将数组封装到map中
+        map.put("appointment", appointment);
+        map.put("room", rooms.get(0));
+        return map;
+    }
+
 
 }

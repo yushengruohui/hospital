@@ -52,4 +52,17 @@ public interface AppointmentMapper {
      */
     int deleteAppointmentById(Integer appointmentId);
 
+    /**
+     * 根据患者Id查询患者预约记录
+     * @param patientId
+     * @return
+     */
+    List<Appointment> getAppointmentListByPatientId(Integer patientId);
+
+    /**
+     * 根据预约单id查询预约单信息（级联查询）
+     * @param appointmentId
+     * @return 预约单信息
+     */
+    Appointment getAppointmentByAppointmentId(Integer appointmentId);
 }
