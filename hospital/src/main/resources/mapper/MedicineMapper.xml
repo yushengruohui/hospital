@@ -94,6 +94,18 @@
         where medicine_name like #{_medicineTip}
         limit 1
     </select>
+    <select id="queryMedicineId" resultType="java.lang.Integer">
+        select medicine_id
+        from medicine
+        where medicine_name = #{medicineName}
+        limit 1
+    </select>
+    <select id="queryMedicinePrice" resultType="java.lang.Double">
+        select medicine_price
+        from medicine
+        where medicine_id = #{medicineId}
+        limit 1
+    </select>
 
     <!--新增Medicine数据-->
     <insert id="insertMedicine" keyProperty="medicineId" useGeneratedKeys="true">

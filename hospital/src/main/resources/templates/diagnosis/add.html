@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="~{com/attending::title}"></div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/layui/layui.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -72,7 +75,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否检查：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="diagnosisIsCheck" value="1" title="是" lay-filter="checkFilter">
+                        <input lay-filter="checkFilter" type="radio" name="diagnosisIsCheck" value="1" title="是"/>
                         <input type="radio" name="diagnosisIsCheck" value="0" title="否" checked>
                     </div>
                 </div>
@@ -100,21 +103,6 @@
         </div>
     </div>
 </div>
-<div id="openCheck">
-    <form action="/diagnosis/checkItem" method="post" class="layui-form">
-        <div class="layui-form-item">
-            <label class="layui-form-label">选择框</label>
-            <div class="layui-input-block">
-                <select name="checkItemIdList" lay-verify="required" multiple="multiple"
-                        th:each="checkItem:${session.checkItems}" th:if="${session.checkItems}!=null">
-                    <option th:value="${checkItem.checkItemId}">[[${checkItem.checkItemName}]]</option>
-                </select>
-                <input type="text" name="diagnosisId" th:value="${}"
-            </div>
-            </label>
-        </div>
-    </form>
-</div>
 <script>
     $(function () {
         //输入框的值改变时触发
@@ -136,13 +124,16 @@
     });
 
     //JavaScript代码区域
-    layui.use(['element', 'form'], function () {
+    layui.use(['element', 'form', 'layui'], function () {
         var element = layui.element;
         var form = layui.form;
+        // var layui = layui.layui;
 
+        layui.msg("你好");
         //监听检查
         form.on('radio(checkFilter)', function (data) {
             var radio_data = data.value; //被点击的radio的value值
+            alert(radio_data);
             $.ajax({
                 type: "get",
                 url: "/checkItem/checkItems",
@@ -189,4 +180,24 @@
     });
 </script>
 </body>
+<div id="openCheck" style="display: none">
+    <form action="/diagnosis/checkItem" method="post" class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择框</label>
+            <div class="layui-input-block">
+                <select name="checkItemIdList" lay-verify="required" multiple="multiple"
+                        th:each="checkItem:${session.checkItems}" th:if="${session.checkItems}!=null">
+                    <option th:value="${checkItem.checkItemId}">[[${checkItem.checkItemName}]]</option>
+                </select>
+                <input type="text" name="diagnosisId" th:value="${session.diagnosis.diagnosisId}" hidden="hidden"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
 </html>

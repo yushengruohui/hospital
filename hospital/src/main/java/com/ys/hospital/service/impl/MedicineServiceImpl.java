@@ -73,4 +73,19 @@ public class MedicineServiceImpl implements MedicineService {
         }
         return medicineMapper.queryMedicineNameByParam(medicineTip);
     }
+
+    @Override
+    public Integer queryMedicineId(String medicineName) {
+        if (medicineName.isEmpty()) {
+            return null;
+        }
+        return this.medicineMapper.queryMedicineId(medicineName);
+    }
+
+    @Override
+    public double queryMedicinePrice(Integer medicineId) {
+        if (medicineId == null)
+            return 0;
+        return this.medicineMapper.queryMedicinePrice(medicineId);
+    }
 }

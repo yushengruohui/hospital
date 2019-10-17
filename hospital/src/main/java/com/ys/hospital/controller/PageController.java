@@ -57,11 +57,11 @@ public class PageController {
     @PostMapping("/diagnosis/addReady")
     @ResponseBody
     public String diagnosisAddReady(@RequestBody Appointment appointment, HttpSession session) {
-        System.out.println("=====" + appointment + "=====");
-
         session.setAttribute("appointment", appointment);
+        //预先创建一个只有主键的诊断记录
         Diagnosis diagnosis = new Diagnosis();
         diagnosis.setAppointmentId(appointment.getAppointmentId());
+
         diagnosisService.insertDiagnosis(diagnosis);
 
         session.setAttribute("diagnosis", diagnosis);

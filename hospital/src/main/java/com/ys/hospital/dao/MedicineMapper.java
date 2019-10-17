@@ -53,4 +53,8 @@ public interface MedicineMapper {
     int deleteMedicineById(Integer medicineId);
 
     String queryMedicineNameByParam(String medicineTip);
+
+    Integer queryMedicineId(String medicineName);
+
+    double queryMedicinePrice(Integer medicineId);
 }

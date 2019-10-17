@@ -44,4 +44,8 @@ public interface MedicineService {
     int deleteMedicineById(Integer medicineId);
 
     String queryMedicineName(String medicineTip);
+
+    Integer queryMedicineId(String medicineName);
+
+    double queryMedicinePrice(Integer medicineId);
 }
