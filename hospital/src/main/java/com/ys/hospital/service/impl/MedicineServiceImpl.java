@@ -68,6 +68,9 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public String queryMedicineName(String medicineTip) {
+        if (medicineTip == null || medicineTip == "") {
+            return null;
+        }
         return medicineMapper.queryMedicineNameByParam(medicineTip);
     }
 }

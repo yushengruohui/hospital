@@ -24,8 +24,11 @@ public class MedicineController {
 
     @GetMapping("/medicine")
     public String getMedicine(String medicineTip) {
+        if (medicineTip == null || medicineTip == "" || medicineTip.isEmpty()) {
+            return "";
+        }
         String medicineName = medicineService.queryMedicineName(medicineTip);
-        return "redirect:/";
+        return medicineName;
     }
 
 

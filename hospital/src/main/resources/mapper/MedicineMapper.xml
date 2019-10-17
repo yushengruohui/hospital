@@ -91,7 +91,8 @@
         <bind name="_medicineTip" value="'%' + medicineTip + '%'"/>
         select medicine_name
         from medicine
-        where medicine_name=#{_medicineTip}
+        where medicine_name like #{_medicineTip}
+        limit 1
     </select>
 
     <!--新增Medicine数据-->

@@ -60,26 +60,27 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" for="diagnosisContent">处方：</label>
                     <div class="layui-input-block">
-                        <textarea name="diagnosisPrescription" placeholder="药品名 数量
-                        药品名 数量" class="layui-textarea"/>
+                        <textarea name="diagnosisPrescription" placeholder="药品名（空格）数量（回车）药品名（空格）数量（回车）"
+                                  class="layui-textarea"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" for="diagnosisContent">药名提醒：</label>
-                    <input type="text" id="medicineTip" placeholder="请输入药名" class="layui-input"/>
+                    <label class="layui-form-label" for="medicineTip">药名提醒：</label>
+                    <input type="text" id="medicineTip" placeholder="请输入药名" class="layui-input-block"/>
                     <span id="medicineMsg"></span>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否检查：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="diagnosisIsCheck" value="1" title="是">
+                        <input type="radio" name="diagnosisIsCheck" value="1" title="是" lay-filter="checkFilter">
                         <input type="radio" name="diagnosisIsCheck" value="0" title="否" checked>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否手术：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="diagnosisIsOperation" value="1" title="是">
+                        <input type="radio" name="diagnosisIsOperation" value="1" title="是"
+                               lay-filter="operationFilter">
                         <input type="radio" name="diagnosisIsOperation" value="0" title="否" checked>
                     </div>
                 </div>
@@ -99,28 +100,73 @@
         </div>
     </div>
 </div>
-
-<div th:replace="~{com/attending::foot}"></div>
+<div id="openCheck">
+    <form action="/diagnosis/checkItem" method="post" class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择框</label>
+            <div class="layui-input-block">
+                <select name="checkItemIdList" lay-verify="required" multiple="multiple"
+                        th:each="checkItem:${session.checkItems}" th:if="${session.checkItems}!=null">
+                    <option th:value="${checkItem.checkItemId}">[[${checkItem.checkItemName}]]</option>
+                </select>
+                <input type="text" name="diagnosisId" th:value="${}"
+            </div>
+            </label>
+        </div>
+    </form>
 </div>
 <script>
-    //JavaScript代码区域
-    layui.use(['element', 'form'], function () {
-        var element = layui.element;
-        var form = layui.form;
-        //药名提示
-        $("#medicineTip").live('input propertychange', function () {
-            var medicineTip = $("#medicineTip").val().toString();
+    $(function () {
+        //输入框的值改变时触发
+        $("#medicineTip").on("input", function (e) {
+            //获取input输入的值
+            var medicineTip = e.delegateTarget.value.toString();
             $.ajax({
                 type: "get",
                 url: "/medicine",
                 data: {"medicineTip": medicineTip},
                 success: function (data) {
-                    $("#medicineMsg").val(data);
+                    $("#medicineMsg").text(data);
                 },
                 error: function () {
-                    $("#medicineMsg").val("");
+                    $("#medicineMsg").text("");
                 }
             });
+        });
+    });
+
+    //JavaScript代码区域
+    layui.use(['element', 'form'], function () {
+        var element = layui.element;
+        var form = layui.form;
+
+        //监听检查
+        form.on('radio(checkFilter)', function (data) {
+            var radio_data = data.value; //被点击的radio的value值
+            $.ajax({
+                type: "get",
+                url: "/checkItem/checkItems",
+                error: function () {
+                    layui.msg("服务器异常，连接后台失败");
+                }
+            });
+            //弹出模态框
+            layer.open({
+                type: 1,//类型
+                area: ['400px', '300px'],//定义宽和高
+                title: '输入检查项',//题目
+                shadeClose: false,//点击遮罩层关闭
+                content: $('#openCheck')//打开的内容
+            });
+            //获取检查项
+        });
+        //监听手术operationFilter
+        form.on('radio(checkFilter)', function (data) {
+            console.log(data.elem); //得到radio原始DOM对象
+            console.log(data.value); //被点击的radio的value值
+            //弹出模态框
+
+            //获取手术名
         });
         //监听提交
         form.on('submit(formSubmit)', function (data) {
