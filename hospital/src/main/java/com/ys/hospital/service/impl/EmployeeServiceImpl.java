@@ -84,4 +84,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmployeeByEmployeeId(Integer employeeId) {
         return this.employeeMapper.getEmployeeByEmployeeId(employeeId);
     }
+
+    @Override
+    public List<Employee> getDoctorEmployees() {
+        return employeeMapper.getDoctorEmployees();
+    }
 }

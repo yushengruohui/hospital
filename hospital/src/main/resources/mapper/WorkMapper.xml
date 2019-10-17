@@ -115,7 +115,7 @@
 
     <!--新增Work数据-->
     <insert id="insertWork" keyProperty="workId" useGeneratedKeys="true">
-        insert into work(work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date)
+        insert into `work`(work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date)
         values (#{workWeek}, #{employeeId}, #{workMorning}, #{workAfternoon}, #{roomId}, #{workDeal}, #{workDate})
     </insert>
 
