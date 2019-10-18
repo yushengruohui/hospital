@@ -13,6 +13,7 @@ import com.ys.hospital.pojo.Branch;
 
 import com.ys.hospital.pojo.*;
 import com.ys.hospital.service.*;
+import com.ys.hospital.tools.InitWorkTimeTool;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -46,6 +47,9 @@ public class WxController {
     private AppointmentService appointmentService;
     @Resource
     private WorkTimeService workTimeService;
+    @Resource
+    private InitWorkTimeTool initWorkTimeTool;
+
 
     /**
      * 登录(返回登陆后的信息)
@@ -373,6 +377,11 @@ public class WxController {
         map.put("appointment", appointment);
         map.put("room", rooms.get(0));
         return map;
+    }
+
+    @RequestMapping("/test")
+    public void test() {
+        System.out.println(initWorkTimeTool.initWorkTime(2019009));
     }
 
 

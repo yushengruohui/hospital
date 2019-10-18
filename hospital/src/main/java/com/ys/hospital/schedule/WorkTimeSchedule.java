@@ -8,7 +8,6 @@ import com.ys.hospital.service.EmployeeService;
 import com.ys.hospital.service.RoomService;
 import com.ys.hospital.service.WorkService;
 import com.ys.hospital.service.WorkTimeService;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -32,7 +31,7 @@ public class WorkTimeSchedule {
     @Resource
     private WorkTimeService workTimeService;
 
-    @Scheduled(cron = ("0 0 0 * * 1-7"))
+    //    @Scheduled(cron = ("0 0 0 * * 1-7"))
     public void work() {
 
         System.out.println("我不懂");
@@ -49,9 +48,7 @@ public class WorkTimeSchedule {
             Room room = new Room();
             //获取今天日期和星期几
             Calendar workDate = Calendar.getInstance();
-//            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
             workDate.add(Calendar.DATE, 6);
-//            String workDate = sdf2.format(calendar2.getTime());
             String[] weekDays = {"7", "1", "2", "3", "4", "5", "6"};
             Calendar calendar = Calendar.getInstance();
             for (int i = 0; i < employees.size(); i++) {

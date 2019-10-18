@@ -26,4 +26,15 @@ public class Employee implements Serializable {
     private Date employeeLastLoginTime;
     private EmployeeDetail employeeDetail;
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", employeeName='" + employeeName + '\'' +
+                ", employeePassword='" + employeePassword + '\'' +
+                ", employeeOnline=" + employeeOnline +
+                ", employeeLastLoginTime=" + employeeLastLoginTime +
+                ", employeeDetail=" + employeeDetail +
+                '}';
+    }
 }
