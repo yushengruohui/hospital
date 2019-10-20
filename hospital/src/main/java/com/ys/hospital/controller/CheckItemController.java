@@ -25,10 +25,10 @@ public class CheckItemController {
     private CheckItemService checkItemService;
 
     @GetMapping("/checkItem/checkItems")
-    public String getCheckItems(HttpSession session) {
+    public List<CheckItem> getCheckItems(HttpSession session) {
         List<CheckItem> checkItems = checkItemService.queryAllCheckItem();
         session.setAttribute("checkItems", checkItems);
-        return "success";
+        return checkItems;
     }
 
 

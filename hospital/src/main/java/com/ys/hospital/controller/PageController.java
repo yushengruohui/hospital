@@ -72,4 +72,5 @@ public class PageController {
     public String toDiagnosisAdd() {
         return "diagnosis/add";
     }
+
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
-import java.util.List;
 
 /**
  * (Diagnosis)表控制层
@@ -36,6 +35,10 @@ public class DiagnosisController {
     private DiagnosisMedicineService diagnosisMedicineService;
     @Resource
     private DiagnosisMedicineDetailService diagnosisMedicineDetailService;
+    @Resource
+    private OperationNotifyService operationNotifyService;
+    @Resource
+    private OperationService operationService;
 
     @PostMapping("/diagnosis")
     public String insertDiagnosis(Diagnosis diagnosis, HttpSession session) {
@@ -113,23 +116,70 @@ public class DiagnosisController {
     }
 
     @PostMapping("/diagnosis/checkItem")
-    public String insertCheckItem(List<Integer> checkItemIdList, Integer diagnosisId) {
+    public String insertCheckItem(String checkItemIdList, String diagnosisId) {
+
         Integer checkItemId = null;
         //准备插入的检查数据
         Check check = new Check();
+        //设计一条检查记录的数据
         check.setCheckStatus(0);
         check.setCheckTime(new Date());
-        check.setDiagnosisId(diagnosisId);
+        check.setDiagnosisId(Integer.valueOf(diagnosisId));
+
+        //插入检查记录，check会获得一个checkId
         checkService.insertCheck(check);
+        //检查费用
+        double checkPrice = 0;
 
         //准备插入的检查详细数据
-        for (int i = 0; i < checkItemIdList.size(); i++) {
-            checkItemId = checkItemIdList.get(i);
+        String[] checkItemIds = checkItemIdList.split(",");
+        for (int i = 0; i < checkItemIds.length; i++) {
+            //把前台传过来的checkItemId转成Integer类型
+            checkItemId = Integer.valueOf(checkItemIds[i]);
+
+            //统计检查费
+            double price = checkService.queryPrice(checkItemId);
+            checkPrice += price;
+
+            //准备checkDetail记录的插入数据
             CheckDetail checkDetail = new CheckDetail();
+
+            //设计一条checkDetail记录的数据
             checkDetail.setCheckId(check.getCheckId());
             checkDetail.setCheckItemId(checkItemId);
+            checkDetail.setCheckDetailPayPrice(price);
+            checkDetail.setCheckDetailPayStatus(0);
+
+            //添加一条checkDetail记录
             checkDetailService.insertCheckDetail(checkDetail);
+
         }
+
+        //更新check记录
+        check.setCheckPrice(checkPrice);
+        checkService.updateCheck(check);
+
+        return "success";
+    }
+
+    @PostMapping("/diagnosis/operation")
+    public String inOperation(String operationName, String diagnosisId) {
+        //设计准备添加的手术通知的数据
+        OperationNotify operationNotify = new OperationNotify();
+        operationNotify.setOperationNotifyStatus(0);
+        operationNotify.setDiagnosisId(Integer.valueOf(diagnosisId));
+        //添加一条手术通知记录
+        operationNotifyService.insertOperationNotify(operationNotify);
+
+        //设计准备添加的手术的数据
+        Operation operation = new Operation();
+        operation.setOperationName(operationName);
+        operation.setOperationStatus(0);
+        operation.setOperationNotifyId(operationNotify.getOperationNotifyId());
+        operation.setOperationPayStatus(0);
+        //添加一条未处理的手术的记录
+        operationService.insertOperation(operation);
+
         return "success";
     }
 }
