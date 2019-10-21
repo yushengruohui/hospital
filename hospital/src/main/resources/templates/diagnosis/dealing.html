@@ -22,15 +22,17 @@
 </div>
 
 <!--================ js代码区域 ================-->
-<script type="text/html" id="optBar">
-    <a class="layui-btn layui-btn-xs" lay-event="arrange">摇号</a>
-    <a class="layui-btn layui-btn-xs" lay-event="diagnosis">填写诊断</a>
-    <a class="layui-btn layui-btn-xs" lay-event="deal">已处理</a>
+<!--================ 工具条：操作处理 ================-->
+<script type="text/html" id="operation_bar">
+    <a class="layui-btn layui-btn-xs" lay-event="search_diagnosis_medicine_event">查看处方</a>
+    <a class="layui-btn layui-btn-xs" lay-event="continue_diagnosis_event">继续诊断</a>
+    <a class="layui-btn layui-btn-xs" lay-event="finish_diagnosis_event">完结诊断</a>
 </script>
 <script>
-    layui.use(['element', 'table'], function () {
+    layui.use(['element', 'table', 'layer'], function () {
         var element = layui.element;
         var table = layui.table;
+        var layer = layui.layer;
 
         table.render({
             elem: '#diagnosis_table'
@@ -41,168 +43,108 @@
             , cols: [
                 [
                     {
-                        field: 'patientName', title: '预约人', fixed: 'left', templet: function (appointment) {
-                            return appointment.patient.patientName;
+                        field: 'patientName', title: '患者', fixed: 'left', width: 120, templet: function (diagnosis) {
+                            return diagnosis.appointment.patient.patientName;
                         }
                     }
-                    , {field: 'appointmentTime', title: '预约时间', sort: true}
+                    , {field: 'diagnosisTime', title: '诊断时间', width: 200, sort: true}
                     , {
-                    field: 'branchName', title: '预约科室', templet: function (appointment) {
-                        return appointment.branch.branchName;
+                    field: 'branchName', title: '科室', width: 240, templet: function (diagnosis) {
+                        return diagnosis.appointment.branch.branchName;
                     }
                 }
+                    , {field: 'diagnosisContent', title: '病情'}
+                    , {field: 'diagnosisIsCheck', width: 60, title: '检查'}
+                    , {field: 'diagnosisIsOperation', width: 60, title: '手术'}
                     , {
-                    field: 'employeeName', title: '医师', templet: function (appointment) {
-                        return appointment.employee.employeeName;
+                    field: 'employeeName', title: '医师', width: 120, templet: function (diagnosis) {
+                        return diagnosis.appointment.employee.employeeName;
                     }
                 }
-                    , {field: 'appointmentStatus', title: '预约状态'}
-                    , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                    , {title: '操作', fixed: 'right', align: 'center', toolbar: '#operation_bar'}
                 ]
             ]
         });
 
-        //监听事件
-        table.on('tool(tableFilter)', function (obj) {
+        //监听操作事件
+        table.on('tool(diagnosis_table_filter)', function (obj) {
             //获取当前行的数据
             var rowData = obj.data;
             switch (obj.event) {
-                case 'arrange':
-                    $.ajax({
-                        type: "post",
-                        url: "/queue",
-                        data: {"patientId": rowData.patientId},
-                        success: function (data) {
-                            layer.msg(data);
+                //查看处方
+                case 'search_diagnosis_medicine_event':
+                    //显示处方
+                    layer.open({
+                        type: 1,//类型，新页面
+                        area: ['500px', '300px'],//定义宽和高
+                        title: '查看处方',//题目
+                        shadeClose: false,//点击遮罩层关闭
+                        content: $('#show_diagnosis_prescription'), //打开的内容
+                        btn: ["关闭"],//添加按钮
+                        success: function (layero, index) {
+                            // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                            $("#show_patient_name").val(rowData.appointment.patient.patientName);
+                            $("#show_diagnosis_content").val(rowData.diagnosisContent);
+                            $("#show_diagnosis_medicine").val(rowData.diagnosisPrescription);
                         },
-                        error: function () {
-                            layer.msg("连接后台失败");
+                        yes: function (index, layero) {
+                            //yes默认触发第一个按钮事件
+                            layer.close(index);
                         }
                     });
                     break;
-                case 'diagnosis':
-                    $.ajax({
-                            url: "/page/diagnosis/addReady",
-                            type: "post",
-                            contentType: "application/json",
-                            data: JSON.stringify({
-                                "appointmentId":
-                                rowData.appointmentId,
-                                "appointmentTime":
-                                rowData.appointmentTime,
-                                "appointmentStatus":
-                                rowData.appointmentStatus,
-                                "patientId":
-                                rowData.patientId,
-                                "employeeId":
-                                rowData.employeeId,
-                                "branchId":
-                                rowData.branchId,
-                                "appointmentPrice":
-                                rowData.appointmentPrice,
-                                "appointmentPayTime":
-                                rowData.appointmentPayTime,
-                                "patient":
-                                    {
-                                        "patientId":
-                                        rowData.patient.patientId,
-                                        "patientPhone":
-                                        rowData.patient.patientPhone,
-                                        "patientName":
-                                        rowData.patient.patientName,
-                                        "patientGender":
-                                        rowData.patient.patientGender,
-                                        "patientIdentity":
-                                        rowData.patient.patientIdentity,
-                                        "patientAddress":
-                                        rowData.patient.patientAddress,
-                                        "clientId":
-                                        rowData.patient.clientId
-                                    }
-                                ,
-                                "employee":
-                                    {
-                                        "employeeId":
-                                        rowData.employee.employeeId,
-                                        "employeeName":
-                                        rowData.employee.employeeName,
-                                        "employeePassword":
-                                        rowData.employee.employeePassword,
-                                        "employeeOnline":
-                                        rowData.employee.employeeOnline,
-                                        "employeeLastLoginTime":
-                                        rowData.employee.employeeLastLoginTime,
-                                        "employeeDetail":
-                                            {
-                                                "employeeDetailId":
-                                                rowData.employee.employeeDetail.employeeDetailId,
-                                                "employeeDetailGender":
-                                                rowData.employee.employeeDetail.employeeDetailGender,
-                                                "employeeDetailBirthday":
-                                                rowData.employee.employeeDetail.employeeDetailBirthday,
-                                                "employeeDetailAddress":
-                                                rowData.employee.employeeDetail.employeeDetailAddress,
-                                                "employeeDetailPhone":
-                                                rowData.employee.employeeDetail.employeeDetailPhone,
-                                                "employeeDetailIdentity":
-                                                rowData.employee.employeeDetail.employeeDetailIdentity,
-                                                "employeeDetailEntryTime":
-                                                rowData.employee.employeeDetail.employeeDetailEntryTime,
-                                                "employeeDetailEmail":
-                                                rowData.employee.employeeDetail.employeeDetailEmail,
-                                                "employeeDetailDescript":
-                                                rowData.employee.employeeDetail.employeeDetailDescript,
-                                                "employeeDetailStatus":
-                                                rowData.employee.employeeDetail.employeeDetailStatus,
-                                                "employeeId":
-                                                rowData.employee.employeeDetail.employeeId,
-                                                "positionId":
-                                                rowData.employee.employeeDetail.positionId,
-                                                "branchId":
-                                                rowData.employee.employeeDetail.branchId,
-                                                "titleId":
-                                                rowData.employee.employeeDetail.titleId
-                                            }
-                                    }
-                                ,
-                                "branch":
-                                    {
-                                        "branchId":
-                                        rowData.branch.branchId,
-                                        "branchName":
-                                        rowData.branch.branchName,
-                                        "departmentId":
-                                        rowData.branch.departmentId
-                                    }
-                            })
 
-                            ,
-                            success: function () {
-
-                                window.location.href = '/page/diagnosis/add';
-                            }
-                            ,
-                            error: function () {
-                                layer.msg("连接后台失败");
+                //继续诊断
+                case 'continue_diagnosis_event':
+                    //把准备更新的诊断记录的相关信息发给后台
+                    var ready_update_diagnosis = {
+                        "diagnosisId": rowData.diagnosisId,
+                        "diagnosisContent": rowData.diagnosisContent,
+                        "diagnosisPrescription": rowData.diagnosisPrescription,
+                        "diagnosisStatus": rowData.diagnosisStatus,
+                        "diagnosisIsCheck": rowData.diagnosisIsCheck,
+                        "diagnosisIsOperation": rowData.diagnosisIsOperation,
+                        "appointmentId": rowData.appointmentId,
+                        "appointment": {
+                            "appointmentId": rowData.appointment.appointmentId,
+                            "appointmentStatus": rowData.appointment.appointmentStatus,
+                            "patientId": rowData.appointment.patientId,
+                            "employeeId": rowData.appointment.employeeId,
+                            "branchId": rowData.appointment.branchId,
+                            "appointmentPrice": rowData.appointment.appointmentPrice,
+                            "appointmentPayTime": rowData.appointment.appointmentPayTime,
+                            "patient": {
+                                "patientId": rowData.appointment.patient.patientId,
+                                "patientPhone": rowData.appointment.patient.patientPhone,
+                                "patientName": rowData.appointment.patient.patientName,
+                                "patientGender": rowData.appointment.patient.patientGender,
+                                "patientIdentity": rowData.appointment.patient.patientIdentity,
+                                "patientAddress": rowData.appointment.patient.patientAddress,
+                                "clientId": rowData.appointment.patient.clientId
                             }
                         }
-                    )
-                    ;
-                    break;
-                case
-                'deal'
-                :
-                    console.info(rowData.employee.employeeDetail.employeeDetailEntryTime);
-                    console.info(rowData.appointmentTime);
+                    };
                     $.ajax({
+                        url: "/page/diagnosis/readyUpdate",
                         type: "post",
-                        url: "/page/test",
+                        contentType: "application/json",
+                        data: JSON.stringify(ready_update_diagnosis),
+                        success: function (result) {
+                            window.location.href = "/page/diagnosis/continue_dealing";
+                        },
+                        error: function () {
+                            layer.msg("连接后台失败，服务器异常")
+                        }
+                    });
+                case 'finish_diagnosis_event':
+                    $.ajax({
+                        type: "put",
+                        url: "/diagnosis/",
                         data: {
-                            "id": "1000",
-                            "age": 18,
-                            "name": rowData.branch.branchName,
-                            "password": "123456",
-                            "date": rowData.appointmentTime
+                            "diagnosisId": rowData.diagnosisId
+                        },
+                        success: function (result) {
+                            layer.msg(result);
                         },
                         error: function () {
                             layer.msg("连接后台失败");
@@ -215,42 +157,57 @@
 
 </script>
 </body>
-<!--================ 模态框：添加手术 ================-->
-<div id="openOperation" style="display: none">
-    <form class="layui-form" lay-filter="checkItemFormFilter">
+<!--================ 模态框：查看患者处方 ================-->
+<div id="show_diagnosis_prescription" style="display: none">
+    <form class="layui-form">
         <div class="layui-form-item">
-            <label class="layui-form-label">手术名：</label>
+            <label class="layui-form-label" for="show_patient_name">患者名：</label>
             <div class="layui-input-block">
                 <div class="layui-input-block">
                     <div class="layui-input-block">
-                        <input type="text" id="send_operation_name" placeholder="请输入手术名" autocomplete="off"
-                               class="layui-input"/>
+                        <input type="text" name="show_patient_name" id="show_patient_name" autocomplete="off"
+                               class="layui-input" readonly="readonly"/>
                     </div>
                 </div>
-                <input type="text" id="send_operation_diagnosisId"
-                       th:value="${session.diagnosis.diagnosisId}"
-                       hidden="hidden"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="show_diagnosis_content">病情诊断：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="show_diagnosis_content" id="show_diagnosis_content"
+                               autocomplete="off" class="layui-input" readonly="readonly"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="show_diagnosis_medicine">处方：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="show_diagnosis_medicine" id="show_diagnosis_medicine"
+                               autocomplete="off" class="layui-input" readonly="readonly"/>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
 </div>
 
-<!--================ 模态框：选择检查项 ================-->
-<div id="openCheck" style="display: none">
-    <form class="layui-form" lay-filter="checkItemFormFilter">
+<!--================ 模态框：输入手术名 ================-->
+<div id="hidden_input_operation" style="display: none">
+    <form class="layui-form">
         <div class="layui-form-item">
-            <label class="layui-form-label">检查项：</label>
+            <label class="layui-form-label" for="input_operation_name">手术名：</label>
             <div class="layui-input-block">
-                <div class="layui-input-block" th:if="${session.checkItems}!=null">
+                <div class="layui-input-block">
                     <div class="layui-input-block">
-                        <input th:each="checkItem:${session.checkItems}" type="checkbox" name="checkItem"
-                               id="send_checkItem"
-                               th:title="${checkItem.checkItemName}"
-                               th:value="${checkItem.checkItemId}"/>
+                        <input type="text" name="input_operation_name" id="input_operation_name" placeholder="请输入手术名"
+                               autocomplete="off" class="layui-input"/>
                     </div>
                 </div>
-                <input type="text" id="send_checkItem_diagnosisId" th:value="${session.diagnosis.diagnosisId}"
-                       hidden="hidden"/>
             </div>
         </div>
     </form>

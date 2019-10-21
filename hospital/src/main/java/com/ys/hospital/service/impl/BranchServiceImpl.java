@@ -1,7 +1,7 @@
 package com.ys.hospital.service.impl;
 
-import com.ys.hospital.pojo.Branch;
 import com.ys.hospital.dao.BranchMapper;
+import com.ys.hospital.pojo.Branch;
 import com.ys.hospital.service.BranchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import java.util.List;
 @Service("branchService")
 public class BranchServiceImpl implements BranchService {
     private static final Logger logger = LoggerFactory.getLogger(BranchServiceImpl.class);
-    
+
     @Resource
     private BranchMapper branchMapper;
 
@@ -37,7 +37,7 @@ public class BranchServiceImpl implements BranchService {
      * 新增Branch数据
      *
      * @param branch 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertBranch(Branch branch) {
@@ -48,7 +48,7 @@ public class BranchServiceImpl implements BranchService {
      * 修改Branch数据
      *
      * @param branch 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateBranch(Branch branch) {
@@ -59,7 +59,7 @@ public class BranchServiceImpl implements BranchService {
      * 通过主键删除Branch数据
      *
      * @param branchId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteBranchById(Integer branchId) {
@@ -69,5 +69,13 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public List<Branch> getBranchListByDepartmentId(int departmentId) {
         return branchMapper.getBranchListByDepartmentId(departmentId);
+    }
+
+    @Override
+    public List<Branch> queryBranchByParam(Branch branch) {
+        if (branch == null) {
+            return null;
+        }
+        return branchMapper.queryBranchByParam(branch);
     }
 }

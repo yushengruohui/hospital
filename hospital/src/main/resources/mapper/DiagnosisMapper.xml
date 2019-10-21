@@ -12,6 +12,13 @@
         <result property="diagnosisIsOperation" column="diagnosis_is_operation" jdbcType="INTEGER"/>
         <result property="appointmentId" column="appointment_id" jdbcType="INTEGER"/>
     </resultMap>
+    <resultMap id="DealingDiagnosisMap" type="com.ys.hospital.pojo.Diagnosis">
+        <association property="appointment" javaType="com.ys.hospital.pojo.Appointment">
+            <association property="patient" javaType="com.ys.hospital.pojo.Patient"></association>
+            <association property="branch" javaType="com.ys.hospital.pojo.Branch"></association>
+            <association property="employee" javaType="com.ys.hospital.pojo.Employee"></association>
+        </association>
+    </resultMap>
 
     <!--查询所有Diagnosis信息-->
     <select id="queryAllDiagnosis" resultMap="DiagnosisMap">
@@ -23,7 +30,8 @@
     <!--根据实体类Diagnosis的相关属性查询实体类Diagnosis-->
     <select id="queryDiagnosisByParam" resultMap="DiagnosisMap">
         select
-          diagnosis_id, diagnosis_time, diagnosis_content, diagnosis_prescription, diagnosis_status, diagnosis_is_check, diagnosis_is_operation, appointment_id
+        diagnosis_id, diagnosis_time, diagnosis_content, diagnosis_prescription, diagnosis_status, diagnosis_is_check,
+        diagnosis_is_operation, appointment_id
         from diagnosis
         <where>
             <if test="diagnosisId != null">
@@ -51,6 +59,51 @@
                 and appointment_id = #{appointmentId}
             </if>
         </where>
+    </select>
+    <select id="queryDealingDiagnosis" resultMap="DealingDiagnosisMap">
+        SELECT
+        diagnosis.diagnosis_id,
+        diagnosis.diagnosis_time,
+        diagnosis.diagnosis_content,
+        diagnosis.diagnosis_prescription,
+        diagnosis.diagnosis_status,
+        diagnosis.diagnosis_is_check,
+        diagnosis.diagnosis_is_operation,
+        diagnosis.appointment_id,
+        appointment.appointment_id,
+        appointment.appointment_time,
+        appointment.appointment_status,
+        appointment.patient_id,
+        appointment.employee_id,
+        appointment.branch_id,
+        appointment.appointment_price,
+        appointment.appointment_pay_time,
+        patient.patient_id,
+        patient.patient_phone,
+        patient.patient_name,
+        patient.patient_gender,
+        patient.patient_identity,
+        patient.patient_address,
+        patient.client_id,
+        branch.branch_id,
+        branch.branch_name,
+        branch.department_id,
+        employee.employee_id,
+        employee.employee_name,
+        employee.employee_password,
+        employee.employee_online,
+        employee.employee_last_login_time
+        FROM
+        diagnosis
+        JOIN appointment ON diagnosis.appointment_id = appointment.appointment_id
+        JOIN patient ON appointment.patient_id = patient.patient_id
+        JOIN branch ON appointment.branch_id = branch.branch_id
+        join employee on appointment.employee_id = employee.employee_id
+        WHERE
+        diagnosis.diagnosis_status = '正在处理'
+        <if test="employeeId!=null">
+            AND appointment.employee_id=#{employeeId}
+        </if>
     </select>
 
     <!--新增Diagnosis数据-->

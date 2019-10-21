@@ -13,7 +13,7 @@
 
     <!--================ 主体内容区 ================-->
     <div class="layui-body">
-        <div style="padding: 15px;" th:if="${session.appointment}!=null">
+        <div style="padding: 15px;" th:if="${session.diagnosis}!=null">
             <!--==== 诊断的表单 =====-->
             <form th:action="@{/diagnosis}" th:method="post" class="layui-form">
                 <div class="layui-form-item">
@@ -24,7 +24,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientId" id="patientId" autocomplete="off"
                                class="layui-input"
-                               th:value="${session.appointment.patient.patientId}" readonly="readonly"/>
+                               th:value="${session.diagnosis.appointment.patient.patientId}" readonly="readonly"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -32,7 +32,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientName" id="patientName" autocomplete="off"
                                class="layui-input"
-                               th:value="${session.appointment.patient.patientName}" readonly="readonly"/>
+                               th:value="${session.diagnosis.appointment.patient.patientName}" readonly="readonly"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -40,7 +40,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientGender" id="patientGender" autocomplete="off"
                                class="layui-input"
-                               th:value="${session.appointment.patient.patientGender}" readonly="readonly"/>
+                               th:value="${session.diagnosis.appointment.patient.patientGender}" readonly="readonly"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -48,7 +48,7 @@
                     <div class="layui-input-block">
                         <input type="text" name="patientAddress" id="patientAddress" autocomplete="off"
                                class="layui-input"
-                               th:value="${session.appointment.patient.patientAddress}" readonly="readonly"/>
+                               th:value="${session.diagnosis.appointment.patient.patientAddress}" readonly="readonly"/>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item" hidden="hidden">
-                    <input type="text" name="appointmentId" th:value="${session.appointment.appointmentId}"/>
+                    <input type="text" name="appointmentId" th:value="${session.diagnosis.appointment.appointmentId}"/>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -97,7 +97,7 @@
             </form>
         </div>
         <!--==== 如果不是点击'填写诊断单跳转过来的，属于非法操作，显示该页面' =====-->
-        <div style="padding: 15px;" th:if="${session.appointment}==null">
+        <div style="padding: 15px;" th:if="${session.diagnosis}==null">
             当前没有相关预约记录，你不能直接添加诊断单记录，请按照正常操作使用该系统
         </div>
     </div>
@@ -111,6 +111,14 @@
         var element = layui.element;
         var form = layui.form;
 
+        //直接获取所有的检查项
+        $.ajax({
+            type: "get",
+            url: "/checkItem/checkItems",
+            error: function () {
+                layui.msg("服务器异常，连接后台失败");
+            }
+        });
         //监听检查
         form.on('radio(checkFilter)', function (data) {
             var radio_data = data.value; //被点击的radio的value值
@@ -150,7 +158,6 @@
                 },
                 btn2: function (index, layero) {
                     //第二个按钮事件
-
                     layer.close(index);
                 }
             });
@@ -211,6 +218,7 @@
         });
 
     });
+
     //获取药名
     $(function () {
         //输入框的值改变时触发

@@ -68,9 +68,21 @@ public class PageController {
         return "/page/diagnosis/add";
     }
 
+
     @RequestMapping("/diagnosis/add")
     public String toDiagnosisAdd() {
         return "diagnosis/add";
     }
 
+    @PostMapping("/diagnosis/readyUpdate")
+    @ResponseBody
+    public String diagnosisReadyUpdate(@RequestBody Diagnosis diagnosis, HttpSession session) {
+        session.setAttribute("diagnosis", diagnosis);
+        return "success";
+    }
+
+    @RequestMapping("/diagnosis/continue_dealing")
+    public String toDiagnosisContinueDealing() {
+        return "diagnosis/continue_dealing";
+    }
 }

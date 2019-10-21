@@ -1,7 +1,6 @@
 package com.ys.hospital.pojo;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,7 +17,6 @@ public class Appointment implements Serializable {
 
     private Integer appointmentId;
     //预约时间段
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date appointmentTime;
     //1:已处理；0：未处理
     private Integer appointmentStatus;

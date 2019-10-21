@@ -1,15 +1,19 @@
 package com.ys.hospital.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ys.hospital.pojo.*;
 import com.ys.hospital.service.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.ys.hospital.tools.MyPageInfo;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 /**
  * (Diagnosis)表控制层
@@ -19,7 +23,7 @@ import java.util.Date;
  */
 @RestController
 public class DiagnosisController {
-    private static final Logger logger = LoggerFactory.getLogger(DiagnosisController.class);
+    //private static final Logger logger = LoggerFactory.getLogger(DiagnosisController.class);
 
     @Resource
     private DiagnosisService diagnosisService;
@@ -40,6 +44,30 @@ public class DiagnosisController {
     @Resource
     private OperationService operationService;
 
+    @GetMapping("/diagnosis/dealingDiagnosis")
+    public MyPageInfo<Diagnosis> showDealingDiagnosis(MyPageInfo<Diagnosis> layuiPage, HttpSession session) {
+        //获取当前登录的用户
+        Employee employee = (Employee) session.getAttribute("employee");
+
+        //开启分页
+        PageHelper.startPage(layuiPage.getPage(), layuiPage.getLimit());
+        //获取当前用户的所有正在处理的诊断记录
+        List<Diagnosis> diagnoses = diagnosisService.queryDealingDiagnosis(employee.getEmployeeId());
+        System.out.println("diagnoses = " + diagnoses);
+
+        //把当前用户的所有正在处理的诊断记录存进layuiPage
+        layuiPage.setData(diagnoses);
+
+        //将数据封装到 PageInfo 中
+        PageInfo page = new PageInfo(layuiPage.getData());
+        //设置数据数量
+        layuiPage.setCount(page.getPageSize());
+        //设置成功代码
+        layuiPage.setCode("0");
+
+        return layuiPage;
+    }
+
     @PostMapping("/diagnosis")
     public String insertDiagnosis(Diagnosis diagnosis, HttpSession session) {
 
@@ -50,6 +78,8 @@ public class DiagnosisController {
         } else {
             diagnosis.setDiagnosisStatus("已处理");
         }
+        diagnosis.setDiagnosisTime(new Date());
+
         //添加处方，未支付
         DiagnosisMedicine diagnosisMedicine = new DiagnosisMedicine();
         diagnosisMedicine.setDiagnosisMedicineStatus(0);
@@ -163,7 +193,7 @@ public class DiagnosisController {
     }
 
     @PostMapping("/diagnosis/operation")
-    public String inOperation(String operationName, String diagnosisId) {
+    public String insertOperation(String operationName, String diagnosisId) {
         //设计准备添加的手术通知的数据
         OperationNotify operationNotify = new OperationNotify();
         operationNotify.setOperationNotifyStatus(0);
@@ -182,4 +212,15 @@ public class DiagnosisController {
 
         return "success";
     }
+
+    @PutMapping("/diagnosis")
+    public String updateDiagnosis(Diagnosis diagnosis) {
+        if (diagnosis != null && diagnosis.getDiagnosisId() != null) {
+            diagnosis.setDiagnosisStatus("已处理");
+            diagnosisService.updateDiagnosis(diagnosis);
+            return "success";
+        }
+        return "error";
+    }
+
 }

@@ -68,4 +68,14 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     public int deleteDiagnosisById(Integer diagnosisId) {
         return this.diagnosisMapper.deleteDiagnosisById(diagnosisId);
     }
+
+    @Override
+    public List<Diagnosis> queryDiagnosisListByParam(Diagnosis diagnosis) {
+        return this.diagnosisMapper.queryDiagnosisByParam(diagnosis);
+    }
+
+    @Override
+    public List<Diagnosis> queryDealingDiagnosis(Integer employeeId) {
+        return this.diagnosisMapper.queryDealingDiagnosis(employeeId);
+    }
 }
