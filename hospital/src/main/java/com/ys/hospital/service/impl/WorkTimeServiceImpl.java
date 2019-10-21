@@ -19,7 +19,7 @@ import java.util.List;
 @Service("workTimeService")
 public class WorkTimeServiceImpl implements WorkTimeService {
     private static final Logger logger = LoggerFactory.getLogger(WorkTimeServiceImpl.class);
-    
+
     @Resource
     private WorkTimeMapper workTimeMapper;
 
@@ -37,7 +37,7 @@ public class WorkTimeServiceImpl implements WorkTimeService {
      * 新增WorkTime数据
      *
      * @param workTime 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertWorkTime(WorkTime workTime) {
@@ -48,7 +48,7 @@ public class WorkTimeServiceImpl implements WorkTimeService {
      * 修改WorkTime数据
      *
      * @param workTime 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateWorkTime(WorkTime workTime) {
@@ -59,10 +59,21 @@ public class WorkTimeServiceImpl implements WorkTimeService {
      * 通过主键删除WorkTime数据
      *
      * @param workTimeId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteWorkTimeById(Integer workTimeId) {
         return this.workTimeMapper.deleteWorkTimeById(workTimeId);
+    }
+
+    /**
+     * 根据实体类WorkTime的相关属性查询实体类WorkTime
+     *
+     * @param workTime 实例对象
+     * @return 对象WorkTime列表
+     */
+    @Override
+    public List<WorkTime> queryWorkTimeByParam(WorkTime workTime) {
+        return workTimeMapper.queryWorkTimeByParam(workTime);
     }
 }

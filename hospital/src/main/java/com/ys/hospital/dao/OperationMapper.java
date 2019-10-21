@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Operation;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface OperationMapper {
      * 新增Operation数据
      *
      * @param operation 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertOperation(Operation operation);
 
@@ -40,7 +41,7 @@ public interface OperationMapper {
      * 修改Operation数据
      *
      * @param operation 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateOperation(Operation operation);
 
@@ -48,7 +49,7 @@ public interface OperationMapper {
      * 通过主键删除数据
      *
      * @param operationId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteOperationById(Integer operationId);
 

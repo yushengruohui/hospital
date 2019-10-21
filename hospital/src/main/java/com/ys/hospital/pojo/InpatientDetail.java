@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -13,7 +14,7 @@ import lombok.Data;
 @Data
 public class InpatientDetail implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer inpatientDetailId;
     //每天的住院费
     private Double inpatientDetailPrice;
@@ -23,5 +24,5 @@ public class InpatientDetail implements Serializable {
     private Date inpatientDetailDate;
     //所属住院单
     private Integer inpatientId;
-    
+
 }

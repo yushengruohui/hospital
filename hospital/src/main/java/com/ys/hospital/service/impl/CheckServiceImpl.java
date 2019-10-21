@@ -19,7 +19,7 @@ import java.util.List;
 @Service("checkService")
 public class CheckServiceImpl implements CheckService {
     private static final Logger logger = LoggerFactory.getLogger(CheckServiceImpl.class);
-    
+
     @Resource
     private CheckMapper checkMapper;
 
@@ -37,7 +37,7 @@ public class CheckServiceImpl implements CheckService {
      * 新增Check数据
      *
      * @param check 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertCheck(Check check) {
@@ -48,7 +48,7 @@ public class CheckServiceImpl implements CheckService {
      * 修改Check数据
      *
      * @param check 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateCheck(Check check) {
@@ -59,7 +59,7 @@ public class CheckServiceImpl implements CheckService {
      * 通过主键删除Check数据
      *
      * @param checkId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteCheckById(Integer checkId) {

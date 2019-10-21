@@ -19,15 +19,15 @@ import javax.annotation.Resource;
 @RequestMapping("/inpatientNotify")
 public class InpatientNotifyController {
     private static final Logger logger = LoggerFactory.getLogger(InpatientNotifyController.class);
-    
+
     @Resource
     private InpatientNotifyService inpatientNotifyService;
-    
+
     @RequestMapping("/test")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }

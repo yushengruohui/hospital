@@ -14,14 +14,14 @@
     <!--查询所有Device信息-->
     <select id="queryAllDevice" resultMap="DeviceMap">
         select
-          device_id, device_name, device_production_time, device_production_address, device_decription, device_alert
+        device_id, device_name, device_production_time, device_production_address, device_decription, device_alert
         from device
     </select>
 
     <!--根据实体类Device的相关属性查询实体类Device-->
     <select id="queryDeviceByParam" resultMap="DeviceMap">
         select
-          device_id, device_name, device_production_time, device_production_address, device_decription, device_alert
+        device_id, device_name, device_production_time, device_production_address, device_decription, device_alert
         from device
         <where>
             <if test="deviceId != null">
@@ -47,7 +47,8 @@
 
     <!--新增Device数据-->
     <insert id="insertDevice" keyProperty="deviceId" useGeneratedKeys="true">
-        insert into device(device_name, device_production_time, device_production_address, device_decription, device_alert)
+        insert into device(device_name, device_production_time, device_production_address, device_decription,
+        device_alert)
         values (#{deviceName}, #{deviceProductionTime}, #{deviceProductionAddress}, #{deviceDecription}, #{deviceAlert})
     </insert>
 

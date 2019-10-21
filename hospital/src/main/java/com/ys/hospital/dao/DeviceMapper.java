@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Device;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface DeviceMapper {
      * 新增Device数据
      *
      * @param device 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertDevice(Device device);
 
@@ -40,7 +41,7 @@ public interface DeviceMapper {
      * 修改Device数据
      *
      * @param device 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateDevice(Device device);
 
@@ -48,7 +49,7 @@ public interface DeviceMapper {
      * 通过主键删除数据
      *
      * @param deviceId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteDeviceById(Integer deviceId);
 

@@ -19,15 +19,15 @@ import javax.annotation.Resource;
 @RequestMapping("/rolePower")
 public class RolePowerController {
     private static final Logger logger = LoggerFactory.getLogger(RolePowerController.class);
-    
+
     @Resource
     private RolePowerService rolePowerService;
-    
+
     @RequestMapping("/test")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }

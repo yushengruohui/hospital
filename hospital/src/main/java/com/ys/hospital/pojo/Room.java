@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -12,7 +13,7 @@ import lombok.Data;
 @Data
 public class Room implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer roomId;
     //诊室名称
     private String roomName;
@@ -20,5 +21,5 @@ public class Room implements Serializable {
     private Integer branchId;
     //房间地址
     private String roomAddress;
-    
+
 }

@@ -12,14 +12,14 @@
     <!--查询所有PowerDetail信息-->
     <select id="queryAllPowerDetail" resultMap="PowerDetailMap">
         select
-          power_detail_id, power_detail_name, power_detail_status, power_id
+        power_detail_id, power_detail_name, power_detail_status, power_id
         from power_detail
     </select>
 
     <!--根据实体类PowerDetail的相关属性查询实体类PowerDetail-->
     <select id="queryPowerDetailByParam" resultMap="PowerDetailMap">
         select
-          power_detail_id, power_detail_name, power_detail_status, power_id
+        power_detail_id, power_detail_name, power_detail_status, power_id
         from power_detail
         <where>
             <if test="powerDetailId != null">

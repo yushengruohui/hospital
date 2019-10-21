@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -20,5 +21,5 @@ public class PowerDetail implements Serializable {
     private Integer powerDetailStatus;
     //外键：权限表的id
     private Integer powerId;
-    
+
 }

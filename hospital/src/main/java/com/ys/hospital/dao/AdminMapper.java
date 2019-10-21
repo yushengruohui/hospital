@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Admin;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface AdminMapper {
      * 新增Admin数据
      *
      * @param admin 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertAdmin(Admin admin);
 
@@ -40,7 +41,7 @@ public interface AdminMapper {
      * 修改Admin数据
      *
      * @param admin 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateAdmin(Admin admin);
 
@@ -48,7 +49,7 @@ public interface AdminMapper {
      * 通过主键删除数据
      *
      * @param adminId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteAdminById(Integer adminId);
 

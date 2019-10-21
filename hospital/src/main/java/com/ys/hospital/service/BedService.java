@@ -1,6 +1,7 @@
 package com.ys.hospital.service;
 
 import com.ys.hospital.pojo.Bed;
+
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public interface BedService {
      * 通过主键删除数据
      *
      * @param bedId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteBedById(Integer bedId);
 

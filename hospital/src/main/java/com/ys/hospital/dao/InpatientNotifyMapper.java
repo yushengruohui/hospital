@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.InpatientNotify;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface InpatientNotifyMapper {
      * 新增InpatientNotify数据
      *
      * @param inpatientNotify 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertInpatientNotify(InpatientNotify inpatientNotify);
 
@@ -40,7 +41,7 @@ public interface InpatientNotifyMapper {
      * 修改InpatientNotify数据
      *
      * @param inpatientNotify 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateInpatientNotify(InpatientNotify inpatientNotify);
 
@@ -48,7 +49,7 @@ public interface InpatientNotifyMapper {
      * 通过主键删除数据
      *
      * @param inpatientNotifyId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteInpatientNotifyById(Integer inpatientNotifyId);
 

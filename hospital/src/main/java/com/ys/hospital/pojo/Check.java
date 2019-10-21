@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -13,7 +14,7 @@ import lombok.Data;
 @Data
 public class Check implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer checkId;
     //1:已处理；0：未处理
     private Integer checkStatus;
@@ -25,5 +26,5 @@ public class Check implements Serializable {
     private Integer employeeId;
     //所属诊断单
     private Integer diagnosisId;
-    
+
 }

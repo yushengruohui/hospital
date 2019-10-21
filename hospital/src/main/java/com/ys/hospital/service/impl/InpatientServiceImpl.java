@@ -19,7 +19,7 @@ import java.util.List;
 @Service("inpatientService")
 public class InpatientServiceImpl implements InpatientService {
     private static final Logger logger = LoggerFactory.getLogger(InpatientServiceImpl.class);
-    
+
     @Resource
     private InpatientMapper inpatientMapper;
 
@@ -37,7 +37,7 @@ public class InpatientServiceImpl implements InpatientService {
      * 新增Inpatient数据
      *
      * @param inpatient 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertInpatient(Inpatient inpatient) {
@@ -48,7 +48,7 @@ public class InpatientServiceImpl implements InpatientService {
      * 修改Inpatient数据
      *
      * @param inpatient 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateInpatient(Inpatient inpatient) {
@@ -59,7 +59,7 @@ public class InpatientServiceImpl implements InpatientService {
      * 通过主键删除Inpatient数据
      *
      * @param inpatientId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteInpatientById(Integer inpatientId) {

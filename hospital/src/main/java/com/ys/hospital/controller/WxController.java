@@ -381,6 +381,7 @@ public class WxController {
 
     @RequestMapping("/test")
     public void test() {
+
         System.out.println(initWorkTimeTool.initWorkTime(2019009));
     }
 

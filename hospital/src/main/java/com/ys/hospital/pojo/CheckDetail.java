@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -27,5 +28,5 @@ public class CheckDetail implements Serializable {
     private Double checkDetailPayPrice;
     //支付时间
     private Date checkDetailPayTime;
-    
+
 }

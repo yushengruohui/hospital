@@ -12,14 +12,14 @@
     <!--查询所有CheckItem信息-->
     <select id="queryAllCheckItem" resultMap="CheckItemMap">
         select
-          check_item_id, check_item_name, check_item_price, room_id
+        check_item_id, check_item_name, check_item_price, room_id
         from check_item
     </select>
 
     <!--根据实体类CheckItem的相关属性查询实体类CheckItem-->
     <select id="queryCheckItemByParam" resultMap="CheckItemMap">
         select
-          check_item_id, check_item_name, check_item_price, room_id
+        check_item_id, check_item_name, check_item_price, room_id
         from check_item
         <where>
             <if test="checkItemId != null">

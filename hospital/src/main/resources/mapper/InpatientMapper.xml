@@ -17,14 +17,16 @@
     <!--查询所有Inpatient信息-->
     <select id="queryAllInpatient" resultMap="InpatientMap">
         select
-          inpatient_id, inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id, inpatient_price, inpatient_pay_status, inpatient_prepaid_price
+        inpatient_id, inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id,
+        inpatient_price, inpatient_pay_status, inpatient_prepaid_price
         from inpatient
     </select>
 
     <!--根据实体类Inpatient的相关属性查询实体类Inpatient-->
     <select id="queryInpatientByParam" resultMap="InpatientMap">
         select
-          inpatient_id, inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id, inpatient_price, inpatient_pay_status, inpatient_prepaid_price
+        inpatient_id, inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id,
+        inpatient_price, inpatient_pay_status, inpatient_prepaid_price
         from inpatient
         <where>
             <if test="inpatientId != null">
@@ -59,8 +61,10 @@
 
     <!--新增Inpatient数据-->
     <insert id="insertInpatient" keyProperty="inpatientId" useGeneratedKeys="true">
-        insert into inpatient(inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id, inpatient_price, inpatient_pay_status, inpatient_prepaid_price)
-        values (#{inpatientEntryTime}, #{inpatientLeaveTime}, #{inpatientStatus}, #{inpatientNotifyId}, #{bedId}, #{inpatientPrice}, #{inpatientPayStatus}, #{inpatientPrepaidPrice})
+        insert into inpatient(inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id,
+        inpatient_price, inpatient_pay_status, inpatient_prepaid_price)
+        values (#{inpatientEntryTime}, #{inpatientLeaveTime}, #{inpatientStatus}, #{inpatientNotifyId}, #{bedId},
+        #{inpatientPrice}, #{inpatientPayStatus}, #{inpatientPrepaidPrice})
     </insert>
 
     <!--修改Inpatient记录-->

@@ -19,7 +19,7 @@ import java.util.List;
 @Service("checkItemService")
 public class CheckItemServiceImpl implements CheckItemService {
     private static final Logger logger = LoggerFactory.getLogger(CheckItemServiceImpl.class);
-    
+
     @Resource
     private CheckItemMapper checkItemMapper;
 
@@ -37,7 +37,7 @@ public class CheckItemServiceImpl implements CheckItemService {
      * 新增CheckItem数据
      *
      * @param checkItem 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertCheckItem(CheckItem checkItem) {
@@ -48,7 +48,7 @@ public class CheckItemServiceImpl implements CheckItemService {
      * 修改CheckItem数据
      *
      * @param checkItem 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateCheckItem(CheckItem checkItem) {
@@ -59,7 +59,7 @@ public class CheckItemServiceImpl implements CheckItemService {
      * 通过主键删除CheckItem数据
      *
      * @param checkItemId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteCheckItemById(Integer checkItemId) {

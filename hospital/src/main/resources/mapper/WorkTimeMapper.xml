@@ -24,14 +24,16 @@
     <!--查询所有WorkTime信息-->
     <select id="queryAllWorkTime" resultMap="WorkTimeMap">
         select
-          work_time_id, work_time1, work_time2, work_time3, work_time4, work_time5, work_time6, work_time7, work_time8, work_time9, work_time10, work_time11, work_time12, work_time13, work_time14, work_id
+        work_time_id, work_time1, work_time2, work_time3, work_time4, work_time5, work_time6, work_time7, work_time8,
+        work_time9, work_time10, work_time11, work_time12, work_time13, work_time14, work_id
         from work_time
     </select>
 
     <!--根据实体类WorkTime的相关属性查询实体类WorkTime-->
     <select id="queryWorkTimeByParam" resultMap="WorkTimeMap">
         select
-          work_time_id, work_time1, work_time2, work_time3, work_time4, work_time5, work_time6, work_time7, work_time8, work_time9, work_time10, work_time11, work_time12, work_time13, work_time14, work_id
+        work_time_id, work_time1, work_time2, work_time3, work_time4, work_time5, work_time6, work_time7, work_time8,
+        work_time9, work_time10, work_time11, work_time12, work_time13, work_time14, work_id
         from work_time
         <where>
             <if test="workTimeId != null">
@@ -87,8 +89,11 @@
 
     <!--新增WorkTime数据-->
     <insert id="insertWorkTime" keyProperty="workTimeId" useGeneratedKeys="true">
-        insert into work_time(work_time1, work_time2, work_time3, work_time4, work_time5, work_time6, work_time7, work_time8, work_time9, work_time10, work_time11, work_time12, work_time13, work_time14, work_id)
-        values (#{workTime1}, #{workTime2}, #{workTime3}, #{workTime4}, #{workTime5}, #{workTime6}, #{workTime7}, #{workTime8}, #{workTime9}, #{workTime10}, #{workTime11}, #{workTime12}, #{workTime13}, #{workTime14}, #{workId})
+        insert into work_time(work_time1, work_time2, work_time3, work_time4, work_time5, work_time6, work_time7,
+        work_time8, work_time9, work_time10, work_time11, work_time12, work_time13, work_time14, work_id)
+        values (#{workTime1}, #{workTime2}, #{workTime3}, #{workTime4}, #{workTime5}, #{workTime6}, #{workTime7},
+        #{workTime8}, #{workTime9}, #{workTime10}, #{workTime11}, #{workTime12}, #{workTime13}, #{workTime14},
+        #{workId})
     </insert>
 
     <!--修改WorkTime记录-->

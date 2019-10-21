@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -13,7 +14,7 @@ import lombok.Data;
 @Data
 public class Bed implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer bedId;
     //病床名称
     private String bedName;
@@ -31,5 +32,5 @@ public class Bed implements Serializable {
     private Integer roomId;
     //归于护士管理
     private Integer employeeId;
-    
+
 }

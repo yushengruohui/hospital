@@ -13,14 +13,14 @@
     <!--查询所有Admin信息-->
     <select id="queryAllAdmin" resultMap="AdminMap">
         select
-          admin_id, admin_name, admin_phone, admin_password, admin_email
+        admin_id, admin_name, admin_phone, admin_password, admin_email
         from admin
     </select>
 
     <!--根据实体类Admin的相关属性查询实体类Admin-->
     <select id="queryAdminByParam" resultMap="AdminMap">
         select
-          admin_id, admin_name, admin_phone, admin_password, admin_email
+        admin_id, admin_name, admin_phone, admin_password, admin_email
         from admin
         <where>
             <if test="adminId != null">

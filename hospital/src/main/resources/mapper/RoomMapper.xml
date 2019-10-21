@@ -12,14 +12,14 @@
     <!--查询所有Room信息-->
     <select id="queryAllRoom" resultMap="RoomMap">
         select
-          room_id, room_name, branch_id, room_address
+        room_id, room_name, branch_id, room_address
         from room
     </select>
 
     <!--根据实体类Room的相关属性查询实体类Room-->
     <select id="queryRoomByParam" resultMap="RoomMap">
         select
-          room_id, room_name, branch_id, room_address
+        room_id, room_name, branch_id, room_address
         from room
         <where>
             <if test="roomId != null">

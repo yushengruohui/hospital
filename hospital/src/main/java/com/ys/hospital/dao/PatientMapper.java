@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Patient;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface PatientMapper {
      * 新增Patient数据
      *
      * @param patient 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertPatient(Patient patient);
 
@@ -40,7 +41,7 @@ public interface PatientMapper {
      * 修改Patient数据
      *
      * @param patient 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updatePatient(Patient patient);
 
@@ -48,7 +49,7 @@ public interface PatientMapper {
      * 通过主键删除数据
      *
      * @param patientId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deletePatientById(Integer patientId);
 

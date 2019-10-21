@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -27,5 +28,5 @@ public class DiagnosisMedicine implements Serializable {
     private Integer employeeId;
     //所属诊断单
     private Integer diagnosisId;
-    
+
 }

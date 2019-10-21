@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Medicine;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface MedicineMapper {
      * 新增Medicine数据
      *
      * @param medicine 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertMedicine(Medicine medicine);
 
@@ -40,7 +41,7 @@ public interface MedicineMapper {
      * 修改Medicine数据
      *
      * @param medicine 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateMedicine(Medicine medicine);
 
@@ -48,7 +49,7 @@ public interface MedicineMapper {
      * 通过主键删除数据
      *
      * @param medicineId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteMedicineById(Integer medicineId);
 

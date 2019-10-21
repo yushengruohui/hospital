@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -18,5 +19,5 @@ public class AiGuide implements Serializable {
     private String aiguideKey;
     //导诊回复
     private String aiguideContent;
-    
+
 }

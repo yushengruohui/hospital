@@ -14,14 +14,14 @@
     <!--查询所有Diagnosis信息-->
     <select id="queryAllDiagnosis" resultMap="DiagnosisMap">
         select
-          diagnosis_id, diagnosis_time, diagnosis_content, diagnosis_is_check, diagnosis_is_operation, appointment_id
+        diagnosis_id, diagnosis_time, diagnosis_content, diagnosis_is_check, diagnosis_is_operation, appointment_id
         from diagnosis
     </select>
 
     <!--根据实体类Diagnosis的相关属性查询实体类Diagnosis-->
     <select id="queryDiagnosisByParam" resultMap="DiagnosisMap">
         select
-          diagnosis_id, diagnosis_time, diagnosis_content, diagnosis_is_check, diagnosis_is_operation, appointment_id
+        diagnosis_id, diagnosis_time, diagnosis_content, diagnosis_is_check, diagnosis_is_operation, appointment_id
         from diagnosis
         <where>
             <if test="diagnosisId != null">
@@ -47,7 +47,8 @@
 
     <!--新增Diagnosis数据-->
     <insert id="insertDiagnosis" keyProperty="diagnosisId" useGeneratedKeys="true">
-        insert into diagnosis(diagnosis_time, diagnosis_content, diagnosis_is_check, diagnosis_is_operation, appointment_id)
+        insert into diagnosis(diagnosis_time, diagnosis_content, diagnosis_is_check, diagnosis_is_operation,
+        appointment_id)
         values (#{diagnosisTime}, #{diagnosisContent}, #{diagnosisIsCheck}, #{diagnosisIsOperation}, #{appointmentId})
     </insert>
 

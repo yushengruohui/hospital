@@ -19,7 +19,7 @@ import java.util.List;
 @Service("medicineService")
 public class MedicineServiceImpl implements MedicineService {
     private static final Logger logger = LoggerFactory.getLogger(MedicineServiceImpl.class);
-    
+
     @Resource
     private MedicineMapper medicineMapper;
 
@@ -37,7 +37,7 @@ public class MedicineServiceImpl implements MedicineService {
      * 新增Medicine数据
      *
      * @param medicine 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertMedicine(Medicine medicine) {
@@ -48,7 +48,7 @@ public class MedicineServiceImpl implements MedicineService {
      * 修改Medicine数据
      *
      * @param medicine 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateMedicine(Medicine medicine) {
@@ -59,7 +59,7 @@ public class MedicineServiceImpl implements MedicineService {
      * 通过主键删除Medicine数据
      *
      * @param medicineId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteMedicineById(Integer medicineId) {

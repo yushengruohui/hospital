@@ -11,14 +11,14 @@
     <!--查询所有EmployeeRole信息-->
     <select id="queryAllEmployeeRole" resultMap="EmployeeRoleMap">
         select
-          employee_role_id, role_id, employee_id
+        employee_role_id, role_id, employee_id
         from employee_role
     </select>
 
     <!--根据实体类EmployeeRole的相关属性查询实体类EmployeeRole-->
     <select id="queryEmployeeRoleByParam" resultMap="EmployeeRoleMap">
         select
-          employee_role_id, role_id, employee_id
+        employee_role_id, role_id, employee_id
         from employee_role
         <where>
             <if test="employeeRoleId != null">

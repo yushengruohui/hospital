@@ -19,7 +19,7 @@ import java.util.List;
 @Service("operationNotifyService")
 public class OperationNotifyServiceImpl implements OperationNotifyService {
     private static final Logger logger = LoggerFactory.getLogger(OperationNotifyServiceImpl.class);
-    
+
     @Resource
     private OperationNotifyMapper operationNotifyMapper;
 
@@ -37,7 +37,7 @@ public class OperationNotifyServiceImpl implements OperationNotifyService {
      * 新增OperationNotify数据
      *
      * @param operationNotify 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertOperationNotify(OperationNotify operationNotify) {
@@ -48,7 +48,7 @@ public class OperationNotifyServiceImpl implements OperationNotifyService {
      * 修改OperationNotify数据
      *
      * @param operationNotify 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateOperationNotify(OperationNotify operationNotify) {
@@ -59,7 +59,7 @@ public class OperationNotifyServiceImpl implements OperationNotifyService {
      * 通过主键删除OperationNotify数据
      *
      * @param operationNotifyId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteOperationNotifyById(Integer operationNotifyId) {

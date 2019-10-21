@@ -68,4 +68,12 @@ public interface WorkService {
      * @return 对象Work列表
      */
     List<Work> queryWorkByParam(Work work);
+
+    /**
+     * 根据员工Id查询（一周）值班安排表
+     *
+     * @param employeeId
+     * @return
+     */
+    List<Work> findWorkListByEmployeeId(Integer employeeId);
 }

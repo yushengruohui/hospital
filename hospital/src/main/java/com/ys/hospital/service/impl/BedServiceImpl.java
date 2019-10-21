@@ -19,7 +19,7 @@ import java.util.List;
 @Service("bedService")
 public class BedServiceImpl implements BedService {
     private static final Logger logger = LoggerFactory.getLogger(BedServiceImpl.class);
-    
+
     @Resource
     private BedMapper bedMapper;
 
@@ -37,7 +37,7 @@ public class BedServiceImpl implements BedService {
      * 新增Bed数据
      *
      * @param bed 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertBed(Bed bed) {
@@ -48,7 +48,7 @@ public class BedServiceImpl implements BedService {
      * 修改Bed数据
      *
      * @param bed 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateBed(Bed bed) {
@@ -59,7 +59,7 @@ public class BedServiceImpl implements BedService {
      * 通过主键删除Bed数据
      *
      * @param bedId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteBedById(Integer bedId) {

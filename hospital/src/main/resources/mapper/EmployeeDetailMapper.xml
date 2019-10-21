@@ -22,14 +22,18 @@
     <!--查询所有EmployeeDetail信息-->
     <select id="queryAllEmployeeDetail" resultMap="EmployeeDetailMap">
         select
-          employee_detail_id, employee_detail_gender, employee_detail_birthday, employee_detail_address, employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email, employee_detail_descript, employee_detail_status, employee_id, position_id, branch_id, title_id
+        employee_detail_id, employee_detail_gender, employee_detail_birthday, employee_detail_address,
+        employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email,
+        employee_detail_descript, employee_detail_status, employee_id, position_id, branch_id, title_id
         from employee_detail
     </select>
 
     <!--根据实体类EmployeeDetail的相关属性查询实体类EmployeeDetail-->
     <select id="queryEmployeeDetailByParam" resultMap="EmployeeDetailMap">
         select
-          employee_detail_id, employee_detail_gender, employee_detail_birthday, employee_detail_address, employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email, employee_detail_descript, employee_detail_status, employee_id, position_id, branch_id, title_id
+        employee_detail_id, employee_detail_gender, employee_detail_birthday, employee_detail_address,
+        employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email,
+        employee_detail_descript, employee_detail_status, employee_id, position_id, branch_id, title_id
         from employee_detail
         <where>
             <if test="employeeDetailId != null">
@@ -79,8 +83,12 @@
 
     <!--新增EmployeeDetail数据-->
     <insert id="insertEmployeeDetail" keyProperty="employeeDetailId" useGeneratedKeys="true">
-        insert into employee_detail(employee_detail_gender, employee_detail_birthday, employee_detail_address, employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email, employee_detail_descript, employee_detail_status, employee_id, position_id, branch_id, title_id)
-        values (#{employeeDetailGender}, #{employeeDetailBirthday}, #{employeeDetailAddress}, #{employeeDetailPhone}, #{employeeDetailIdentity}, #{employeeDetailEntryTime}, #{employeeDetailEmail}, #{employeeDetailDescript}, #{employeeDetailStatus}, #{employeeId}, #{positionId}, #{branchId}, #{titleId})
+        insert into employee_detail(employee_detail_gender, employee_detail_birthday, employee_detail_address,
+        employee_detail_phone, employee_detail_identity, employee_detail_entry_time, employee_detail_email,
+        employee_detail_descript, employee_detail_status, employee_id, position_id, branch_id, title_id)
+        values (#{employeeDetailGender}, #{employeeDetailBirthday}, #{employeeDetailAddress}, #{employeeDetailPhone},
+        #{employeeDetailIdentity}, #{employeeDetailEntryTime}, #{employeeDetailEmail}, #{employeeDetailDescript},
+        #{employeeDetailStatus}, #{employeeId}, #{positionId}, #{branchId}, #{titleId})
     </insert>
 
     <!--修改EmployeeDetail记录-->

@@ -19,15 +19,15 @@ import javax.annotation.Resource;
 @RequestMapping("/bed")
 public class BedController {
     private static final Logger logger = LoggerFactory.getLogger(BedController.class);
-    
+
     @Resource
     private BedService bedService;
-    
+
     @RequestMapping("/test")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }
