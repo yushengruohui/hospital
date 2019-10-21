@@ -37,4 +37,17 @@ public class Appointment implements Serializable {
 
     private Branch branch;
 
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "appointmentId=" + appointmentId +
+                ", appointmentTime=" + appointmentTime +
+                ", appointmentStatus=" + appointmentStatus +
+                ", patientId=" + patientId +
+                ", employeeId=" + employeeId +
+                ", branchId=" + branchId +
+                ", appointmentPrice=" + appointmentPrice +
+                ", appointmentPayTime=" + appointmentPayTime +
+                '}';
+    }
 }

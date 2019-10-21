@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Title;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface TitleMapper {
      * 新增Title数据
      *
      * @param title 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertTitle(Title title);
 
@@ -40,7 +41,7 @@ public interface TitleMapper {
      * 修改Title数据
      *
      * @param title 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateTitle(Title title);
 
@@ -48,8 +49,16 @@ public interface TitleMapper {
      * 通过主键删除数据
      *
      * @param titleId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteTitleById(Integer titleId);
+
+    /**
+     * 根据主键查询title对象
+     *
+     * @param titleId
+     * @return title
+     */
+    Title getTitleByTitleId(Integer titleId);
 
 }

@@ -24,7 +24,6 @@ public class Employee implements Serializable {
     private Integer employeeOnline;
     //离线时，自动更新最后登录时间
     private Date employeeLastLoginTime;
-
     private EmployeeDetail employeeDetail;
 
 	public Integer getEmployeeId() {

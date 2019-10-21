@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{com/attending::title}"></div>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{com/attending::head}"></div>
+
+    <div th:replace="~{com/attending::left_appointment}"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-table" id="appointmentTable" lay-filter="tableFilter">
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{com/attending::foot}"></div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'table'], function () {
+        var element = layui.element;
+        var table = layui.table;
+
+        table.render({
+            elem: '#appointmentTable'
+            , height: 312
+            , url: '/appointment/treatedAppointments' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'patientName', title: '预约人', fixed: 'left', templet: function (appointment) {
+                            return appointment.patient.patientName;
+                        }
+                    }
+                    , {field: 'appointmentTime', title: '预约时间', sort: true}
+                    , {
+                    field: 'branchName', title: '预约科室', templet: function (appointment) {
+                        return appointment.branch.branchName;
+                    }
+                }
+                    , {
+                    field: 'employeeName', title: '医师', templet: function (appointment) {
+                        return appointment.employee.employeeName;
+                    }
+                }
+                    , {field: 'appointmentStatus', title: '预约状态'}
+                ]
+            ]
+        });
+
+
+    });
+
+
+</script>
+</body>
+</html>

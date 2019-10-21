@@ -53,6 +53,22 @@
             <artifactId>zhenzisms</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <!-- 动态代理，用于copy，不用导入，springframework自带了 -->
+        <!--<dependency>-->
+        <!--    <groupId>cglib</groupId>-->
+        <!--    <artifactId>cglib</artifactId>-->
+        <!--    <version>3.3.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>org.apache.ant</groupId>-->
+        <!--    <artifactId>ant</artifactId>-->
+        <!--    <version>1.10.3</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>org.ow2.asm</groupId>-->
+        <!--    <artifactId>asm</artifactId>-->
+        <!--    <version>7.1</version>-->
+        <!--</dependency>-->
 
         <!--=============== 便利工具 end ===============-->
 
@@ -85,6 +101,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
         </dependency>
         <!--=============== web相关 end ===============-->
 

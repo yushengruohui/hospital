@@ -52,4 +52,11 @@ public interface EmployeeMapper {
      */
     int deleteEmployeeById(Integer employeeId);
 
+    /**
+     * 根据主键查询员工信息（包括员工详情）
+     *
+     * @param employeeId
+     * @return employee(员工及其详情信息)
+     */
+    Employee getEmployeeByEmployeeId(Integer employeeId);
 }

@@ -42,4 +42,12 @@ public interface RoomService {
      */
     int deleteRoomById(Integer roomId);
 
+    /**
+     * 根据实体类Room的相关属性查询实体类Room
+     *
+     * @param room 实例对象
+     * @return 对象Room列表
+     */
+    List<Room> queryRoomByParam(Room room);
+
 }

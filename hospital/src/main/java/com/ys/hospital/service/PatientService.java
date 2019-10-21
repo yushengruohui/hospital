@@ -49,7 +49,7 @@ public interface PatientService {
      * @param clientId
      * @return
      */
-    public List<Patient> getPatientListByClientId(int clientId);
+    List<Patient> getPatientListByClientId(int clientId);
 
     /**
      * 根据就诊人id查询就诊人信息
@@ -57,7 +57,7 @@ public interface PatientService {
      * @param patientId
      * @return
      */
-    public Patient getPatientDetailByPatientId(int patientId);
+    Patient getPatientDetailByPatientId(int patientId);
 
     /**
      * 根据身份证号查询就诊人信息
@@ -65,7 +65,7 @@ public interface PatientService {
      * @param patientIdentity
      * @return
      */
-    public Patient getPatientBypatientIdentity(String patientIdentity);
+    Patient getPatientBypatientIdentity(String patientIdentity);
 
     /**
      * 添加就诊人信息
@@ -73,7 +73,7 @@ public interface PatientService {
      * @param patient
      * @return
      */
-    public int addPatient(Patient patient);
+    int addPatient(Patient patient);
 
     /**
      * 根据就诊人id修改就诊人信息
@@ -81,6 +81,7 @@ public interface PatientService {
      * @param patient
      * @return
      */
-    public int updatePatientClientId(Patient patient);
+    int updatePatientClientId(Patient patient);
 
+    List<Patient> queryPatientByParam(Patient patient);
 }

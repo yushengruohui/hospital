@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{com/attending::title}"></div>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--================ 网页头部 ================-->
+    <div th:replace="~{com/attending::head}"></div>
+
+    <!--================ 网页左侧导航栏 ================-->
+    <div th:replace="~{com/attending::left_diagnosis}"></div>
+
+    <!--================ 主体内容区 ================-->
+    <div class="layui-body">
+        <div style="padding: 15px;" th:if="${session.appointment}!=null">
+            <!--==== 诊断的表单 =====-->
+            <form th:action="@{/diagnosis}" th:method="post" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">医院处方笺</label>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="patientId">病历号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="patientId" id="patientId" autocomplete="off"
+                               class="layui-input"
+                               th:value="${session.appointment.patient.patientId}" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="patientName">性别：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="patientName" id="patientName" autocomplete="off"
+                               class="layui-input"
+                               th:value="${session.appointment.patient.patientName}" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="patientGender">性别：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="patientGender" id="patientGender" autocomplete="off"
+                               class="layui-input"
+                               th:value="${session.appointment.patient.patientGender}" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="patientAddress">地址：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="patientAddress" id="patientAddress" autocomplete="off"
+                               class="layui-input"
+                               th:value="${session.appointment.patient.patientAddress}" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="diagnosisContent">临床诊断：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="diagnosisContent" id="diagnosisContent" autocomplete="off"
+                               class="layui-input" required="required"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="diagnosisContent">处方：</label>
+                    <div class="layui-input-block">
+                        <textarea name="diagnosisPrescription" placeholder="药品名（空格）数量（回车）药品名（空格）数量（回车）"
+                                  class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="medicineTip">药名提醒：</label>
+                    <input type="text" id="medicineTip" placeholder="请输入药名" class="layui-input-block"/>
+                    <span id="medicineMsg"></span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否检查：</label>
+                    <div class="layui-input-block">
+                        <input lay-filter="checkFilter" type="radio" name="diagnosisIsCheck" value="1" title="是"/>
+                        <input type="radio" name="diagnosisIsCheck" value="0" title="否" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否手术：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="diagnosisIsOperation" value="1" title="是"
+                               lay-filter="operationFilter">
+                        <input type="radio" name="diagnosisIsOperation" value="0" title="否" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item" hidden="hidden">
+                    <input type="text" name="appointmentId" th:value="${session.appointment.appointmentId}"/>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formSubmit">提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--==== 如果不是点击'填写诊断单跳转过来的，属于非法操作，显示该页面' =====-->
+        <div style="padding: 15px;" th:if="${session.appointment}==null">
+            当前没有相关预约记录，你不能直接添加诊断单记录，请按照正常操作使用该系统
+        </div>
+    </div>
+</div>
+
+<!--================ js代码区域 ================-->
+<script>
+    layui.use(['layer', 'element', 'form'], function () {
+
+        var layer = layui.layer;
+        var element = layui.element;
+        var form = layui.form;
+
+        //监听检查
+        form.on('radio(checkFilter)', function (data) {
+            var radio_data = data.value; //被点击的radio的value值
+            //发送请求，获取所有的检查项
+            //弹出模态框
+            layer.open({
+                type: 1,//类型，新页面
+                area: ['50%', '50%'],//定义宽和高
+                title: '选择检查项',//题目
+                shadeClose: false,//点击遮罩层关闭
+                content: $('#openCheck'), //打开的内容
+                btn: ["确认", "取消"],//添加两个按钮
+                success: function (layero, index) {
+                    // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                },
+                yes: function (index, layero) {
+                    //yes默认触发第一个按钮事件
+                    var obj = document.getElementsByName("checkItem");
+                    var check_val = new Array();
+                    for (var i in obj) {
+                        if (obj[i].checked)
+                            check_val.push(obj[i].value);
+                    }
+                    var send_data = {
+                        "checkItemIdList": check_val.toString(),
+                        "diagnosisId": $("#send_checkItem_diagnosisId").val().toString()
+                    };
+                    $.ajax({
+                        url: "/diagnosis/checkItem",
+                        type: "post",
+                        data: (send_data),
+                        error: function () {
+                            layer.msg("连接后台失败，服务器异常")
+                        }
+                    });
+                    layer.close(index);
+                },
+                btn2: function (index, layero) {
+                    //第二个按钮事件
+
+                    layer.close(index);
+                }
+            });
+        });
+
+        //监听手术
+        form.on('radio(operationFilter)', function (data) {
+            //弹出模态框
+            layer.open({
+                type: 1,//类型，新页面
+                area: ['50%', '50%'],//定义宽和高
+                title: '输入手术名',//题目
+                shadeClose: false,//点击遮罩层关闭
+                content: $('#openOperation'), //打开的内容
+                btn: ["确认", "取消"],//添加两个按钮
+                success: function (layero, index) {
+                    // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                },
+                yes: function (index, layero) {
+                    //yes默认触发第一个按钮事件
+                    var send_data = {
+                        "operationName": $("#send_operation_name").val().toString(),
+                        "diagnosisId": $("#send_operation_diagnosisId").val().toString()
+                    };
+                    $.ajax({
+                        url: "/diagnosis/operation",
+                        type: "post",
+                        data: send_data,
+                        error: function () {
+                            layer.msg("连接后台失败，服务器异常")
+                        }
+                    });
+                    layer.close(index);
+                },
+                btn2: function (index, layero) {
+                    //第二个按钮事件
+                    layer.close(index);
+                }
+            });
+            //获取手术名
+        });
+        //监听提交
+        form.on('submit(formSubmit)', function (data) {
+            var send_diagnosis_data = data.field;
+            $.ajax({
+                type: "post",
+                url: "/diagnosis",
+                data: send_diagnosis_data,
+                success: function (data) {
+                    layer.msg(data);
+                    window.location.href = "/page/appointment/index"
+                },
+                error: function () {
+                    layer.msg("连接后台失败");
+                }
+            });
+            return false;
+        });
+
+    });
+    //获取药名
+    $(function () {
+        //输入框的值改变时触发
+        $("#medicineTip").on("input", function (e) {
+            //获取input输入的值
+            var medicineTip = e.delegateTarget.value.toString();
+            $.ajax({
+                type: "get",
+                url: "/medicine",
+                data: {"medicineTip": medicineTip},
+                success: function (data) {
+                    $("#medicineMsg").text(data);
+                },
+                error: function () {
+                    $("#medicineMsg").text("");
+                }
+            });
+        });
+
+    });
+
+</script>
+</body>
+<!--================ 模态框：添加手术 ================-->
+<div id="openOperation" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="send_operation_name">手术名：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="send_operation_name" id="send_operation_name" placeholder="请输入手术名"
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+                <input type="text" id="send_operation_diagnosisId"
+                       th:value="${session.diagnosis.diagnosisId}"
+                       hidden="hidden"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--================ 模态框：选择检查项 ================-->
+<div id="openCheck" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+            <label class="layui-form-label">检查项：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block" th:if="${session.checkItems}!=null">
+                    <div class="layui-input-block">
+                        <input th:each="checkItem:${session.checkItems}" type="checkbox" name="checkItem"
+                               id="send_checkItem"
+                               th:title="${checkItem.checkItemName}"
+                               th:value="${checkItem.checkItemId}"/>
+                    </div>
+                </div>
+                <input type="text" id="send_checkItem_diagnosisId" th:value="${session.diagnosis.diagnosisId}"
+                       hidden="hidden"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+</html>

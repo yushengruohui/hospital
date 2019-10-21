@@ -1,4 +1,4 @@
-package com.ys.hospital.pojo;
+﻿package com.ys.hospital.pojo;
 
 import java.io.Serializable;
 import lombok.Data;
@@ -26,50 +26,4 @@ public class Patient implements Serializable {
     private String patientAddress;
     //所属用户id
     private Integer clientId;
-	public Integer getPatientId() {
-		return patientId;
-	}
-	public void setPatientId(Integer patientId) {
-		this.patientId = patientId;
-	}
-	public String getPatientPhone() {
-		return patientPhone;
-	}
-	public void setPatientPhone(String patientPhone) {
-		this.patientPhone = patientPhone;
-	}
-	public String getPatientName() {
-		return patientName;
-	}
-	public void setPatientName(String patientName) {
-		this.patientName = patientName;
-	}
-	public String getPatientGender() {
-		return patientGender;
-	}
-	public void setPatientGender(String patientGender) {
-		this.patientGender = patientGender;
-	}
-	public String getPatientIdentity() {
-		return patientIdentity;
-	}
-	public void setPatientIdentity(String patientIdentity) {
-		this.patientIdentity = patientIdentity;
-	}
-	public String getPatientAddress() {
-		return patientAddress;
-	}
-	public void setPatientAddress(String patientAddress) {
-		this.patientAddress = patientAddress;
-	}
-	public Integer getClientId() {
-		return clientId;
-	}
-	public void setClientId(Integer clientId) {
-		this.clientId = clientId;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-    
 }

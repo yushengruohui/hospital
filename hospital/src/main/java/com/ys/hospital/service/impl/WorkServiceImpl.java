@@ -19,7 +19,7 @@ import java.util.List;
 @Service("workService")
 public class WorkServiceImpl implements WorkService {
     private static final Logger logger = LoggerFactory.getLogger(WorkServiceImpl.class);
-    
+
     @Resource
     private WorkMapper workMapper;
 
@@ -37,7 +37,7 @@ public class WorkServiceImpl implements WorkService {
      * 新增Work数据
      *
      * @param work 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertWork(Work work) {
@@ -48,7 +48,7 @@ public class WorkServiceImpl implements WorkService {
      * 修改Work数据
      *
      * @param work 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateWork(Work work) {
@@ -59,10 +59,39 @@ public class WorkServiceImpl implements WorkService {
      * 通过主键删除Work数据
      *
      * @param workId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteWorkById(Integer workId) {
         return this.workMapper.deleteWorkById(workId);
+    }
+
+    /**
+     * 根据科室id以及工作时间查询值班情况(room与work双表联查)
+     *
+     * @param branchId（科室表中的科室id）
+     * @param time(工作时间)
+     * @return works(工作列表)
+     */
+    @Override
+    public List<Work> findWorksByBranchIdAndTime(int branchId, String time) {
+        return this.workMapper.findWorksByBranchIdAndTime(branchId, time);
+    }
+
+    /**
+     * 根据医师Id与值班时间查找值班表
+     *
+     * @param employeeId
+     * @param workDate
+     * @return work(值班安排表信息)
+     */
+    @Override
+    public Work findWorkByEmployeeIdAndWorkDate(Integer employeeId, String workDate) {
+        return this.workMapper.findWorkByEmployeeIdAndWorkDate(employeeId, workDate);
+    }
+
+    @Override
+    public List<Work> queryWorkByParam(Work work) {
+        return this.workMapper.queryWorkByParam(work);
     }
 }

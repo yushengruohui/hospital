@@ -2,10 +2,10 @@ package com.ys.hospital.service.impl;
 
 import com.ys.hospital.dao.AppointmentMapper;
 import com.ys.hospital.pojo.Appointment;
-import com.ys.hospital.service.AppointmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import com.ys.hospital.service.AppointmentService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -75,5 +75,43 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setEmployeeId(employeeId);
         appointment.setAppointmentStatus(0);
         return appointmentMapper.queryAppointmentByParam(appointment);
+    }
+
+    @Override
+    public List<Appointment> findTreatedAppointment(Integer employeeId) {
+        if (employeeId == null) {
+            return null;
+        }
+        Appointment appointment = new Appointment();
+        appointment.setEmployeeId(employeeId);
+        appointment.setAppointmentStatus(1);
+        return appointmentMapper.queryAppointmentByParam(appointment);
+    }
+
+    @Override
+    public List<Appointment> queryAppointmentByParam(Appointment appointment) {
+        return appointmentMapper.queryAppointmentByParam(appointment);
+    }
+
+    /**
+     * 根据患者Id查询患者预约记录
+     *
+     * @param patientId
+     * @return
+     */
+    @Override
+    public List<Appointment> getAppointmentListByPatientId(Integer patientId) {
+        return appointmentMapper.getAppointmentListByPatientId(patientId);
+    }
+
+    /**
+     * 根据预约单id查询预约单信息（级联查询）
+     *
+     * @param appointmentId
+     * @return 预约单信息
+     */
+    @Override
+    public Appointment getAppointmentByAppointmentId(Integer appointmentId) {
+        return appointmentMapper.getAppointmentByAppointmentId(appointmentId);
     }
 }

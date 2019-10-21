@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -12,7 +13,7 @@ import lombok.Data;
 @Data
 public class WorkTime implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer workTimeId;
     //8:00
     private Integer workTime1;
@@ -44,5 +45,26 @@ public class WorkTime implements Serializable {
     private Integer workTime14;
     //所属工作表
     private Integer workId;
-    
+
+    @Override
+    public String toString() {
+        return "WorkTime{" +
+                "workTimeId=" + workTimeId +
+                ", workTime1=" + workTime1 +
+                ", workTime2=" + workTime2 +
+                ", workTime3=" + workTime3 +
+                ", workTime4=" + workTime4 +
+                ", workTime5=" + workTime5 +
+                ", workTime6=" + workTime6 +
+                ", workTime7=" + workTime7 +
+                ", workTime8=" + workTime8 +
+                ", workTime9=" + workTime9 +
+                ", workTime10=" + workTime10 +
+                ", workTime11=" + workTime11 +
+                ", workTime12=" + workTime12 +
+                ", workTime13=" + workTime13 +
+                ", workTime14=" + workTime14 +
+                ", workId=" + workId +
+                '}';
+    }
 }
