@@ -46,4 +46,6 @@ public interface DiagnosisService {
     List<Diagnosis> queryDiagnosisListByParam(Diagnosis diagnosis);
 
     List<Diagnosis> queryDealingDiagnosis(Integer employeeId);
+
+    List<Diagnosis> queryDealtDiagnosis(Integer employeeId);
 }

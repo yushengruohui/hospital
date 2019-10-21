@@ -53,7 +53,29 @@ public class DiagnosisController {
         PageHelper.startPage(layuiPage.getPage(), layuiPage.getLimit());
         //获取当前用户的所有正在处理的诊断记录
         List<Diagnosis> diagnoses = diagnosisService.queryDealingDiagnosis(employee.getEmployeeId());
-        System.out.println("diagnoses = " + diagnoses);
+
+        //把当前用户的所有正在处理的诊断记录存进layuiPage
+        layuiPage.setData(diagnoses);
+
+        //将数据封装到 PageInfo 中
+        PageInfo page = new PageInfo(layuiPage.getData());
+        //设置数据数量
+        layuiPage.setCount(page.getPageSize());
+        //设置成功代码
+        layuiPage.setCode("0");
+
+        return layuiPage;
+    }
+
+    @GetMapping("/diagnosis/dealtDiagnosis")
+    public MyPageInfo<Diagnosis> showDiagnosis(MyPageInfo<Diagnosis> layuiPage, HttpSession session) {
+        //获取当前登录的用户
+        Employee employee = (Employee) session.getAttribute("employee");
+
+        //开启分页
+        PageHelper.startPage(layuiPage.getPage(), layuiPage.getLimit());
+        //获取当前用户的所有正在处理的诊断记录
+        List<Diagnosis> diagnoses = diagnosisService.queryDealtDiagnosis(employee.getEmployeeId());
 
         //把当前用户的所有正在处理的诊断记录存进layuiPage
         layuiPage.setData(diagnoses);

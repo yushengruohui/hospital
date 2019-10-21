@@ -78,4 +78,9 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     public List<Diagnosis> queryDealingDiagnosis(Integer employeeId) {
         return this.diagnosisMapper.queryDealingDiagnosis(employeeId);
     }
+
+    @Override
+    public List<Diagnosis> queryDealtDiagnosis(Integer employeeId) {
+        return this.diagnosisMapper.queryDealtDiagnosis(employeeId);
+    }
 }

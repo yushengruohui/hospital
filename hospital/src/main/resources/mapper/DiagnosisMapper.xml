@@ -105,6 +105,51 @@
             AND appointment.employee_id=#{employeeId}
         </if>
     </select>
+    <select id="queryDealtDiagnosis" resultMap="DealingDiagnosisMap">
+        SELECT
+        diagnosis.diagnosis_id,
+        diagnosis.diagnosis_time,
+        diagnosis.diagnosis_content,
+        diagnosis.diagnosis_prescription,
+        diagnosis.diagnosis_status,
+        diagnosis.diagnosis_is_check,
+        diagnosis.diagnosis_is_operation,
+        diagnosis.appointment_id,
+        appointment.appointment_id,
+        appointment.appointment_time,
+        appointment.appointment_status,
+        appointment.patient_id,
+        appointment.employee_id,
+        appointment.branch_id,
+        appointment.appointment_price,
+        appointment.appointment_pay_time,
+        patient.patient_id,
+        patient.patient_phone,
+        patient.patient_name,
+        patient.patient_gender,
+        patient.patient_identity,
+        patient.patient_address,
+        patient.client_id,
+        branch.branch_id,
+        branch.branch_name,
+        branch.department_id,
+        employee.employee_id,
+        employee.employee_name,
+        employee.employee_password,
+        employee.employee_online,
+        employee.employee_last_login_time
+        FROM
+        diagnosis
+        JOIN appointment ON diagnosis.appointment_id = appointment.appointment_id
+        JOIN patient ON appointment.patient_id = patient.patient_id
+        JOIN branch ON appointment.branch_id = branch.branch_id
+        join employee on appointment.employee_id = employee.employee_id
+        WHERE
+        diagnosis.diagnosis_status = '已处理'
+        <if test="employeeId!=null">
+            AND appointment.employee_id=#{employeeId}
+        </if>
+    </select>
 
     <!--新增Diagnosis数据-->
     <insert id="insertDiagnosis" keyProperty="diagnosisId" useGeneratedKeys="true">

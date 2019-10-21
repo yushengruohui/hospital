@@ -53,4 +53,6 @@ public interface DiagnosisMapper {
     int deleteDiagnosisById(Integer diagnosisId);
 
     List<Diagnosis> queryDealingDiagnosis(Integer employeeId);
+
+    List<Diagnosis> queryDealtDiagnosis(Integer employeeId);
 }
