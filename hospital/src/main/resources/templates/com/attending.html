@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="title">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>医院自动化管理系统</title>
     <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
     <script th:src="@{/webjars/layui/layui.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </div>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -15,12 +15,15 @@
             <div class="layui-logo">医院自动化管理系统</div>
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item"><a th:href="@{/page/appointment/index}">预约处理</a></li>
-                <li class="layui-nav-item"><a th:href="@{/page/diagnosis/index}">诊断处理</a></li>
+                <li class="layui-nav-item"><a th:href="@{/page/diagnosis/dealing}">诊断处理</a></li>
                 <li class="layui-nav-item"><a th:href="@{/page/employee/index}">个人中心</a></li>
             </ul>
             <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" th:if="${session.employee}!=null">
                     <a th:href="@{/page/employee/index}">[[${session.employee.employeeName}]]</a>
+                </li>
+                <li class="layui-nav-item" th:if="${session.employee}==null">
+                    <a th:href="@{/}">你还没登录，请登录</a>
                 </li>
                 <li class="layui-nav-item"><a th:href="@{/employee/out}">退出登录</a></li>
             </ul>
@@ -32,7 +35,7 @@
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item">
                         <a href="/page/diagnosis/add">添加诊断</a>
                     </li>
                     <li class="layui-nav-item">
@@ -51,7 +54,7 @@
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item">
                         <a href="javascript:;">个人基本信息</a>
                     </li>
                     <li class="layui-nav-item">
@@ -67,7 +70,7 @@
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item">
                         <a href="/page/appointment/index">待处理预约</a>
                     </li>
                     <li class="layui-nav-item">

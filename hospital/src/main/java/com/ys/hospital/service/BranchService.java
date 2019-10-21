@@ -49,6 +49,7 @@ public interface BranchService {
      * @param departmentId
      * @return branchList(子科目列表)
      */
-    public List<Branch> getBranchListByDepartmentId(int departmentId);
+    List<Branch> getBranchListByDepartmentId(int departmentId);
 
+    List<Branch> queryBranchByParam(Branch branch);
 }

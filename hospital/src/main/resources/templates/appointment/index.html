@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="~{com/attending::title}"></div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/layui/layui.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </head>
 <body class="layui-layout-body">
@@ -34,7 +38,7 @@
         table.render({
             elem: '#appointmentTable'
             , height: 312
-            , url: '/untreatedAppointments' //数据接口
+            , url: '/appointment/untreatedAppointments' //数据接口
             , method: 'get'
             , page: true //开启分页
             , cols: [
@@ -80,128 +84,126 @@
                     });
                     break;
                 case 'diagnosis':
+                    //直接获取所有的检查项
                     $.ajax({
-                            url: "/page/diagnosis/addReady",
-                            type: "post",
-                            contentType: "application/json",
-                            data: JSON.stringify({
-                                "appointmentId":
-                                rowData.appointmentId,
-                                "appointmentTime":
-                                rowData.appointmentTime,
-                                "appointmentStatus":
-                                rowData.appointmentStatus,
-                                "patientId":
-                                rowData.patientId,
-                                "employeeId":
-                                rowData.employeeId,
-                                "branchId":
-                                rowData.branchId,
-                                "appointmentPrice":
-                                rowData.appointmentPrice,
-                                "appointmentPayTime":
-                                rowData.appointmentPayTime,
-                                "patient":
-                                    {
-                                        "patientId":
-                                        rowData.patient.patientId,
-                                        "patientPhone":
-                                        rowData.patient.patientPhone,
-                                        "patientName":
-                                        rowData.patient.patientName,
-                                        "patientGender":
-                                        rowData.patient.patientGender,
-                                        "patientIdentity":
-                                        rowData.patient.patientIdentity,
-                                        "patientAddress":
-                                        rowData.patient.patientAddress,
-                                        "clientId":
-                                        rowData.patient.clientId
-                                    }
-                                ,
-                                "employee":
-                                    {
-                                        "employeeId":
-                                        rowData.employee.employeeId,
-                                        "employeeName":
-                                        rowData.employee.employeeName,
-                                        "employeePassword":
-                                        rowData.employee.employeePassword,
-                                        "employeeOnline":
-                                        rowData.employee.employeeOnline,
-                                        "employeeLastLoginTime":
-                                        rowData.employee.employeeLastLoginTime,
-                                        "employeeDetail":
-                                            {
-                                                "employeeDetailId":
-                                                rowData.employee.employeeDetail.employeeDetailId,
-                                                "employeeDetailGender":
-                                                rowData.employee.employeeDetail.employeeDetailGender,
-                                                "employeeDetailBirthday":
-                                                rowData.employee.employeeDetail.employeeDetailBirthday,
-                                                "employeeDetailAddress":
-                                                rowData.employee.employeeDetail.employeeDetailAddress,
-                                                "employeeDetailPhone":
-                                                rowData.employee.employeeDetail.employeeDetailPhone,
-                                                "employeeDetailIdentity":
-                                                rowData.employee.employeeDetail.employeeDetailIdentity,
-                                                "employeeDetailEntryTime":
-                                                rowData.employee.employeeDetail.employeeDetailEntryTime,
-                                                "employeeDetailEmail":
-                                                rowData.employee.employeeDetail.employeeDetailEmail,
-                                                "employeeDetailDescript":
-                                                rowData.employee.employeeDetail.employeeDetailDescript,
-                                                "employeeDetailStatus":
-                                                rowData.employee.employeeDetail.employeeDetailStatus,
-                                                "employeeId":
-                                                rowData.employee.employeeDetail.employeeId,
-                                                "positionId":
-                                                rowData.employee.employeeDetail.positionId,
-                                                "branchId":
-                                                rowData.employee.employeeDetail.branchId,
-                                                "titleId":
-                                                rowData.employee.employeeDetail.titleId
-                                            }
-                                    }
-                                ,
-                                "branch":
-                                    {
-                                        "branchId":
-                                        rowData.branch.branchId,
-                                        "branchName":
-                                        rowData.branch.branchName,
-                                        "departmentId":
-                                        rowData.branch.departmentId
-                                    }
-                            })
-
-                            ,
-                            success: function () {
-
-                                window.location.href = '/page/diagnosis/add';
-                            }
-                            ,
-                            error: function () {
-                                layer.msg("连接后台失败");
-                            }
-                        }
-                    )
-                    ;
-                    break;
-                case
-                'deal'
-                :
-                    console.info(rowData.employee.employeeDetail.employeeDetailEntryTime);
-                    console.info(rowData.appointmentTime);
+                        type: "get",
+                        url: "/checkItem/checkItems"
+                    });
                     $.ajax({
+                        url: "/page/diagnosis/addReady",
                         type: "post",
-                        url: "/page/test",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            "appointmentId":
+                            rowData.appointmentId,
+                            "appointmentTime":
+                            rowData.appointmentTime,
+                            "appointmentStatus":
+                            rowData.appointmentStatus,
+                            "patientId":
+                            rowData.patientId,
+                            "employeeId":
+                            rowData.employeeId,
+                            "branchId":
+                            rowData.branchId,
+                            "appointmentPrice":
+                            rowData.appointmentPrice,
+                            "appointmentPayTime":
+                            rowData.appointmentPayTime,
+                            "patient":
+                                {
+                                    "patientId":
+                                    rowData.patient.patientId,
+                                    "patientPhone":
+                                    rowData.patient.patientPhone,
+                                    "patientName":
+                                    rowData.patient.patientName,
+                                    "patientGender":
+                                    rowData.patient.patientGender,
+                                    "patientIdentity":
+                                    rowData.patient.patientIdentity,
+                                    "patientAddress":
+                                    rowData.patient.patientAddress,
+                                    "clientId":
+                                    rowData.patient.clientId
+                                }
+                            ,
+                            "employee":
+                                {
+                                    "employeeId":
+                                    rowData.employee.employeeId,
+                                    "employeeName":
+                                    rowData.employee.employeeName,
+                                    "employeePassword":
+                                    rowData.employee.employeePassword,
+                                    "employeeOnline":
+                                    rowData.employee.employeeOnline,
+                                    "employeeLastLoginTime":
+                                    rowData.employee.employeeLastLoginTime,
+                                    "employeeDetail":
+                                        {
+                                            "employeeDetailId":
+                                            rowData.employee.employeeDetail.employeeDetailId,
+                                            "employeeDetailGender":
+                                            rowData.employee.employeeDetail.employeeDetailGender,
+                                            "employeeDetailBirthday":
+                                            rowData.employee.employeeDetail.employeeDetailBirthday,
+                                            "employeeDetailAddress":
+                                            rowData.employee.employeeDetail.employeeDetailAddress,
+                                            "employeeDetailPhone":
+                                            rowData.employee.employeeDetail.employeeDetailPhone,
+                                            "employeeDetailIdentity":
+                                            rowData.employee.employeeDetail.employeeDetailIdentity,
+                                            "employeeDetailEntryTime":
+                                            rowData.employee.employeeDetail.employeeDetailEntryTime,
+                                            "employeeDetailEmail":
+                                            rowData.employee.employeeDetail.employeeDetailEmail,
+                                            "employeeDetailDescript":
+                                            rowData.employee.employeeDetail.employeeDetailDescript,
+                                            "employeeDetailStatus":
+                                            rowData.employee.employeeDetail.employeeDetailStatus,
+                                            "employeeId":
+                                            rowData.employee.employeeDetail.employeeId,
+                                            "positionId":
+                                            rowData.employee.employeeDetail.positionId,
+                                            "branchId":
+                                            rowData.employee.employeeDetail.branchId,
+                                            "titleId":
+                                            rowData.employee.employeeDetail.titleId
+                                        }
+                                }
+                            ,
+                            "branch":
+                                {
+                                    "branchId":
+                                    rowData.branch.branchId,
+                                    "branchName":
+                                    rowData.branch.branchName,
+                                    "departmentId":
+                                    rowData.branch.departmentId
+                                }
+                        })
+
+                        ,
+                        success: function (data) {
+                            window.location.href = data;
+                        }
+                        ,
+                        error: function () {
+                            layer.msg("连接后台失败");
+                        }
+                    });
+                    break;
+                case 'deal':
+                    $.ajax({
+                        type: "put",
+                        url: "/appointment",
                         data: {
-                            "id": "1000",
-                            "age": 18,
-                            "name": rowData.branch.branchName,
-                            "password": "123456",
-                            "date": rowData.appointmentTime
+                            "appointmentId": rowData.appointmentId
+                        },
+                        success: function (result) {
+                            layer.msg(result);
+                            location.reload();
                         },
                         error: function () {
                             layer.msg("连接后台失败");

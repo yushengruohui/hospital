@@ -1,7 +1,7 @@
 package com.ys.hospital.service.impl;
 
-import com.ys.hospital.pojo.Patient;
 import com.ys.hospital.dao.PatientMapper;
+import com.ys.hospital.pojo.Patient;
 import com.ys.hospital.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,5 +89,13 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public int updatePatientClientId(Patient patient) {
         return patientMapper.updatePatientClientId(patient);
+    }
+
+    @Override
+    public List<Patient> queryPatientByParam(Patient patient) {
+        if (patient == null) {
+            return null;
+        }
+        return patientMapper.queryPatientByParam(patient);
     }
 }
