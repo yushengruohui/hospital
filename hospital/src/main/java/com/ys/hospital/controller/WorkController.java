@@ -1,5 +1,7 @@
 package com.ys.hospital.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.pojo.Room;
 import com.ys.hospital.pojo.Work;
@@ -7,6 +9,7 @@ import com.ys.hospital.pojo.WorkTime;
 import com.ys.hospital.service.RoomService;
 import com.ys.hospital.service.WorkService;
 import com.ys.hospital.service.WorkTimeService;
+import com.ys.hospital.tools.MyPageInfo;
 import org.apache.ibatis.javassist.expr.NewExpr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,11 +53,11 @@ public class WorkController {
     @ResponseBody
     @RequestMapping("/updateWorkDetailByWorkId")
     public String updateWorkDetailByWorkId(Work work) {
-        work.setWorkId(1);
+        Work selectWork = new Work();
+        selectWork.setWorkId(work.getWorkId());
         //根据workId查询work信息
-        List<Work> works = workService.queryWorkByParam(work);
+        List<Work> works = workService.queryWorkByParam(selectWork);
         //设置要安排预约的人数，只能是14的倍数
-        work.setWorkDeal(14);
         //将要修改的预约人数平均分为14个时间段
         int workTimeNum = work.getWorkDeal() / 14;
         //原本每个时间段能预约多少人
@@ -173,7 +176,8 @@ public class WorkController {
      */
     @ResponseBody
     @GetMapping("/works")
-    public List<Work> getWorkList(HttpSession session) {
+    public MyPageInfo<Work> getWorkList(HttpSession session, MyPageInfo<Work> myPageInfo) {
+        PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
         //获取登录医师的Id
         Employee employee = (Employee) session.getAttribute("employee");
         //根据医师Id查询值班安排
@@ -187,7 +191,11 @@ public class WorkController {
             //获取诊室信息将其注入值班安排中
             works.get(i).setRoom(roomService.queryRoomByParam(room).get(0));
         }
-        return works;
+        myPageInfo.setData(works);
+        PageInfo page = new PageInfo(myPageInfo.getData());
+        myPageInfo.setCode("0");
+        myPageInfo.setCount(page.getPageSize());
+        return myPageInfo;
     }
 
     /**
@@ -196,12 +204,129 @@ public class WorkController {
      * @param workId
      * @return 时间段详情
      */
+    @ResponseBody
+    @RequestMapping("/getWorkTimeByWorkId")
     public WorkTime getWorkTimeByWorkId(Integer workId) {
         WorkTime workTime = new WorkTime();
         workTime.setWorkId(workId);
         workTime = workTimeService.queryWorkTimeByParam(workTime).get(0);
 
         return workTime;
+    }
+
+
+    /**
+     * 修改上班时间安排
+     *
+     * @param work
+     * @return 修改结果
+     */
+    @ResponseBody
+    @RequestMapping("/updateIsWork")
+    public String updateIsWork(Work work) {
+        //获取原本每个时间段的可预约人数
+        int oldWorkTime = work.getWorkDeal() / 14;
+        //创建一个用于查询的workTime对象
+        WorkTime selectWorkTime = new WorkTime();
+        selectWorkTime.setWorkId(work.getWorkId());
+        //根据workId查找值班详情
+        WorkTime workTime = workTimeService.queryWorkTimeByParam(selectWorkTime).get(0);
+        //获取剩余可预约人数
+        //1-8早上
+        int residueWorkTime1 = workTime.getWorkTime1();
+        int residueWorkTime2 = workTime.getWorkTime2();
+        int residueWorkTime3 = workTime.getWorkTime3();
+        int residueWorkTime4 = workTime.getWorkTime4();
+        int residueWorkTime5 = workTime.getWorkTime5();
+        int residueWorkTime6 = workTime.getWorkTime6();
+        int residueWorkTime7 = workTime.getWorkTime7();
+        int residueWorkTime8 = workTime.getWorkTime8();
+        //9-14 晚上
+        int residueWorkTime9 = workTime.getWorkTime9();
+        int residueWorkTime10 = workTime.getWorkTime10();
+        int residueWorkTime11 = workTime.getWorkTime11();
+        int residueWorkTime12 = workTime.getWorkTime12();
+        int residueWorkTime13 = workTime.getWorkTime13();
+        int residueWorkTime14 = workTime.getWorkTime14();
+        //如果选择了休假一天
+        if (work.getWorkMorning() == 0 && work.getWorkAfternoon() == 0) {
+            //判断12点前是否有人预约，有人预约不可休假
+            if (residueWorkTime1 < oldWorkTime && residueWorkTime2 < oldWorkTime && residueWorkTime3 < oldWorkTime && residueWorkTime4 < oldWorkTime && residueWorkTime5 < oldWorkTime && residueWorkTime6 < oldWorkTime && residueWorkTime7 < oldWorkTime && residueWorkTime8 < oldWorkTime) {
+                return "早上时间段已经有人预约了，无法休假";
+            } else if (residueWorkTime9 < oldWorkTime && residueWorkTime10 < oldWorkTime && residueWorkTime11 < oldWorkTime && residueWorkTime12 < oldWorkTime && residueWorkTime13 < oldWorkTime && residueWorkTime14 < oldWorkTime) {
+                return "下午时间段已经有人预约了，无法休假";
+            } else {
+                work.setWorkDeal(0);
+                //修改值班安排表
+                workService.updateWork(work);
+                //修改值班详情表，将1-8个时间段的预约源显示为0
+                workTime.setWorkTime1(0);
+                workTime.setWorkTime2(0);
+                workTime.setWorkTime3(0);
+                workTime.setWorkTime4(0);
+                workTime.setWorkTime5(0);
+                workTime.setWorkTime6(0);
+                workTime.setWorkTime7(0);
+                workTime.setWorkTime8(0);
+                workTime.setWorkTime9(0);
+                workTime.setWorkTime10(0);
+                workTime.setWorkTime11(0);
+                workTime.setWorkTime12(0);
+                workTime.setWorkTime13(0);
+                workTime.setWorkTime14(0);
+                workTimeService.updateWorkTime(workTime);
+                return "已经为你安排这天休假";
+            }
+        } else if (work.getWorkMorning() == 0 && work.getWorkAfternoon() > 0) {
+            //如果早上休假，晚上不休
+            if (residueWorkTime1 < oldWorkTime && residueWorkTime2 < oldWorkTime && residueWorkTime3 < oldWorkTime && residueWorkTime4 < oldWorkTime && residueWorkTime5 < oldWorkTime && residueWorkTime6 < oldWorkTime && residueWorkTime7 < oldWorkTime && residueWorkTime8 < oldWorkTime) {
+                work.setWorkDeal(work.getWorkDeal() - oldWorkTime * 8);
+                workService.updateWork(work);
+                workTime.setWorkTime1(0);
+                workTime.setWorkTime2(0);
+                workTime.setWorkTime3(0);
+                workTime.setWorkTime4(0);
+                workTime.setWorkTime5(0);
+                workTime.setWorkTime6(0);
+                workTime.setWorkTime7(0);
+                workTime.setWorkTime8(0);
+                workTimeService.updateWorkTime(workTime);
+                return "早上已经为你安排休假";
+            } else {
+                System.out.println("你这天早上有病人待诊，无法休假");
+                return "你这天早上有病人待诊，无法休假";
+            }
+        } else {
+            //早上不休假，下午休假
+            if (residueWorkTime9 < oldWorkTime && residueWorkTime10 < oldWorkTime && residueWorkTime11 < oldWorkTime && residueWorkTime12 < oldWorkTime && residueWorkTime13 < oldWorkTime && residueWorkTime14 < oldWorkTime) {
+                work.setWorkDeal(work.getWorkDeal() - oldWorkTime * 6);
+                workService.updateWork(work);
+                workTime.setWorkTime9(0);
+                workTime.setWorkTime10(0);
+                workTime.setWorkTime11(0);
+                workTime.setWorkTime12(0);
+                workTime.setWorkTime13(0);
+                workTime.setWorkTime14(0);
+                workTimeService.updateWorkTime(workTime);
+                return "下午已经为你安排休假";
+            } else {
+                System.out.println("你这天下午有病人待诊，无法休假");
+                return "你这天下午有病人待诊，无法休假";
+            }
+        }
+
+    }
+
+    /***
+     * 将早上、下午是否上班存入session中
+     * @param work
+     * @param session
+     */
+    @ResponseBody
+    @RequestMapping("/setWorkSession")
+    public void setWorkSession(Work work, HttpSession session) {
+        session.setAttribute("workMorning", work.getWorkMorning());
+        session.setAttribute("workAfternoon", work.getWorkAfternoon());
     }
 
 
