@@ -72,4 +72,11 @@
         delete from inpatient_detail where inpatient_detail_id = #{inpatientDetailId}
     </delete>
 
+    <!--通过住院表ID查询住院明细-->
+    <select id="queryInpatientDetailByInpatientId" resultMap="InpatientDetailMap">
+        select
+            inpatient_detail_id, inpatient_detail_price, inpatient_detail_description, inpatient_detail_date, inpatient_id
+        from inpatient_detail
+        where inpatient_id=#{inpatient.inpatientId}
+    </select>
 </mapper>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+
+    <title>填写住院信息</title>
+</head>
+<body>
+<form th:action="@{/inpatient/insertInpatient}" method="post">
+    <table>
+        <tr>
+            <td>入院时间：</td>
+            <td><input type="text" name="inpatientEntryTime" style="width:200px"></td>
+        </tr>
+        <tr>
+            <td>出院时间：</td>
+            <td><input type="text" name="inpatientLeaveTime" style="width:200px"></td>
+        </tr>
+        <tr>
+            <td>处理状态：</td>
+            <td>
+                <select class="form-control" id="inpatientStatus" name="inpatientStatus">
+                    <option>0</option>
+                    <option>1</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>所属住院通知:</td>
+            <td><input style="width:50px"></td>
+        </tr>
+
+        <tr>
+            <td>病床ID：</td>
+            <td>
+                <select  class="form-control" id="bedId" name="bedId">
+                    <option th:each="result : ${beds}" th:value="${result.bedId}" th:text="${result.bedId}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>住院总费用：</td>
+            <td><input type="text" name="inpatientPrice" style="width:50px"></td>
+        </tr>
+        <tr>
+            <td>支付状态：</td>
+            <td><input type="text" name="inpatientPayStatus" style="width:50px"></td>
+        </tr>
+        <tr>
+            <td>预交费用：</td>
+            <td><input type="text" name="inpatientPrepaidPrice" style="width:50px"></td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

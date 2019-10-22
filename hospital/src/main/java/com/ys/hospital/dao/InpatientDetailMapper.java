@@ -52,4 +52,10 @@ public interface InpatientDetailMapper {
      */
     int deleteInpatientDetailById(Integer inpatientDetailId);
 
+    /**
+     * 通过住院表ID查询住院明细
+     * @param inpatientId
+     * @return
+     */
+    List<InpatientDetail> queryInpatientDetailByInpatientId(Integer inpatientId);
 }

@@ -1,6 +1,7 @@
 package com.ys.hospital.service;
 
 import com.ys.hospital.pojo.Medicine;
+
 import java.util.List;
 
 /**
@@ -38,8 +39,13 @@ public interface MedicineService {
      * 通过主键删除数据
      *
      * @param medicineId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteMedicineById(Integer medicineId);
 
+    String queryMedicineName(String medicineTip);
+
+    Integer queryMedicineId(String medicineName);
+
+    double queryMedicinePrice(Integer medicineId);
 }

@@ -1,4 +1,4 @@
-package com.ys.hospital.pojo;
+﻿package com.ys.hospital.pojo;
 
 import java.io.Serializable;
 import lombok.Data;
@@ -26,5 +26,4 @@ public class Patient implements Serializable {
     private String patientAddress;
     //所属用户id
     private Integer clientId;
-
 }

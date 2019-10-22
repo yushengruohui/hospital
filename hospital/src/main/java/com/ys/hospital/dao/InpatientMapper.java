@@ -37,6 +37,13 @@ public interface InpatientMapper {
     int insertInpatient(Inpatient inpatient);
 
     /**
+     * 通过住院表ID查询住院信息
+     * @param inpatientId
+     * @return
+     */
+    List<Inpatient> queryInpatientByInpatientId(Integer inpatientId);
+
+    /**
      * 修改Inpatient数据
      *
      * @param inpatient 实例对象

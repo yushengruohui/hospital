@@ -45,6 +45,16 @@ public class InpatientServiceImpl implements InpatientService {
     }
 
     /**
+     * 通过住院表ID查询住院信息
+     * @param inpatientId
+     * @return
+     */
+    @Override
+    public List<Inpatient> queryInpatientByInpatientId(Integer inpatientId) {
+        return this.inpatientMapper.queryInpatientByInpatientId(inpatientId);
+    }
+
+    /**
      * 修改Inpatient数据
      *
      * @param inpatient 实例对象
@@ -65,4 +75,10 @@ public class InpatientServiceImpl implements InpatientService {
     public int deleteInpatientById(Integer inpatientId) {
         return this.inpatientMapper.deleteInpatientById(inpatientId);
     }
+
+    @Override
+    public List<Inpatient> queryInpatientByParam(Inpatient inpatient) {
+        return this.inpatientMapper.queryInpatientByParam(inpatient);
+    }
+
 }

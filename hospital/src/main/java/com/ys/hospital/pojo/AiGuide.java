@@ -18,5 +18,5 @@ public class AiGuide implements Serializable {
     private String aiguideKey;
     //导诊回复
     private String aiguideContent;
-    
+	
 }

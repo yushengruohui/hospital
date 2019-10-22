@@ -63,6 +63,13 @@
         values (#{bedName}, #{bedStatus}, #{bedEntryTime}, #{bedLeaveTime}, #{bedPrice}, #{patientId}, #{roomId}, #{employeeId})
     </insert>
 
+    <!--通过bedId查询病床信息-->
+    <select id="findBedById" resultMap="BedMap">
+        select
+            bed_id, bed_name, bed_status, bed_entry_time, bed_leave_time, bed_price, patient_id, room_id, employee_id
+        from bed
+        where bed_id = #{bedId}
+    </select>
     <!--修改Bed记录-->
     <update id="updateBed">
         update bed
@@ -100,4 +107,10 @@
         delete from bed where bed_id = #{bedId}
     </delete>
 
+    <select id="queryBedByStatus" resultMap="BedMap">
+        select
+            bed_id, bed_name
+        from bed
+        where bed_status='0'
+    </select>
 </mapper>

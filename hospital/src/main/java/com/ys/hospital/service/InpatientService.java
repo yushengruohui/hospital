@@ -27,6 +27,13 @@ public interface InpatientService {
     int insertInpatient(Inpatient inpatient);
 
     /**
+     * 根据住院表ID查询住院信息
+     * @param inpatientId
+     * @return
+     */
+    List<Inpatient> queryInpatientByInpatientId(Integer inpatientId);
+
+    /**
      * 修改数据
      *
      * @param inpatient 实例对象
@@ -42,4 +49,10 @@ public interface InpatientService {
      */
     int deleteInpatientById(Integer inpatientId);
 
+    /**
+     * 通过inpatient相关属性查询住院信息
+     * @param inpatient
+     * @return
+     */
+    List<Inpatient> queryInpatientByParam(Inpatient inpatient);
 }

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -33,6 +34,9 @@ public class InpatientNotifyServiceImpl implements InpatientNotifyService {
         return this.inpatientNotifyMapper.queryAllInpatientNotify();
     }
 
+    public List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer inpatientNotifyStatus){
+        return this.inpatientNotifyMapper.queryInpatientNotifyByEmployeeId(inpatientNotifyStatus);
+    }
     /**
      * 新增InpatientNotify数据
      *

@@ -5,9 +5,11 @@ import com.ys.hospital.service.InpatientDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (InpatientDetail)表控制层
@@ -28,6 +30,29 @@ public class InpatientDetailController {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+    @RequestMapping("/queryInpatientDetailByInpatientId")
+    public String queryInpatientDetailByInpatientId(Integer InpatientId, Model model){
+        List<InpatientDetail> inpatientDetails=inpatientDetailService.queryInpatientDetailByInpatientId(InpatientId);
+        model.addAttribute("inpatientDetails",inpatientDetails);
+        logger.info("queryInpatientDetailByInpatientId success");
+        return "/nurse/inpatientDetail_list";
+    }
+
+    @RequestMapping("/toUpdateInpatientDetail")
+    public String toUpdateInpatientDetail(Integer InpatientId, Model model){
+        List<InpatientDetail> inpatientDetails=inpatientDetailService.queryInpatientDetailByInpatientId(InpatientId);
+        model.addAttribute("inpatientDetails",inpatientDetails);
+        logger.info("queryInpatientDetailByInpatientId success");
+        return "/nurse/inpatientDetail_update";
+    }
+
+    @RequestMapping("/updateInpatientDetail")
+    public String updateInpatientDetail(InpatientDetail inpatientDetail){
+        int count=inpatientDetailService.updateInpatientDetail(inpatientDetail);
+        if(count>0){
+            return "redirect:/inpatientDetail/queryInpatientDetailByInpatientId";
+        }
+        return "redirect:/inpatientDetail/toUpdateInpatientDetail";
+    }
 }

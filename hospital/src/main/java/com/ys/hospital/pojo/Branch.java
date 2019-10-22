@@ -1,4 +1,4 @@
-package com.ys.hospital.pojo;
+﻿package com.ys.hospital.pojo;
 
 import java.io.Serializable;
 import lombok.Data;
