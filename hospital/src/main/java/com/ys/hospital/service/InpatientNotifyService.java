@@ -1,6 +1,8 @@
 package com.ys.hospital.service;
 
 import com.ys.hospital.pojo.InpatientNotify;
+
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -20,11 +22,11 @@ public interface InpatientNotifyService {
 
     /**
      * 通过登陆人Id查询未处理住院通知
-     * @param employeeId
+     * @param
      * @param inpatientNotifyStatus
      * @return
      */
-    List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer employeeId,Integer inpatientNotifyStatus);
+    List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer inpatientNotifyStatus);
 
     /**
      * 新增数据
