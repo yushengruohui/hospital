@@ -15,14 +15,16 @@
     <!--查询所有AiPrescription信息-->
     <select id="queryAllAiPrescription" resultMap="AiPrescriptionMap">
         select
-          ai_prescription_id, ai_prescription_key, ai_prescription_time, ai_prescription_creator, ai_prescription_modify_time, ai_prescription_modify_employee, ai_prescription_content
+        ai_prescription_id, ai_prescription_key, ai_prescription_time, ai_prescription_creator,
+        ai_prescription_modify_time, ai_prescription_modify_employee, ai_prescription_content
         from ai_prescription
     </select>
 
     <!--根据实体类AiPrescription的相关属性查询实体类AiPrescription-->
     <select id="queryAiPrescriptionByParam" resultMap="AiPrescriptionMap">
         select
-          ai_prescription_id, ai_prescription_key, ai_prescription_time, ai_prescription_creator, ai_prescription_modify_time, ai_prescription_modify_employee, ai_prescription_content
+        ai_prescription_id, ai_prescription_key, ai_prescription_time, ai_prescription_creator,
+        ai_prescription_modify_time, ai_prescription_modify_employee, ai_prescription_content
         from ai_prescription
         <where>
             <if test="aiPrescriptionId != null">
@@ -51,8 +53,10 @@
 
     <!--新增AiPrescription数据-->
     <insert id="insertAiPrescription" keyProperty="aiPrescriptionId" useGeneratedKeys="true">
-        insert into ai_prescription(ai_prescription_key, ai_prescription_time, ai_prescription_creator, ai_prescription_modify_time, ai_prescription_modify_employee, ai_prescription_content)
-        values (#{aiPrescriptionKey}, #{aiPrescriptionTime}, #{aiPrescriptionCreator}, #{aiPrescriptionModifyTime}, #{aiPrescriptionModifyEmployee}, #{aiPrescriptionContent})
+        insert into ai_prescription(ai_prescription_key, ai_prescription_time, ai_prescription_creator,
+        ai_prescription_modify_time, ai_prescription_modify_employee, ai_prescription_content)
+        values (#{aiPrescriptionKey}, #{aiPrescriptionTime}, #{aiPrescriptionCreator}, #{aiPrescriptionModifyTime},
+        #{aiPrescriptionModifyEmployee}, #{aiPrescriptionContent})
     </insert>
 
     <!--修改AiPrescription记录-->

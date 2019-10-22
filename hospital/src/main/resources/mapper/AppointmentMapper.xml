@@ -18,7 +18,8 @@
     <!--查询所有Appointment信息-->
     <select id="queryAllAppointment" resultMap="AppointmentMap">
         select
-          appointment_id, appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price, appointment_pay_time
+        appointment_id, appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price,
+        appointment_pay_time
         from appointment
     </select>
 
@@ -86,7 +87,7 @@
     </select>
     <!--    根据预约单id查询预约单信息-->
     <select id="getAppointmentByAppointmentId" resultMap="AppointmentMap">
-         SELECT
+        SELECT
         employee.employee_id,
         employee.employee_name,
         employee.employee_password,
@@ -115,8 +116,10 @@
 
     <!--新增Appointment数据-->
     <insert id="insertAppointment" keyProperty="appointmentId" useGeneratedKeys="true">
-        insert into appointment(appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price, appointment_pay_time)
-        values (#{appointmentTime}, #{appointmentStatus}, #{patientId}, #{employeeId}, #{branchId}, #{appointmentPrice}, #{appointmentPayTime})
+        insert into appointment(appointment_time, appointment_status, patient_id, employee_id, branch_id,
+        appointment_price, appointment_pay_time)
+        values (#{appointmentTime}, #{appointmentStatus}, #{patientId}, #{employeeId}, #{branchId}, #{appointmentPrice},
+        #{appointmentPayTime})
     </insert>
 
     <!--修改Appointment记录-->

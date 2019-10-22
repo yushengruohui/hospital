@@ -19,7 +19,7 @@ import java.util.List;
 @Service("powerService")
 public class PowerServiceImpl implements PowerService {
     private static final Logger logger = LoggerFactory.getLogger(PowerServiceImpl.class);
-    
+
     @Resource
     private PowerMapper powerMapper;
 
@@ -37,7 +37,7 @@ public class PowerServiceImpl implements PowerService {
      * 新增Power数据
      *
      * @param power 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertPower(Power power) {
@@ -48,7 +48,7 @@ public class PowerServiceImpl implements PowerService {
      * 修改Power数据
      *
      * @param power 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updatePower(Power power) {
@@ -59,7 +59,7 @@ public class PowerServiceImpl implements PowerService {
      * 通过主键删除Power数据
      *
      * @param powerId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deletePowerById(Integer powerId) {

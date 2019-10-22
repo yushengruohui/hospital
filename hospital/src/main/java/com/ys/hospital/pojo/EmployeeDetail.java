@@ -1,15 +1,15 @@
-﻿package com.ys.hospital.pojo;
-
-import java.util.Date;
-import java.io.Serializable;
+package com.ys.hospital.pojo;
 
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * (EmployeeDetail)实体类
  *
  * @author yusheng
- * @since 2019-10-10 08:09:39
+ * @since 2019-10-22 10:54:22
  */
 @Data
 public class EmployeeDetail implements Serializable {
@@ -43,7 +43,9 @@ public class EmployeeDetail implements Serializable {
     //职称id
     private Integer titleId;
 
+    private Position position;
+
+    private Branch branch;
+
     private Title title;
-
-
 }

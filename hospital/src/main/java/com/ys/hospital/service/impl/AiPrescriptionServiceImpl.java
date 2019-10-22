@@ -19,7 +19,7 @@ import java.util.List;
 @Service("aiPrescriptionService")
 public class AiPrescriptionServiceImpl implements AiPrescriptionService {
     private static final Logger logger = LoggerFactory.getLogger(AiPrescriptionServiceImpl.class);
-    
+
     @Resource
     private AiPrescriptionMapper aiPrescriptionMapper;
 
@@ -37,7 +37,7 @@ public class AiPrescriptionServiceImpl implements AiPrescriptionService {
      * 新增AiPrescription数据
      *
      * @param aiPrescription 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertAiPrescription(AiPrescription aiPrescription) {
@@ -48,7 +48,7 @@ public class AiPrescriptionServiceImpl implements AiPrescriptionService {
      * 修改AiPrescription数据
      *
      * @param aiPrescription 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateAiPrescription(AiPrescription aiPrescription) {
@@ -59,7 +59,7 @@ public class AiPrescriptionServiceImpl implements AiPrescriptionService {
      * 通过主键删除AiPrescription数据
      *
      * @param aiPrescriptionId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteAiPrescriptionById(Integer aiPrescriptionId) {

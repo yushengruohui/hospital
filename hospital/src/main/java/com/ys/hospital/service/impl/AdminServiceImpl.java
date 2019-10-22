@@ -19,7 +19,7 @@ import java.util.List;
 @Service("adminService")
 public class AdminServiceImpl implements AdminService {
     private static final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
-    
+
     @Resource
     private AdminMapper adminMapper;
 
@@ -37,7 +37,7 @@ public class AdminServiceImpl implements AdminService {
      * 新增Admin数据
      *
      * @param admin 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertAdmin(Admin admin) {
@@ -48,7 +48,7 @@ public class AdminServiceImpl implements AdminService {
      * 修改Admin数据
      *
      * @param admin 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateAdmin(Admin admin) {
@@ -59,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
      * 通过主键删除Admin数据
      *
      * @param adminId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteAdminById(Integer adminId) {

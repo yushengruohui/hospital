@@ -1,4 +1,4 @@
-﻿package com.ys.hospital.pojo;
+package com.ys.hospital.pojo;
 
 import java.io.Serializable;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.Data;
  * (Patient)实体类
  *
  * @author yusheng
- * @since 2019-10-10 08:09:40
+ * @since 2019-10-22 10:54:22
  */
 @Data
 public class Patient implements Serializable {
@@ -26,4 +26,5 @@ public class Patient implements Serializable {
     private String patientAddress;
     //所属用户id
     private Integer clientId;
+    
 }

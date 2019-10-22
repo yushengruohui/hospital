@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -25,5 +26,5 @@ public class Device implements Serializable {
     private String deviceDecription;
     //注意事件
     private String deviceAlert;
-    
+
 }

@@ -8,7 +8,8 @@
         <result property="clientPassword" column="client_password" jdbcType="VARCHAR"/>
     </resultMap>
     <!--    将用户信息存入数据库，返回存入的信息-->
-    <insert id="insertClient" useGeneratedKeys="true" keyProperty="clientId" parameterType="com.ys.hospital.pojo.Client">
+    <insert id="insertClient" useGeneratedKeys="true" keyProperty="clientId"
+            parameterType="com.ys.hospital.pojo.Client">
         insert into client(client_phone,client_password) values (#{clientPhone},#{clientPassword})
     </insert>
     <!--    查询所有用户信息-->

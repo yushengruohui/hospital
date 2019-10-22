@@ -54,4 +54,11 @@ public interface EmployeeService {
      */
     Employee getEmployeeByEmployeeId(Integer employeeId);
 
+    /**
+     * 查询医院中所有在职的职位为医师信息
+     *
+     * @return 医师列表
+     */
+    List<Employee> getDoctorEmployees();
+
 }

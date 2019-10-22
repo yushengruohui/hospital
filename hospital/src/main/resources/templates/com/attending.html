@@ -15,13 +15,16 @@
             <div class="layui-logo">医院自动化管理系统</div>
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item"><a th:href="@{/page/appointment/index}">预约处理</a></li>
-                <li class="layui-nav-item"><a th:href="@{/page/diagnosis/dealing}">诊断处理</a></li>
+                <li class="layui-nav-item"><a th:href="@{/page/diagnosis/index}">诊断处理</a></li>
+                <li class="layui-nav-item"><a th:href="@{/page/work/index}">值班管理</a></li>
                 <li class="layui-nav-item"><a th:href="@{/page/employee/index}">个人中心</a></li>
+
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item" th:if="${session.employee}!=null">
                     <a th:href="@{/page/employee/index}">[[${session.employee.employeeName}]]</a>
                 </li>
+
                 <li class="layui-nav-item" th:if="${session.employee}==null">
                     <a th:href="@{/}">你还没登录，请登录</a>
                 </li>
@@ -64,6 +67,20 @@
             </div>
         </div>
     </div>
+
+    <!--值班模块-->
+    <div th:fragment="left_work">
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">值班安排</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 
     <!--预约模块-->
     <div th:fragment="left_appointment">

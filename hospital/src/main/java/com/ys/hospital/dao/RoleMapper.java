@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Role;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface RoleMapper {
      * 新增Role数据
      *
      * @param role 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertRole(Role role);
 
@@ -40,7 +41,7 @@ public interface RoleMapper {
      * 修改Role数据
      *
      * @param role 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateRole(Role role);
 
@@ -48,7 +49,7 @@ public interface RoleMapper {
      * 通过主键删除数据
      *
      * @param roleId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteRoleById(Integer roleId);
 

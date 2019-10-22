@@ -13,7 +13,7 @@
     <!--查询所有InpatientNotify信息-->
     <select id="queryAllInpatientNotify" resultMap="InpatientNotifyMap">
         select
-          inpatient_notify_id, inpatient_notify_status, inpatient_deal_time, diagnosis_id, employee_id
+        inpatient_notify_id, inpatient_notify_status, inpatient_deal_time, diagnosis_id, employee_id
         from inpatient_notify
     </select>
     <!--通过登陆人ID查看未处理通知单 -->
@@ -27,7 +27,7 @@
     <!--根据实体类InpatientNotify的相关属性查询实体类InpatientNotify-->
     <select id="queryInpatientNotifyByParam" resultMap="InpatientNotifyMap">
         select
-          inpatient_notify_id, inpatient_notify_status, inpatient_deal_time, diagnosis_id, employee_id
+        inpatient_notify_id, inpatient_notify_status, inpatient_deal_time, diagnosis_id, employee_id
         from inpatient_notify
         <where>
             <if test="inpatientNotifyId != null">

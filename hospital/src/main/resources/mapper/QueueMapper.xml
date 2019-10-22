@@ -13,7 +13,7 @@
     <!--查询所有Queue信息-->
     <select id="queryAllQueue" resultMap="QueueMap">
         select
-          queue__id, queue_number, queue_time, patient_id, employee_id
+        queue__id, queue_number, queue_time, patient_id, employee_id
         from queue
     </select>
 

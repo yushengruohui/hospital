@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -27,5 +28,5 @@ public class AiPrescription implements Serializable {
     private String aiPrescriptionModifyEmployee;
     //智能处方内容
     private String aiPrescriptionContent;
-    
+
 }

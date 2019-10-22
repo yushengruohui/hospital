@@ -13,14 +13,14 @@
     <!--查询所有InpatientDetail信息-->
     <select id="queryAllInpatientDetail" resultMap="InpatientDetailMap">
         select
-          inpatient_detail_id, inpatient_detail_price, inpatient_detail_description, inpatient_detail_date, inpatient_id
+        inpatient_detail_id, inpatient_detail_price, inpatient_detail_description, inpatient_detail_date, inpatient_id
         from inpatient_detail
     </select>
 
     <!--根据实体类InpatientDetail的相关属性查询实体类InpatientDetail-->
     <select id="queryInpatientDetailByParam" resultMap="InpatientDetailMap">
         select
-          inpatient_detail_id, inpatient_detail_price, inpatient_detail_description, inpatient_detail_date, inpatient_id
+        inpatient_detail_id, inpatient_detail_price, inpatient_detail_description, inpatient_detail_date, inpatient_id
         from inpatient_detail
         <where>
             <if test="inpatientDetailId != null">
@@ -43,7 +43,8 @@
 
     <!--新增InpatientDetail数据-->
     <insert id="insertInpatientDetail" keyProperty="inpatientDetailId" useGeneratedKeys="true">
-        insert into inpatient_detail(inpatient_detail_price, inpatient_detail_description, inpatient_detail_date, inpatient_id)
+        insert into inpatient_detail(inpatient_detail_price, inpatient_detail_description, inpatient_detail_date,
+        inpatient_id)
         values (#{inpatientDetailPrice}, #{inpatientDetailDescription}, #{inpatientDetailDate}, #{inpatientId})
     </insert>
 

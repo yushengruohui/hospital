@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -13,7 +14,7 @@ import lombok.Data;
 @Data
 public class Medicine implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer medicineId;
     //药名
     private String medicineName;
@@ -45,5 +46,5 @@ public class Medicine implements Serializable {
     private String medicineSave;
     //审批文号
     private String medicineApproval;
-    
+
 }

@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.WorkTime;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface WorkTimeMapper {
      * 新增WorkTime数据
      *
      * @param workTime 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertWorkTime(WorkTime workTime);
 
@@ -40,7 +41,7 @@ public interface WorkTimeMapper {
      * 修改WorkTime数据
      *
      * @param workTime 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateWorkTime(WorkTime workTime);
 
@@ -48,7 +49,7 @@ public interface WorkTimeMapper {
      * 通过主键删除数据
      *
      * @param workTimeId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteWorkTimeById(Integer workTimeId);
 

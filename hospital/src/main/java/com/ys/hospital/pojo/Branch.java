@@ -1,4 +1,4 @@
-﻿package com.ys.hospital.pojo;
+package com.ys.hospital.pojo;
 
 import java.io.Serializable;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.Data;
  * (Branch)实体类
  *
  * @author yusheng
- * @since 2019-10-10 08:09:39
+ * @since 2019-10-22 10:54:21
  */
 @Data
 public class Branch implements Serializable {
@@ -18,5 +18,5 @@ public class Branch implements Serializable {
     private String branchName;
     //所属科
     private Integer departmentId;
-
+    
 }

@@ -14,7 +14,7 @@
     <!--查询所有Employee信息-->
     <select id="queryAllEmployee" resultMap="EmployeeMap">
         select
-          employee_id, employee_name, employee_password, employee_online, employee_last_login_time
+        employee_id, employee_name, employee_password, employee_online, employee_last_login_time
         from employee
     </select>
 
@@ -69,6 +69,42 @@
         WHERE
         employee.employee_id = employee_detail.employee_id AND
         employee_detail.employee_id = #{employeeId}
+    </select>
+    <!--    查询医院中所有在职的职位为医师信息-->
+    <select id="getDoctorEmployees" resultMap="EmployeeMap">
+        SELECT
+        employee.employee_id,
+        employee.employee_name,
+        employee.employee_password,
+        employee.employee_online,
+        employee.employee_last_login_time,
+        employee_detail.employee_detail_id,
+        employee_detail.employee_detail_gender,
+        employee_detail.employee_detail_birthday,
+        employee_detail.employee_detail_address,
+        employee_detail.employee_detail_phone,
+        employee_detail.employee_detail_identity,
+        employee_detail.employee_detail_entry_time,
+        employee_detail.employee_detail_email,
+        employee_detail.employee_detail_descript,
+        employee_detail.employee_detail_status,
+        employee_detail.employee_id,
+        employee_detail.position_id,
+        employee_detail.branch_id,
+        employee_detail.title_id
+        FROM
+        employee,
+        employee_detail,
+        `position`,
+        title
+        WHERE
+        employee.employee_id = employee_detail.employee_id
+        AND employee_detail.position_id = `position`.position_id
+        AND employee_detail.title_id = title.title_id
+        AND employee_detail.employee_detail_status = 1
+        AND employee_detail.position_id = ( SELECT `position`.position_id FROM `position` WHERE `position`.position_name
+        = '医师' )
+        AND ( title.title_id = 2 OR title.title_id = 1 )
     </select>
 
     <!--新增Employee数据-->

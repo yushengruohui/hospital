@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.CheckItem;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface CheckItemMapper {
      * 新增CheckItem数据
      *
      * @param checkItem 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertCheckItem(CheckItem checkItem);
 
@@ -40,7 +41,7 @@ public interface CheckItemMapper {
      * 修改CheckItem数据
      *
      * @param checkItem 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateCheckItem(CheckItem checkItem);
 
@@ -48,7 +49,7 @@ public interface CheckItemMapper {
      * 通过主键删除数据
      *
      * @param checkItemId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteCheckItemById(Integer checkItemId);
 

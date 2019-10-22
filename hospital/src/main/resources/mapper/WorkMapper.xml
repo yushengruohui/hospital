@@ -18,7 +18,7 @@
     <!--查询所有Work信息-->
     <select id="queryAllWork" resultMap="WorkMap">
         select
-          work_id, work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date
+        work_id, work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date
         from `work`
     </select>
 
@@ -112,10 +112,26 @@
         `work`.employee_id =#{employeeId} AND
         `work`.work_date = #{workDate}
     </select>
+    <select id="findWorkListByEmployeeId" resultType="com.ys.hospital.pojo.Work">
+        SELECT
+        `work`.work_id,
+        `work`.work_week,
+        `work`.employee_id,
+        `work`.work_morning,
+        `work`.work_afternoon,
+        `work`.room_id,
+        `work`.work_deal,
+        `work`.work_date
+        FROM
+        `work`
+        WHERE
+        `work`.work_date > curdate() AND
+        `work`.employee_id = #{employeeId}
+    </select>
 
     <!--新增Work数据-->
     <insert id="insertWork" keyProperty="workId" useGeneratedKeys="true">
-        insert into work(work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date)
+        insert into `work`(work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date)
         values (#{workWeek}, #{employeeId}, #{workMorning}, #{workAfternoon}, #{roomId}, #{workDeal}, #{workDate})
     </insert>
 

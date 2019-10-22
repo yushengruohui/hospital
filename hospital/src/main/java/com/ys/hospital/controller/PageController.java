@@ -25,6 +25,7 @@ public class PageController {
 
     @RequestMapping("/employee/index")
     public String toEmployeeIndex() {
+
         return "employee/index";
     }
 
@@ -52,6 +53,11 @@ public class PageController {
     @RequestMapping("/diagnosis/index")
     public String toDiagnosisIndex() {
         return "diagnosis/index";
+    }
+
+    @RequestMapping("/work/index")
+    public String toWorkIndex() {
+        return "work/index";
     }
 
     @PostMapping("/diagnosis/addReady")
