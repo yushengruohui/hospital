@@ -2,6 +2,8 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 
 /**

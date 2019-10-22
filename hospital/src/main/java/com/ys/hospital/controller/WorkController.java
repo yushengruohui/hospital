@@ -181,7 +181,7 @@ public class WorkController {
         //获取登录医师的Id
         Employee employee = (Employee) session.getAttribute("employee");
         //根据医师Id查询值班安排
-        List<Work> works = workService.findWorkListByEmployeeId(2019009);
+        List<Work> works = workService.findWorkListByEmployeeId(employee.getEmployeeId());
         int roomId;
         Room room = new Room();
         //根据所在roomId查询room信息

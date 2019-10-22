@@ -1,20 +1,19 @@
-﻿package com.ys.hospital.pojo;
+package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
-
 import lombok.Data;
 
 /**
  * (EmployeeDetail)实体类
  *
  * @author yusheng
- * @since 2019-10-10 08:09:39
+ * @since 2019-10-22 10:54:22
  */
 @Data
 public class EmployeeDetail implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    
     private Integer employeeDetailId;
     //员工性别
     private String employeeDetailGender;
@@ -42,8 +41,5 @@ public class EmployeeDetail implements Serializable {
     private Integer branchId;
     //职称id
     private Integer titleId;
-
     private Title title;
-
-
 }
