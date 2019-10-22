@@ -26,4 +26,6 @@ public class Check implements Serializable {
     //所属诊断单
     private Integer diagnosisId;
     
+    private Employee employee;
+    
 }
