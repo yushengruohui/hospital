@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+	<div th:replace="~{com/attending::title}"></div>
+	<script th:src="@{webjars/jquery/jquery.min.js}"></script>
+</head>
+<body class="layui-layout-body">
+	<div class = "layui-layout layui-layout-admin">
+		<div th:replace = "~{com/attending::head_check}"></div>
+		
+		<div th:replace = "~{com/attending::left_check}"></div>
+		
+		<div class = "layui-body">
+			<!-- 主体内容 -->
+			<div style = "padding:15px">
+				<table class = "layui-table" id = "checkTable" lay-filter = "tableFilter"></table>
+			</div>
+		</div>
+		
+		<div th:replace="~{com/attending::foot}"></div>
+	</div>
+	
+	<script>
+		<a class = "layui-btn layui-btn-xs" layevent = ""></a>
+	</script>
+</body>
+</html>
