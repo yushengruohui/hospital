@@ -44,9 +44,10 @@ public class LoginController {
             //返回到登录错误界面
             return "error/login_error";
         }
-        session.setAttribute("employee", employee);
+
         //获取该员工的详细信息
         employee.setEmployeeDetail(employeeDetailService.findEmployeeById(employee.getEmployeeId()));
+        session.setAttribute("employee", employee);
 
         //redisTemplate.opsForValue().set("employee:" + employee.getEmployeeId(), employee);
         //根据员工的不同职称，跳转到相应的界面
