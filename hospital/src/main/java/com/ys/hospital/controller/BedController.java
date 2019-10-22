@@ -99,7 +99,6 @@ public class BedController {
     @RequestMapping("/updateBed")
     public String updateBed(Bed bed){
         int count=bedService.updateBed(bed);
-//      System.out.println(bed);
         logger.info("updateBed success!");
         if(count>0){
             return "redirect:/bed/queryAllBed";
@@ -122,10 +121,10 @@ public class BedController {
      * @param bedStatus
      * @return
      */
-    @RequestMapping("/queryBedByStatus")
+    /*@RequestMapping("/queryBedByStatus")
     public String queryBedByStatus(Integer bedStatus,Model model){
         List<Bed> beds=bedService.queryBedByStatus(bedStatus);
         model.addAttribute("beds",beds);
         return "/nurse/inpatient_insert";
-    }
+    }*/
 }

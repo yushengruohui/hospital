@@ -33,6 +33,11 @@ public class InpatientNotifyController {
         return "redirect:/";
     }
 
+    /**
+     * 查询所有住院通知
+     * @param model
+     * @return
+     */
     @RequestMapping("/queryAllInpatientNotify")
     public String queryAllInpatientNotify(Model model){
         List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryAllInpatientNotify();
@@ -41,11 +46,23 @@ public class InpatientNotifyController {
         return "/nurse/inpatientNotify_list";
     }
 
+    @RequestMapping("/queryInpatientNotifyByParam")
+    public String queryInpatientNotifyByParam(InpatientNotify inpatientNotify,Model model){
+        List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryInpatientNotifyByParam(inpatientNotify);
+        model.addAttribute("inpatientNotifies", inpatientNotifies);
+        return "/nurse/inpatientNotify_list";
+    }
+    /**
+     * 通过登录人ID查询未处理住院通知
+     * @param session
+     * @param model
+     * @return
+     */
     @RequestMapping("/queryInpatientNotifyByEmployeeId")
-    public String queryInpatientNotifyByEmployeeId(HttpSession session, Integer inpatientNotifyStatus, Model model){
+    public String queryInpatientNotifyByEmployeeId(HttpSession session,Model model){
         //获取当前登录的用户
         Employee employee= (Employee) session.getAttribute("employee");
-        List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryInpatientNotifyByEmployeeId(inpatientNotifyStatus);
+        List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryInpatientNotifyByEmployeeId(employee.getEmployeeId());
         model.addAttribute("inpatientNotifies",inpatientNotifies);
         return "/nurse/inpatientNotify_list";
     }

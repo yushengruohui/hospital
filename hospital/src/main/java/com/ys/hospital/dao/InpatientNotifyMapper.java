@@ -2,6 +2,8 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.InpatientNotify;
 import org.apache.ibatis.annotations.Param;
+import org.attoparser.dom.INestableNode;
+
 import java.util.List;
 
 /**
@@ -22,10 +24,10 @@ public interface InpatientNotifyMapper {
     /**
      * 通过登陆人Id查询未处理住院通知
      * @param
-     * @param inpatientNotifyStatus
+     * @param employeeId
      * @return
      */
-    List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer inpatientNotifyStatus);
+    List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer employeeId);
 
     /**
      * 根据实体类InpatientNotify的相关属性查询实体类InpatientNotify
@@ -58,5 +60,4 @@ public interface InpatientNotifyMapper {
      * @return 是否成功(1：成功|0：失败)
      */
     int deleteInpatientNotifyById(Integer inpatientNotifyId);
-
 }

@@ -5,6 +5,19 @@
     <title>住院通知</title>
 </head>
 <body>
+<div>
+<form th:action="@{/inpatientNotify/queryInpatientNotifyByParam}" method="get">
+    <div>
+        <h3>查询</h3>
+        住院通知状态：
+        <input type="text" name="inpatientNotifyStatus" id="inpatientNotifyStatus" style="width:50px" class="input-text">
+        所属诊断单ID：
+        <input type="text" name="diagnosisId" id="diagnosisId" style="width:50px" class="input-text">
+        处理人ID：
+        <input type="text" name="employeeId" id="employeeID" style="width:50px" class="input-text">
+        <button name="bed_search" id="bed_search" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索病床</button>
+    </div>
+</form>
 <form>
     <table border="1">
         <thead>
@@ -26,11 +39,12 @@
                 <td th:text=${inpatientNotify.employeeId}></td>
 
                 <td>
-                    <a th:href="@{/bed/queryBedByStatus}">去处理</a>
+                    <a th:href="@{/inpatient/toInsertInpatient}">去处理</a>
                 </td>
             </tr>
         </tbody>
     </table>
 </form>
+</div>
 </body>
 </html>

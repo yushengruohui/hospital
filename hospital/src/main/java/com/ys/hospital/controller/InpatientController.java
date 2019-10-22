@@ -1,7 +1,10 @@
 package com.ys.hospital.controller;
 
+import com.ys.hospital.pojo.Bed;
 import com.ys.hospital.pojo.Inpatient;
 import com.ys.hospital.pojo.InpatientNotify;
+import com.ys.hospital.service.BedService;
+import com.ys.hospital.service.InpatientNotifyService;
 import com.ys.hospital.service.InpatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +28,10 @@ public class InpatientController {
     
     @Resource
     private InpatientService inpatientService;
-    
-    @RequestMapping("/test")
-    public String testDome() {
-        logger.info("testDome success");
-        return "redirect:/";
-    }
+   @Resource
+    private BedService bedService;
+   @Resource
+    private InpatientNotifyService inpatientNotifyService;
 
     @RequestMapping("/queryAllInpatient")
     public String queryAllInpatient(Model model){
@@ -49,7 +50,9 @@ public class InpatientController {
     }
 
     @RequestMapping("/toInsertInpatient")
-    public String toInsertInpatient(){
+    public String toInsertInpatient(Integer bedStatus,Model model){
+        List<Bed> beds=bedService.queryBedByStatus(bedStatus);
+        model.addAttribute("beds",beds);
         return "/nurse/inpatient_insert";
     }
 
@@ -62,6 +65,13 @@ public class InpatientController {
             InpatientNotify inpatientNotify=new InpatientNotify();
             inpatientNotify.setInpatientNotifyId(inpatient.getInpatientNotifyId());
             inpatientNotify.setInpatientNotifyStatus(1);
+            inpatientNotifyService.updateInpatientNotify(inpatientNotify);
+            //更新病床信息
+            Bed bed=new Bed();
+            bed.setBedId(bed.getBedId());
+            bed.setBedStatus(1);
+            bed.setPatientId();
+            bed.setEmployeeId();
             return "/nurse/inpatient_list";
         }
         logger.info("insertInpatient success");

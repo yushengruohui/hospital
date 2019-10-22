@@ -41,6 +41,7 @@
                 <th>支付状态</th>
                 <th>预交费用</th>
                 <th>住院详情</th>
+                <th>患者名称</th>
                 <!--<th>每天住院费</th>-->
                 <!--<th>观察建议</th>-->
                 <!--<th>每天住院时间</th>-->
@@ -59,6 +60,7 @@
                 <td th:text=${inpatient.inpatientPrice}></td>
                 <td th:text=${inpatient.inpatientPayStatus}></td>
                 <td th:text=${inpatient.inpatientPrepaidPrice}></td>
+                <td th:text=${inpatient.inpatientNotify.diagnosis.appointment.patient.patientName}></td>
                 <!--<td th:text=${inpatientDetails.inpatientDetailPrice}></td>-->
                 <!--<td th:text=${inpatientDetails.inpatientDetailDescription}></td>-->
                 <!--<td th:text=${inpatientDetails.inpatientDetailDate}></td>-->

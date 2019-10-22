@@ -23,10 +23,10 @@ public interface InpatientNotifyService {
     /**
      * 通过登陆人Id查询未处理住院通知
      * @param
-     * @param inpatientNotifyStatus
+     * @param employeeId
      * @return
      */
-    List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer inpatientNotifyStatus);
+    List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer employeeId);
 
     /**
      * 新增数据
@@ -52,4 +52,10 @@ public interface InpatientNotifyService {
      */
     int deleteInpatientNotifyById(Integer inpatientNotifyId);
 
+    /**
+     * 通过inpatientNotify相关属性信息查询住院通知
+     * @param inpatientNotify
+     * @return
+     */
+    List<InpatientNotify> queryInpatientNotifyByParam(InpatientNotify inpatientNotify);
 }
