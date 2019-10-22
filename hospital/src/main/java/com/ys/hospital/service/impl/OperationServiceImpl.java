@@ -65,4 +65,42 @@ public class OperationServiceImpl implements OperationService {
     public int deleteOperationById(Integer operationId) {
         return this.operationMapper.deleteOperationById(operationId);
     }
+	/**
+     * 根据实体类Operation的相关属性查询实体类Operation
+     *
+     * @param operation 实例对象
+     * @return 对象Operation列表
+     */
+    @Override
+    public List<Operation> queryOperationByParam(Operation operation) {
+        return this.operationMapper.queryOperationByParam(operation);
+    }
+    /**
+     * 根据实体类Operation的id查找Operation的详细信息
+     *
+     * @param operation 实例对象
+     * @return Operation
+     */
+    @Override
+    public Operation queryOperationById(Operation operation) {
+        return this.operationMapper.queryOperationById(operation);
+    }
+    /**
+     * 根据实体类Operation的相关属性查询实体类Operation,多表
+     *
+     * @param operation 实例对象
+     * @return 对象Operation列表
+     */
+    @Override
+    public List<Operation> queryOperationsByParam(Operation operation){
+        return this.operationMapper.queryOperationsByParam(operation);
+    }
+    /**
+     * 查询所有Operation信息,多表
+     *
+     * @return 对象Operation列表
+     */
+    public List<Operation> queryAllOperations(){
+        return this.operationMapper.queryAllOperations();
+    }
 }

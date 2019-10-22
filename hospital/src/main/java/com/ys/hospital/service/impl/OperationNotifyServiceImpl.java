@@ -65,4 +65,13 @@ public class OperationNotifyServiceImpl implements OperationNotifyService {
     public int deleteOperationNotifyById(Integer operationNotifyId) {
         return this.operationNotifyMapper.deleteOperationNotifyById(operationNotifyId);
     }
+    /**
+     * 根据实体类OperationNotify的相关属性查询实体类OperationNotify
+     *
+     * @param operationNotify 实例对象
+     * @return 对象OperationNotify列表
+     */
+    public List<OperationNotify> queryOperationNotifyByParam(OperationNotify operationNotify){
+        return this.operationNotifyMapper.queryOperationNotifyByParam(operationNotify);
+    }
 }

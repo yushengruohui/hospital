@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看手术信息</title>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <table border="1">
+        <tr>
+            <th>手术通知id</th>
+            <th>所属诊断id</th>
+            <th>主刀医师id</th>
+            <th>通知情况</th>
+            <th>操作</th>
+        </tr>
+        <tr v-for="operationNotify in operationNotifys">
+
+            <td>{{operationNotify.operationNotifyId}}</td>
+            <td>{{operationNotify.employeeId}}</td>
+            <td>{{operationNotify.diagnosisId}}</td>
+            <td>{{operationNotify.operationNotifyStatus>0?'已通知':'未通知'}}</td>
+            <td><input type="button" id="saveForm" @click="saveShow(operationNotify.operationNotifyId)" value="添加手术"></td>
+        </tr>
+    </table>
+    <form id="save" v-show="show === 1 ? true : false ">
+        <table border="1">
+            <tr>
+                <td></td>
+                <td>新增手术</td>
+            </tr>
+
+            <tr>
+                <td>手术名称:</td>
+                <td><input type="text"  v-model="operation.operationName"></td>
+            </tr>
+            <tr>
+                <td>协助者:</td>
+                <td><input type="text"  v-model="operation.operationAssistant"></td>
+            </tr>
+            <tr>
+                <td>麻醉师:</td>
+                <td><input type="text"  v-model="operation.operationAnesthetist"></td>
+            </tr>
+            <tr>
+                <td>所用药品:</td>
+                <td><input type="text"  v-model="operation.operationMedicine"></td>
+            </tr>
+            <tr>
+                <td>所用设备:</td>
+                <td><input type="text"  v-model="operation.operationDevice"></td>
+            </tr>
+            <!--<tr>-->
+                <!--<td>手术时间:</td>-->
+                <!--<td><input type="date"  v-model="operation.operationTime"></td>-->
+            <!--</tr>-->
+
+            <tr>
+                <td>手术描述:</td>
+                <td><input type="text"  v-model="operation.operationDescription"></td>
+            </tr>
+
+            <tr>
+                <td>所属手术通知:</td>
+                <td><input type="text"  v-model="operation.operationNotifyId" readonly="readonly"></td>
+            </tr>
+
+            <tr>
+                <td>所在的手术室:</td>
+                <td><input type="text"  v-model="operation.roomId"></td>
+            </tr>
+            <tr>
+                <td>手术费用:</td>
+                <td><input type="text"  v-model="operation.operationPrice"></td>
+            </tr>
+            <!--<tr>-->
+                <!--<td>支付时间:</td>-->
+                <!--<td><input type="date"  v-model="operation.operationPayTime"></td>-->
+            <!--</tr>-->
+            <tr>
+                <td>处理状态:</td>
+                <td>
+                    <input type="radio" v-model="operation.operationStatus" value="0">未处理
+                    <input type="radio" v-model="operation.operationStatus" value="1">已处理
+                </td>
+            </tr>
+            <tr>
+                <td> <button type="button" @click="addOperation()">添加</button></td>
+                <td><input type="reset" value="重置"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+<script type="text/javascript">
+    new Vue({
+        el:"#app",
+        data(){
+            return {
+                operationNotifys:[],
+                show:0,
+                operation:{
+                    operationId:"",
+                    operationName:"",
+                    operationAssistant:"",
+                    operationAnesthetist:"",
+                    operationMedicine:"",
+                    operationDevice:"",
+                    // operationTime:"",
+                    operationStatus:"",
+                    operationDescription:"",
+                    operationNotifyId:"",
+                    roomId:"",
+                    operationPrice:"",
+                    // operationPayTime:"",
+                    operationPayStatus:""
+                }
+            }
+        },
+        methods:{
+            /*获取全部数据*/
+            queryAllOperationNotify:function(){
+
+                axios.get('/operationNotify/queryAllOperationNotify').then(response => (
+                        this.operationNotifys = response.data
+                    )
+                ).catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+            },
+            /*弹出添加手术form*/
+            saveShow:function (operationNotifyId) {
+                this.show=1;
+                this.operation.operationNotifyId=operationNotifyId;
+            },
+            /*添加手术form*/
+            addOperation:function () {
+                alert("bbb");
+                alert(this.operation.operationName);
+                // var headers ={'Content-Type':"text/plain"};
+                // axios.default.headers.post['Content-Type']='text/plain';
+                // Vue.prototype.$axios=asiox;
+                axios.post('/operation/addOperation',this.operation).then(response => {
+                    if(response.data===true){
+                        this.cleanUser();
+                        this.queryAllOperationNotify();
+                        this.show=0;
+                    }else {
+                        console.log("失败");
+                    }
+                }).catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+
+            },
+            /*数据清空*/
+            cleanUser:function () {
+                this.operationNotifys=[];
+            }
+        },
+        /*页面加载调用查询全部方法*/
+        created(){
+            this.queryAllOperationNotify();
+        }
+    });
+</script>
+</html>

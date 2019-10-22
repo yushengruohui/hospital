@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看手术信息</title>
+</head>
+<body>
+<div id="app">
+    <select v-model="operationStatus" @change="findOperationByStatus()">
+        <option value="1">已处理</option>
+        <option value="0">未处理</option>
+    </select>
+    <!--<input type="text" name="operationStatus" v-model="operationStatus"><input type="button" value="点我立即进行搜索" @click="findOperationByStatus()"><br>-->
+    <input type="button" id="saveForm" @click="saveShow()" value="添加">
+    <table border="1">
+        <tr>
+            <th>手术ID</th>
+            <th>手术名称</th>
+            <th>协助者</th>
+            <th>麻醉师</th>
+            <th>所用药品</th>
+            <th>所用设备</th>
+            <th>手术时间</th>
+            <th>手术描述</th>
+            <th>手术费用</th>
+            <th>所在的手术室</th>
+            <th>房间地址</th>
+            <th>支付情况</th>
+            <th>支付时间</th>
+            <th>处理情况</th>
+            <th>操作</th>
+        </tr>
+        <tr v-for="operation in operations">
+
+            <td>{{operation.operationId}}</td>
+            <td>{{operation.operationName}}</td>
+            <td>{{operation.operationAssistant}}</td>
+            <td>{{operation.operationAnesthetist}}</td>
+            <td>{{operation.operationMedicine}}</td>
+            <td>{{operation.operationDevice}}</td>
+            <td>{{operation.operationTime}}</td>
+            <td>{{operation.operationDescription}}</td>
+            <td>{{operation.operationPrice}}</td>
+            <td>{{operation.room.roomName}}</td>
+            <td>{{operation.room.roomAddress}}</td>
+            <td>{{operation.operationPayStatus>0?'已支付':'未支付'}}</td>
+            <td>{{operation.operationPayTime}}</td>
+            <td>{{operation.operationStatus>0?'已处理':'未处理'}}</td>
+        </tr>
+    </table>
+</div>
+</body>
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el:"#app",
+        data(){
+            return {
+                operations:[],
+                operationStatus:""
+                // show:0,
+
+            }
+        },
+        methods:{
+            /*获取全部数据*/
+            findAllOperation:function(){
+
+                axios.get('/operation/findAllOperation').then(response => (
+                        this.operations = response.data
+                    )
+                ).catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+            },
+            /*根据状态查询*/
+            findOperationByStatus:function () {
+                alert("aaa");
+                axios.get('/operation/findOperationByStatus',{params:{operationStatus:this.operationStatus}}).then(response => {
+                    this.operations = response.data
+            }).catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+            },
+
+            /*数据清空*/
+            cleanUser:function () {
+                this.operations=[];
+            }
+        },
+        /*页面加载调用查询全部方法*/
+        created(){
+            this.findAllOperation();
+        }
+    });
+</script>
+</html>

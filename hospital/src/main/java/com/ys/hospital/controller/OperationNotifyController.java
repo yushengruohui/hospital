@@ -5,9 +5,12 @@ import com.ys.hospital.service.OperationNotifyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (OperationNotify)表控制层
@@ -29,5 +32,24 @@ public class OperationNotifyController {
         return "redirect:/";
     }
 
-
+/**
+     * 页面跳转
+     * @return ModelAndView
+     */
+    @RequestMapping("/findoperationNotify")
+    public ModelAndView findoperatioNotifyn() {
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("operation/findOperationNotify");
+        return modelAndView;
+    }
+    /**
+     * 查找所有手术通知
+     * @return ModelAndView
+     */
+    @RequestMapping("/queryAllOperationNotify")
+    @ResponseBody
+    public List<OperationNotify> queryAllOperationNotify() {
+        List<OperationNotify> operationNotifys = operationNotifyService.queryAllOperationNotify();
+        return operationNotifys;
+    }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ys.hospital.dao.OperationMapper">
 
@@ -142,5 +142,97 @@
     <delete id="deleteOperationById">
         delete from operation where operation_id = #{operationId}
     </delete>
-
+<resultMap id="OperationRoomOperationNotifyMap" type="com.ys.hospital.pojo.Operation">
+        <result property="operationId" column="operation_id" jdbcType="INTEGER"/>
+        <result property="operationName" column="operation_name" jdbcType="VARCHAR"/>
+        <result property="operationAssistant" column="operation_assistant" jdbcType="VARCHAR"/>
+        <result property="operationAnesthetist" column="operation_anesthetist" jdbcType="VARCHAR"/>
+        <result property="operationMedicine" column="operation_medicine" jdbcType="VARCHAR"/>
+        <result property="operationDevice" column="operation_device" jdbcType="VARCHAR"/>
+        <result property="operationTime" column="operation_time" jdbcType="TIMESTAMP"/>
+        <result property="operationStatus" column="operation_status" jdbcType="INTEGER"/>
+        <result property="operationDescription" column="operation_description" jdbcType="VARCHAR"/>
+        <result property="operationNotifyId" column="operation_notify_id" jdbcType="INTEGER"/>
+        <result property="roomId" column="room_id" jdbcType="INTEGER"/>
+        <result property="operationPrice" column="operation_price" jdbcType="NUMERIC"/>
+        <result property="operationPayTime" column="operation_pay_time" jdbcType="TIMESTAMP"/>
+        <result property="operationPayStatus" column="operation_pay_status" jdbcType="INTEGER"/>
+        <!--一个手术对应一个手术室-->
+        <association property="room" javaType="com.ys.hospital.pojo.Room">
+            <result property="roomId" column="room_id" jdbcType="INTEGER"/>
+            <result property="roomName" column="room_name" jdbcType="VARCHAR"/>
+            <result property="branchId" column="branch_id" jdbcType="INTEGER"/>
+            <result property="roomAddress" column="room_address" jdbcType="VARCHAR"/>
+        </association>
+        <!--一个手术对应一个手术通知-->
+        <association property="operationNotify" javaType="com.ys.hospital.pojo.OperationNotify">
+            <result property="operationNotifyId" column="operation_notify_id" jdbcType="INTEGER"/>
+            <result property="operationNotifyStatus" column="operation_notify_status" jdbcType="INTEGER"/>
+            <result property="diagnosisId" column="diagnosis_id" jdbcType="INTEGER"/>
+            <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+    <select id="queryOperationById" resultMap="OperationRoomOperationNotifyMap">
+    select *
+        from operation,operation_notify,room
+            WHERE operation.operation_notify_id=operation_notify.operation_notify_id
+              and operation.room_id=room.room_id
+                and operation_id =#{operationId}
+    </select>
+    <select id="queryOperationsByParam" resultMap="OperationRoomOperationNotifyMap">
+        select *
+        from operation,operation_notify,room
+        <where>
+           and operation.operation_notify_id=operation_notify.operation_notify_id and operation.room_id=room.room_id
+        </where>
+        <if test="operationId != null">
+            and operation_id = #{operationId}
+        </if>
+        <if test="operationName != null and operationName != ''">
+            and operation_name = #{operationName}
+        </if>
+        <if test="operationAssistant != null and operationAssistant != ''">
+            and operation_assistant = #{operationAssistant}
+        </if>
+        <if test="operationAnesthetist != null and operationAnesthetist != ''">
+            and operation_anesthetist = #{operationAnesthetist}
+        </if>
+        <if test="operationMedicine != null and operationMedicine != ''">
+            and operation_medicine = #{operationMedicine}
+        </if>
+        <if test="operationDevice != null and operationDevice != ''">
+            and operation_device = #{operationDevice}
+        </if>
+        <if test="operationTime != null">
+            and operation_time = #{operationTime}
+        </if>
+        <if test="operationStatus != null">
+            and operation_status = #{operationStatus}
+        </if>
+        <if test="operationDescription != null and operationDescription != ''">
+            and operation_description = #{operationDescription}
+        </if>
+        <if test="operationNotifyId != null">
+            and operation_notify_id = #{operationNotifyId}
+        </if>
+        <if test="roomId != null">
+            and room_id = #{roomId}
+        </if>
+        <if test="operationPrice != null">
+            and operation_price = #{operationPrice}
+        </if>
+        <if test="operationPayTime != null">
+            and operation_pay_time = #{operationPayTime}
+        </if>
+        <if test="operationPayStatus != null">
+            and operation_pay_status = #{operationPayStatus}
+        </if>
+    </select>
+    <!--查询所有Operation信息-->
+    <select id="queryAllOperations" resultMap="OperationRoomOperationNotifyMap">
+        select *
+        from operation,operation_notify,room
+            WHERE operation.operation_notify_id=operation_notify.operation_notify_id
+              and operation.room_id=room.room_id
+    </select>
 </mapper>

@@ -5,9 +5,11 @@ import com.ys.hospital.service.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Room)表控制层
@@ -29,5 +31,15 @@ public class RoomController {
         return "redirect:/";
     }
 
-
+	/**
+     * 查找所有病房
+     * @return
+     */
+    @RequestMapping("/findAllRoom")
+    @ResponseBody
+    public List<Room> findOperationByStatus() {
+        List<Room> rooms = roomService.queryAllRoom();
+        return rooms;
+    }
+    
 }

@@ -42,5 +42,11 @@ public interface OperationNotifyService {
      * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteOperationNotifyById(Integer operationNotifyId);
-
+    /**
+     * 根据实体类OperationNotify的相关属性查询实体类OperationNotify
+     *
+     * @param operationNotify 实例对象
+     * @return 对象OperationNotify列表
+     */
+    List<OperationNotify> queryOperationNotifyByParam(OperationNotify operationNotify);
 }

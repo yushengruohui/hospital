@@ -42,5 +42,8 @@ public class Operation implements Serializable {
     private Date operationPayTime;
     //1：已支付；0：未支付
     private Integer operationPayStatus;
-
+	//一个手术对应一个手术室
+    private Room room;
+    //一个手术对应一个手术通知
+    private OperationNotify operationNotify;
 }
