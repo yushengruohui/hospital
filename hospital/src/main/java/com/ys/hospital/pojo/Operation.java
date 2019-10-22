@@ -2,6 +2,7 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -13,7 +14,7 @@ import lombok.Data;
 @Data
 public class Operation implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer operationId;
     //手术名称
     private String operationName;
@@ -41,5 +42,5 @@ public class Operation implements Serializable {
     private Date operationPayTime;
     //1：已支付；0：未支付
     private Integer operationPayStatus;
-    
+
 }

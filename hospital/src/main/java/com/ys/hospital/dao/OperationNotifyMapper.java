@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.OperationNotify;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface OperationNotifyMapper {
      * 新增OperationNotify数据
      *
      * @param operationNotify 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertOperationNotify(OperationNotify operationNotify);
 
@@ -40,7 +41,7 @@ public interface OperationNotifyMapper {
      * 修改OperationNotify数据
      *
      * @param operationNotify 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateOperationNotify(OperationNotify operationNotify);
 
@@ -48,7 +49,7 @@ public interface OperationNotifyMapper {
      * 通过主键删除数据
      *
      * @param operationNotifyId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteOperationNotifyById(Integer operationNotifyId);
 

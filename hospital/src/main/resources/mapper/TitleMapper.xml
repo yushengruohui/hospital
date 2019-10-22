@@ -10,7 +10,7 @@
     <!--查询所有Title信息-->
     <select id="queryAllTitle" resultMap="TitleMap">
         select
-          title_id, title_name
+        title_id, title_name
         from title
     </select>
 

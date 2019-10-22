@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -20,5 +21,5 @@ public class OperationNotify implements Serializable {
     private Integer diagnosisId;
     //主刀医师id
     private Integer employeeId;
-    
+
 }

@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Power;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface PowerMapper {
      * 新增Power数据
      *
      * @param power 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertPower(Power power);
 
@@ -40,7 +41,7 @@ public interface PowerMapper {
      * 修改Power数据
      *
      * @param power 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updatePower(Power power);
 
@@ -48,7 +49,7 @@ public interface PowerMapper {
      * 通过主键删除数据
      *
      * @param powerId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deletePowerById(Integer powerId);
 

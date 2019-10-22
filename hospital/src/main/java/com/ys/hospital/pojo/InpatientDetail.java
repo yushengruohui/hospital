@@ -23,48 +23,5 @@ public class InpatientDetail implements Serializable {
     private Date inpatientDetailDate;
     //所属住院单
     private Integer inpatientId;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Integer getInpatientDetailId() {
-        return inpatientDetailId;
-    }
-
-    public void setInpatientDetailId(Integer inpatientDetailId) {
-        this.inpatientDetailId = inpatientDetailId;
-    }
-
-    public Double getInpatientDetailPrice() {
-        return inpatientDetailPrice;
-    }
-
-    public void setInpatientDetailPrice(Double inpatientDetailPrice) {
-        this.inpatientDetailPrice = inpatientDetailPrice;
-    }
-
-    public String getInpatientDetailDescription() {
-        return inpatientDetailDescription;
-    }
-
-    public void setInpatientDetailDescription(String inpatientDetailDescription) {
-        this.inpatientDetailDescription = inpatientDetailDescription;
-    }
-
-    public Date getInpatientDetailDate() {
-        return inpatientDetailDate;
-    }
-
-    public void setInpatientDetailDate(Date inpatientDetailDate) {
-        this.inpatientDetailDate = inpatientDetailDate;
-    }
-
-    public Integer getInpatientId() {
-        return inpatientId;
-    }
-
-    public void setInpatientId(Integer inpatientId) {
-        this.inpatientId = inpatientId;
-    }
+    
 }

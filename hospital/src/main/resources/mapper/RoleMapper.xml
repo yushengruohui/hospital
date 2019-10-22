@@ -10,14 +10,14 @@
     <!--查询所有Role信息-->
     <select id="queryAllRole" resultMap="RoleMap">
         select
-          role_id, role_name
+        role_id, role_name
         from role
     </select>
 
     <!--根据实体类Role的相关属性查询实体类Role-->
     <select id="queryRoleByParam" resultMap="RoleMap">
         select
-          role_id, role_name
+        role_id, role_name
         from role
         <where>
             <if test="roleId != null">

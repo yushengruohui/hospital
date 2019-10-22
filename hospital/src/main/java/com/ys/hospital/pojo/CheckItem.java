@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -20,5 +21,5 @@ public class CheckItem implements Serializable {
     private Double checkItemPrice;
     //对应检查室
     private Integer roomId;
-    
+
 }

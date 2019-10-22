@@ -54,6 +54,11 @@ public class PageController {
         return "diagnosis/index";
     }
 
+    @RequestMapping("/work/index")
+    public String toWorkIndex() {
+        return "work/index";
+    }
+
     @PostMapping("/diagnosis/addReady")
     @ResponseBody
     public String diagnosisAddReady(@RequestBody Appointment appointment, HttpSession session) {

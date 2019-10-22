@@ -19,7 +19,7 @@ import java.util.List;
 @Service("rolePowerService")
 public class RolePowerServiceImpl implements RolePowerService {
     private static final Logger logger = LoggerFactory.getLogger(RolePowerServiceImpl.class);
-    
+
     @Resource
     private RolePowerMapper rolePowerMapper;
 
@@ -37,7 +37,7 @@ public class RolePowerServiceImpl implements RolePowerService {
      * 新增RolePower数据
      *
      * @param rolePower 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertRolePower(RolePower rolePower) {
@@ -48,7 +48,7 @@ public class RolePowerServiceImpl implements RolePowerService {
      * 修改RolePower数据
      *
      * @param rolePower 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateRolePower(RolePower rolePower) {
@@ -59,7 +59,7 @@ public class RolePowerServiceImpl implements RolePowerService {
      * 通过主键删除RolePower数据
      *
      * @param rolePowerId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteRolePowerById(Integer rolePowerId) {

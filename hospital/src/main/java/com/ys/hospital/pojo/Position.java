@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -16,5 +17,5 @@ public class Position implements Serializable {
     private Integer positionId;
     //职位名称
     private String positionName;
-    
+
 }

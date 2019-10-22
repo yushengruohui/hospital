@@ -70,4 +70,12 @@ public interface WorkMapper {
      * @return
      */
     Work findWorkByEmployeeIdAndWorkDate(Integer employeeId, String workDate);
+
+    /**
+     * 根据员工Id查询（一周）值班安排表
+     *
+     * @param employeeId
+     * @return
+     */
+    List<Work> findWorkListByEmployeeId(Integer employeeId);
 }

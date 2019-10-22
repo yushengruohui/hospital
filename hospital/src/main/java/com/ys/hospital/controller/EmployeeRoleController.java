@@ -19,15 +19,15 @@ import javax.annotation.Resource;
 @RequestMapping("/employeeRole")
 public class EmployeeRoleController {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeRoleController.class);
-    
+
     @Resource
     private EmployeeRoleService employeeRoleService;
-    
+
     @RequestMapping("/test")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }

@@ -15,14 +15,16 @@
     <!--查询所有CheckDetail信息-->
     <select id="queryAllCheckDetail" resultMap="CheckDetailMap">
         select
-          check_detail_id, check_id, check_item_id, check_detail_result, check_detail_pay_status, check_detail_pay_price, check_detail_pay_time
+        check_detail_id, check_id, check_item_id, check_detail_result, check_detail_pay_status, check_detail_pay_price,
+        check_detail_pay_time
         from check_detail
     </select>
 
     <!--根据实体类CheckDetail的相关属性查询实体类CheckDetail-->
     <select id="queryCheckDetailByParam" resultMap="CheckDetailMap">
         select
-          check_detail_id, check_id, check_item_id, check_detail_result, check_detail_pay_status, check_detail_pay_price, check_detail_pay_time
+        check_detail_id, check_id, check_item_id, check_detail_result, check_detail_pay_status, check_detail_pay_price,
+        check_detail_pay_time
         from check_detail
         <where>
             <if test="checkDetailId != null">
@@ -51,8 +53,10 @@
 
     <!--新增CheckDetail数据-->
     <insert id="insertCheckDetail" keyProperty="checkDetailId" useGeneratedKeys="true">
-        insert into check_detail(check_id, check_item_id, check_detail_result, check_detail_pay_status, check_detail_pay_price, check_detail_pay_time)
-        values (#{checkId}, #{checkItemId}, #{checkDetailResult}, #{checkDetailPayStatus}, #{checkDetailPayPrice}, #{checkDetailPayTime})
+        insert into check_detail(check_id, check_item_id, check_detail_result, check_detail_pay_status,
+        check_detail_pay_price, check_detail_pay_time)
+        values (#{checkId}, #{checkItemId}, #{checkDetailResult}, #{checkDetailPayStatus}, #{checkDetailPayPrice},
+        #{checkDetailPayTime})
     </insert>
 
     <!--修改CheckDetail记录-->

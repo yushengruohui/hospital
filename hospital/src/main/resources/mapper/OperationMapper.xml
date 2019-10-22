@@ -22,14 +22,18 @@
     <!--查询所有Operation信息-->
     <select id="queryAllOperation" resultMap="OperationMap">
         select
-          operation_id, operation_name, operation_assistant, operation_anesthetist, operation_medicine, operation_device, operation_time, operation_status, operation_description, operation_notify_id, room_id, operation_price, operation_pay_time, operation_pay_status
+        operation_id, operation_name, operation_assistant, operation_anesthetist, operation_medicine, operation_device,
+        operation_time, operation_status, operation_description, operation_notify_id, room_id, operation_price,
+        operation_pay_time, operation_pay_status
         from operation
     </select>
 
     <!--根据实体类Operation的相关属性查询实体类Operation-->
     <select id="queryOperationByParam" resultMap="OperationMap">
         select
-          operation_id, operation_name, operation_assistant, operation_anesthetist, operation_medicine, operation_device, operation_time, operation_status, operation_description, operation_notify_id, room_id, operation_price, operation_pay_time, operation_pay_status
+        operation_id, operation_name, operation_assistant, operation_anesthetist, operation_medicine, operation_device,
+        operation_time, operation_status, operation_description, operation_notify_id, room_id, operation_price,
+        operation_pay_time, operation_pay_status
         from operation
         <where>
             <if test="operationId != null">
@@ -79,8 +83,12 @@
 
     <!--新增Operation数据-->
     <insert id="insertOperation" keyProperty="operationId" useGeneratedKeys="true">
-        insert into operation(operation_name, operation_assistant, operation_anesthetist, operation_medicine, operation_device, operation_time, operation_status, operation_description, operation_notify_id, room_id, operation_price, operation_pay_time, operation_pay_status)
-        values (#{operationName}, #{operationAssistant}, #{operationAnesthetist}, #{operationMedicine}, #{operationDevice}, #{operationTime}, #{operationStatus}, #{operationDescription}, #{operationNotifyId}, #{roomId}, #{operationPrice}, #{operationPayTime}, #{operationPayStatus})
+        insert into operation(operation_name, operation_assistant, operation_anesthetist, operation_medicine,
+        operation_device, operation_time, operation_status, operation_description, operation_notify_id, room_id,
+        operation_price, operation_pay_time, operation_pay_status)
+        values (#{operationName}, #{operationAssistant}, #{operationAnesthetist}, #{operationMedicine},
+        #{operationDevice}, #{operationTime}, #{operationStatus}, #{operationDescription}, #{operationNotifyId},
+        #{roomId}, #{operationPrice}, #{operationPayTime}, #{operationPayStatus})
     </insert>
 
     <!--修改Operation记录-->

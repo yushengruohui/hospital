@@ -26,6 +26,7 @@ public interface ClientService {
 
     /**
      * 将用户信息存入数据库，并且返回存入的信息
+     *
      * @param client
      * @return
      */

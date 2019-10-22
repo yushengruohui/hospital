@@ -11,14 +11,14 @@
     <!--查询所有Power信息-->
     <select id="queryAllPower" resultMap="PowerMap">
         select
-          power_id, power_type, power_status
+        power_id, power_type, power_status
         from power
     </select>
 
     <!--根据实体类Power的相关属性查询实体类Power-->
     <select id="queryPowerByParam" resultMap="PowerMap">
         select
-          power_id, power_type, power_status
+        power_id, power_type, power_status
         from power
         <where>
             <if test="powerId != null">

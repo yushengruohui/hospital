@@ -19,15 +19,15 @@ import javax.annotation.Resource;
 @RequestMapping("/aiGuide")
 public class AiGuideController {
     private static final Logger logger = LoggerFactory.getLogger(AiGuideController.class);
-    
+
     @Resource
     private AiGuideService aiGuideService;
-    
+
     @RequestMapping("/test")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }

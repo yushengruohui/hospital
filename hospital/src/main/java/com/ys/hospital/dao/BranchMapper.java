@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Branch;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface BranchMapper {
      * 新增Branch数据
      *
      * @param branch 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertBranch(Branch branch);
 
@@ -40,7 +41,7 @@ public interface BranchMapper {
      * 修改Branch数据
      *
      * @param branch 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateBranch(Branch branch);
 
@@ -48,7 +49,7 @@ public interface BranchMapper {
      * 通过主键删除数据
      *
      * @param branchId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteBranchById(Integer branchId);
 

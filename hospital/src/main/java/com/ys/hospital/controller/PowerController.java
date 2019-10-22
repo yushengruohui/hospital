@@ -19,15 +19,15 @@ import javax.annotation.Resource;
 @RequestMapping("/power")
 public class PowerController {
     private static final Logger logger = LoggerFactory.getLogger(PowerController.class);
-    
+
     @Resource
     private PowerService powerService;
-    
+
     @RequestMapping("/test")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }

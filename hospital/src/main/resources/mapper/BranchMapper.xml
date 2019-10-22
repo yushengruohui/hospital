@@ -11,7 +11,7 @@
     <!--查询所有Branch信息-->
     <select id="queryAllBranch" resultMap="BranchMap">
         select
-          branch_id, branch_name, department_id
+        branch_id, branch_name, department_id
         from branch
     </select>
 

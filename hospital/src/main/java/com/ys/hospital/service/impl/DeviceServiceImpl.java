@@ -19,7 +19,7 @@ import java.util.List;
 @Service("deviceService")
 public class DeviceServiceImpl implements DeviceService {
     private static final Logger logger = LoggerFactory.getLogger(DeviceServiceImpl.class);
-    
+
     @Resource
     private DeviceMapper deviceMapper;
 
@@ -37,7 +37,7 @@ public class DeviceServiceImpl implements DeviceService {
      * 新增Device数据
      *
      * @param device 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertDevice(Device device) {
@@ -48,7 +48,7 @@ public class DeviceServiceImpl implements DeviceService {
      * 修改Device数据
      *
      * @param device 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateDevice(Device device) {
@@ -59,7 +59,7 @@ public class DeviceServiceImpl implements DeviceService {
      * 通过主键删除Device数据
      *
      * @param deviceId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteDeviceById(Integer deviceId) {

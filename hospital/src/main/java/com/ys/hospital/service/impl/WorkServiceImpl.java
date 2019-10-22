@@ -94,4 +94,9 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> queryWorkByParam(Work work) {
         return this.workMapper.queryWorkByParam(work);
     }
+
+    @Override
+    public List<Work> findWorkListByEmployeeId(Integer employeeId) {
+        return this.workMapper.findWorkListByEmployeeId(employeeId);
+    }
 }

@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Position;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface PositionMapper {
      * 新增Position数据
      *
      * @param position 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertPosition(Position position);
 
@@ -40,7 +41,7 @@ public interface PositionMapper {
      * 修改Position数据
      *
      * @param position 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updatePosition(Position position);
 
@@ -48,7 +49,7 @@ public interface PositionMapper {
      * 通过主键删除数据
      *
      * @param positionId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deletePositionById(Integer positionId);
 
