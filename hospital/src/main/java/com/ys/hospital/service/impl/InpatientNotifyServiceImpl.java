@@ -33,6 +33,9 @@ public class InpatientNotifyServiceImpl implements InpatientNotifyService {
         return this.inpatientNotifyMapper.queryAllInpatientNotify();
     }
 
+    public List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer employeeId,Integer inpatientNotifyStatus){
+        return this.inpatientNotifyMapper.queryInpatientNotifyByEmployeeId(employeeId,inpatientNotifyStatus);
+    }
     /**
      * 新增InpatientNotify数据
      *

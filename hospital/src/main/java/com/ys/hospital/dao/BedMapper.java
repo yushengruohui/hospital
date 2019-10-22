@@ -37,6 +37,12 @@ public interface BedMapper {
     int insertBed(Bed bed);
 
     /**
+     * 通过bedID查找信息
+     * @param bedId
+     * @return
+     */
+    List<Bed> findBedById(int bedId);
+    /**
      * 修改Bed数据
      *
      * @param bed 实例对象
@@ -52,4 +58,10 @@ public interface BedMapper {
      */
     int deleteBedById(Integer bedId);
 
+    /**
+     * 通过病床状态获取病床信息
+     * @param bedStatus
+     * @return
+     */
+    List<Bed> queryBedByStatus(Integer bedStatus);
 }

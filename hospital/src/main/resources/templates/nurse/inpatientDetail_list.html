@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>住院详情</title>
+</head>
+<body>
+<form>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>每天住院费</th>
+            <th>观察建议</th>
+            <th>每天住院时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="inpatientDetail:${inpatientDetails}">
+            <td th:text="${inpatientDetail.inpatientDetailPrice}"></td>
+            <td th:text="${inpatientDetail.inpatientDetailDescription}"></td>
+            <td th:text="${inpatientDetail.inpatientDetailDate}"></td>
+
+            <td><a th:href="@{/inpatientDetail/toUpdateInpatientDetail}"></a>修改</td>
+        </tr>
+        </tbody>
+
+
+    </table>
+</form>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>修改病床信息</title>
+</head>
+<body>
+<form th:action="@{/bed/updateBed}" method="post">
+    <table th:each="bed:${beds}">
+    <tr >
+        <td>病床ID</td>
+        <td><input type="text" name="bedId" style="width:50px" th:value="${bed.bedId}"></td>
+    </tr>
+    <tr >
+        <td>病床名称</td>
+        <td><input type="text" name="bedName" style="width:50px" th:value="${bed.bedName}"></td>
+    </tr>
+        <tr>
+        <td>状态</td>
+        <td><input type="text" name="bedStatus" style="width:50px" th:value="${bed.bedStatus}"></td>
+    </tr>
+        <tr>
+        <td>入住时间1</td>
+        <td><input type="text" name="bedEntryTime" style="width:150px" th:value="${#dates.format(bed.bedEntryTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+    </tr>
+        <tr>
+        <td>离开时间</td>
+        <td><input type="text" name="bedLeaveTime" style="width:150px" th:value="${#dates.format(bed.bedLeaveTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+    </tr>
+        <tr>
+        <td>价格</td>
+        <td><input type="text" name="bedPrice" style="width:50px" th:value="${bed.bedPrice}"></td>
+    </tr>
+        <tr>
+        <td>入住患者</td>
+        <td><input type="text" name="patientId" style="width:50px" th:value="${bed.patientId}"></td>
+    </tr>
+        <tr>
+        <td>病房ID</td>
+        <td>
+            <input type="text" name="roomId" style="width:50px" th:value="${bed.roomId}">
+        </td>
+    </tr>
+        <tr>
+        <td>负责护士</td>
+        <td>
+            <input type="text" name="employeeId" style="width:50px" th:value="${bed.employeeId}">
+        </td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="修改"></td>
+    </tr>
+    </table>
+</form>
+</body>
+</html>

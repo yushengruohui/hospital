@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>添加病床信息</title>
+</head>
+<body>
+<form th:action="@{/bed/insertBed}" method="post">
+    <table>
+        <tr >
+            <td>病床名称</td>
+            <td><input type="text" name="bedName" style="width:50px"></td>
+        </tr>
+        <tr>
+            <td>状态</td>
+            <td><input type="text" name="bedStatus" style="width:50px"></td>
+        </tr>
+        <tr>
+            <td>入住时间</td>
+            <td><input type="text" name="bedEntryTime" style="width:150px"></td>
+        </tr>
+        <tr>
+            <td>离开时间</td>
+            <td><input type="text" name="bedLeaveTime" style="width:150px"></td>
+        </tr>
+        <tr>
+            <td>价格</td>
+            <td><input type="text" name="bedPrice" style="width:50px"></td>
+        </tr>
+        <tr>
+            <td>入住患者</td>
+            <td><input type="text" name="patientId" style="width:50px"></td>
+        </tr>
+        <tr>
+            <td>病房ID</td>
+            <td>
+                <input type="text" name="roomId" style="width:50px">
+            </td>
+        </tr>
+        <tr>
+            <td>负责护士</td>
+            <td>
+                <input type="text" name="employeeId" style="width:50px">
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="添加"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

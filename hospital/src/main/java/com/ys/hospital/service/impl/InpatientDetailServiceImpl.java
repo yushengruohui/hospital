@@ -65,4 +65,14 @@ public class InpatientDetailServiceImpl implements InpatientDetailService {
     public int deleteInpatientDetailById(Integer inpatientDetailId) {
         return this.inpatientDetailMapper.deleteInpatientDetailById(inpatientDetailId);
     }
+
+    /**
+     * 通过住院表ID查询住院明细
+     * @param inpatientId
+     * @return
+     */
+    @Override
+    public List<InpatientDetail> queryInpatientDetailByInpatientId(Integer inpatientId) {
+        return this.inpatientDetailMapper.queryInpatientDetailByInpatientId(inpatientId);
+    }
 }

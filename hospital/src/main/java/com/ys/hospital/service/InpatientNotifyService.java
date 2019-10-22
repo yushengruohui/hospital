@@ -19,6 +19,14 @@ public interface InpatientNotifyService {
     List<InpatientNotify> queryAllInpatientNotify();
 
     /**
+     * 通过登陆人Id查询未处理住院通知
+     * @param employeeId
+     * @param inpatientNotifyStatus
+     * @return
+     */
+    List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer employeeId,Integer inpatientNotifyStatus);
+
+    /**
      * 新增数据
      *
      * @param inpatientNotify 实例对象

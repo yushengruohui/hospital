@@ -34,6 +34,15 @@ public class BedServiceImpl implements BedService {
     }
 
     /**
+     * 根据实体类Bed的相关属性查询实体类Bed
+     * @param bed 属性
+     * @return 实例对象
+     */
+    @Override
+    public List<Bed> queryBedByParam(Bed bed){
+        return this.bedMapper.queryBedByParam(bed);
+    }
+    /**
      * 新增Bed数据
      *
      * @param bed 实例对象
@@ -44,6 +53,10 @@ public class BedServiceImpl implements BedService {
         return this.bedMapper.insertBed(bed);
     }
 
+    @Override
+    public List<Bed> findBedById(int bedId){
+        return this.bedMapper.findBedById(bedId);
+    }
     /**
      * 修改Bed数据
      *
@@ -64,5 +77,10 @@ public class BedServiceImpl implements BedService {
     @Override
     public int deleteBedById(Integer bedId) {
         return this.bedMapper.deleteBedById(bedId);
+    }
+
+    @Override
+    public List<Bed> queryBedByStatus(Integer bedStatus) {
+        return this.bedMapper.queryBedByStatus(bedStatus);
     }
 }
