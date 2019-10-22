@@ -34,7 +34,7 @@ public class EmployeeController {
     private EmployeeDetailService employeeDetailService;
 
 
-    @GetMapping("/test")
+    @GetMapping
     @ResponseBody
     public Employee test(HttpSession session) {
         Object employee = session.getAttribute("employee");
