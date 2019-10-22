@@ -1,6 +1,7 @@
 package com.ys.hospital.service;
 
 import com.ys.hospital.pojo.WorkTime;
+
 import java.util.List;
 
 /**
@@ -38,8 +39,16 @@ public interface WorkTimeService {
      * 通过主键删除数据
      *
      * @param workTimeId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteWorkTimeById(Integer workTimeId);
+
+    /**
+     * 根据实体类WorkTime的相关属性查询实体类WorkTime
+     *
+     * @param workTime 实例对象
+     * @return 对象WorkTime列表
+     */
+    List<WorkTime> queryWorkTimeByParam(WorkTime workTime);
 
 }

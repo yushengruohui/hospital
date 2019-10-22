@@ -52,4 +52,18 @@ public interface EmployeeMapper {
      */
     int deleteEmployeeById(Integer employeeId);
 
+    /**
+     * 根据主键查询员工信息（包括员工详情）
+     *
+     * @param employeeId
+     * @return employee(员工及其详情信息)
+     */
+    Employee getEmployeeByEmployeeId(Integer employeeId);
+
+    /**
+     * 查询医院中所有在职的职位为医师信息
+     *
+     * @return 医师列表
+     */
+    List<Employee> getDoctorEmployees();
 }

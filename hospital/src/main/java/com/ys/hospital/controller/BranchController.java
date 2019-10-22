@@ -19,15 +19,15 @@ import javax.annotation.Resource;
 @RequestMapping("/branch")
 public class BranchController {
     private static final Logger logger = LoggerFactory.getLogger(BranchController.class);
-    
+
     @Resource
     private BranchService branchService;
-    
+
     @RequestMapping("/test")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }

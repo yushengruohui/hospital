@@ -19,7 +19,7 @@ import java.util.List;
 @Service("diagnosisMedicineService")
 public class DiagnosisMedicineServiceImpl implements DiagnosisMedicineService {
     private static final Logger logger = LoggerFactory.getLogger(DiagnosisMedicineServiceImpl.class);
-    
+
     @Resource
     private DiagnosisMedicineMapper diagnosisMedicineMapper;
 
@@ -37,7 +37,7 @@ public class DiagnosisMedicineServiceImpl implements DiagnosisMedicineService {
      * 新增DiagnosisMedicine数据
      *
      * @param diagnosisMedicine 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertDiagnosisMedicine(DiagnosisMedicine diagnosisMedicine) {
@@ -48,7 +48,7 @@ public class DiagnosisMedicineServiceImpl implements DiagnosisMedicineService {
      * 修改DiagnosisMedicine数据
      *
      * @param diagnosisMedicine 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateDiagnosisMedicine(DiagnosisMedicine diagnosisMedicine) {
@@ -59,7 +59,7 @@ public class DiagnosisMedicineServiceImpl implements DiagnosisMedicineService {
      * 通过主键删除DiagnosisMedicine数据
      *
      * @param diagnosisMedicineId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteDiagnosisMedicineById(Integer diagnosisMedicineId) {

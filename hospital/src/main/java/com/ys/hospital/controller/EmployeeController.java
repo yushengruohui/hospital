@@ -5,10 +5,11 @@ import com.ys.hospital.service.EmployeeDetailService;
 import com.ys.hospital.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -59,7 +60,6 @@ public class EmployeeController {
         	return "check/index";
         }
         return "redirect:/";
+
     }
-
-
 }

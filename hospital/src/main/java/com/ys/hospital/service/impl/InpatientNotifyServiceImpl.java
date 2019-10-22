@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ import java.util.List;
 @Service("inpatientNotifyService")
 public class InpatientNotifyServiceImpl implements InpatientNotifyService {
     private static final Logger logger = LoggerFactory.getLogger(InpatientNotifyServiceImpl.class);
-    
+
     @Resource
     private InpatientNotifyMapper inpatientNotifyMapper;
 
@@ -33,11 +34,14 @@ public class InpatientNotifyServiceImpl implements InpatientNotifyService {
         return this.inpatientNotifyMapper.queryAllInpatientNotify();
     }
 
+    public List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer inpatientNotifyStatus){
+        return this.inpatientNotifyMapper.queryInpatientNotifyByEmployeeId(inpatientNotifyStatus);
+    }
     /**
      * 新增InpatientNotify数据
      *
      * @param inpatientNotify 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertInpatientNotify(InpatientNotify inpatientNotify) {
@@ -48,7 +52,7 @@ public class InpatientNotifyServiceImpl implements InpatientNotifyService {
      * 修改InpatientNotify数据
      *
      * @param inpatientNotify 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateInpatientNotify(InpatientNotify inpatientNotify) {
@@ -59,7 +63,7 @@ public class InpatientNotifyServiceImpl implements InpatientNotifyService {
      * 通过主键删除InpatientNotify数据
      *
      * @param inpatientNotifyId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteInpatientNotifyById(Integer inpatientNotifyId) {

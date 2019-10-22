@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.DiagnosisMedicineDetail;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface DiagnosisMedicineDetailMapper {
      * 新增DiagnosisMedicineDetail数据
      *
      * @param diagnosisMedicineDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertDiagnosisMedicineDetail(DiagnosisMedicineDetail diagnosisMedicineDetail);
 
@@ -40,7 +41,7 @@ public interface DiagnosisMedicineDetailMapper {
      * 修改DiagnosisMedicineDetail数据
      *
      * @param diagnosisMedicineDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateDiagnosisMedicineDetail(DiagnosisMedicineDetail diagnosisMedicineDetail);
 
@@ -48,7 +49,7 @@ public interface DiagnosisMedicineDetailMapper {
      * 通过主键删除数据
      *
      * @param diagnosisMedicineDetailId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteDiagnosisMedicineDetailById(Integer diagnosisMedicineDetailId);
 

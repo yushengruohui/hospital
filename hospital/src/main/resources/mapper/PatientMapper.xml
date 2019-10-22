@@ -15,7 +15,7 @@
     <!--查询所有Patient信息-->
     <select id="queryAllPatient" resultMap="PatientMap">
         select
-          patient_id, patient_phone, patient_name, patient_gender, patient_identity, patient_address, client_id
+        patient_id, patient_phone, patient_name, patient_gender, patient_identity, patient_address, client_id
         from patient
     </select>
 
@@ -103,7 +103,8 @@
     <!--    微信端的-->
     <!--    添加就诊人信息-->
     <insert id="addPatient">
-        insert into patient(patient_phone, patient_name, patient_gender, patient_identity, patient_address, client_id) values (#{patientPhone},#{patientName},#{patientGender},#{patientIdentity},#{patientAddress},#{clientId})
+        insert into patient(patient_phone, patient_name, patient_gender, patient_identity, patient_address, client_id)
+        values (#{patientPhone},#{patientName},#{patientGender},#{patientIdentity},#{patientAddress},#{clientId})
     </insert>
     <!--    查询用户绑定下的所有就诊人信息-->
     <select id="getPatientListByClientId" resultType="com.ys.hospital.pojo.Patient">

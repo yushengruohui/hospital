@@ -10,21 +10,23 @@
         <result property="workAfternoon" column="work_afternoon" jdbcType="INTEGER"/>
         <result property="roomId" column="room_id" jdbcType="INTEGER"/>
         <result property="workDeal" column="work_deal" jdbcType="INTEGER"/>
-        <result property="workDate" column="work_date" jdbcType="TIMESTAMP"/>
+        <result property="workDate" column="work_date"/>
+        <association property="room" javaType="com.ys.hospital.pojo.Room"/>
+        <association property="workTime" javaType="com.ys.hospital.pojo.WorkTime"/>
     </resultMap>
 
     <!--查询所有Work信息-->
     <select id="queryAllWork" resultMap="WorkMap">
         select
-          work_id, work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date
-        from work
+        work_id, work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date
+        from `work`
     </select>
 
     <!--根据实体类Work的相关属性查询实体类Work-->
     <select id="queryWorkByParam" resultMap="WorkMap">
         select
-          work_id, work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date
-        from work
+        work_id, work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date
+        from `work`
         <where>
             <if test="workId != null">
                 and work_id = #{workId}
@@ -48,20 +50,94 @@
                 and work_deal = #{workDeal}
             </if>
             <if test="workDate != null">
-                and work_date = #{workDate}
+                and work_date = DATE_FORMAT(#{workDate}, '%Y-%m-%d')
             </if>
         </where>
+    </select>
+    <!--    根据branchId跟work_date查询工作安排-->
+    <select id="findWorksByBranchIdAndTime" resultMap="WorkMap">
+        SELECT
+        room.room_id,
+        room.room_name,
+        room.branch_id,
+        room.room_address,
+        `work`.work_id,
+        `work`.work_week,
+        `work`.employee_id,
+        `work`.work_morning,
+        `work`.work_afternoon,
+        `work`.room_id,
+        `work`.work_deal,
+        `work`.work_date
+        FROM
+        room ,
+        `work`
+        WHERE
+        room.room_id = `work`.room_id AND
+        room.branch_id = #{branchId} and
+        `work`.work_date=#{time}
+    </select>
+    <!--    根据医师Id与值班时间查找值班表-->
+    <select id="findWorkByEmployeeIdAndWorkDate" resultMap="WorkMap">
+        SELECT
+        `work`.work_id,
+        `work`.work_week,
+        `work`.employee_id,
+        `work`.work_morning,
+        `work`.work_afternoon,
+        `work`.room_id,
+        `work`.work_deal,
+        `work`.work_date,
+        work_time.work_time_id,
+        work_time.work_time1,
+        work_time.work_time2,
+        work_time.work_time3,
+        work_time.work_time4,
+        work_time.work_time5,
+        work_time.work_time6,
+        work_time.work_time7,
+        work_time.work_time8,
+        work_time.work_time9,
+        work_time.work_time10,
+        work_time.work_time11,
+        work_time.work_time12,
+        work_time.work_time13,
+        work_time.work_time14,
+        work_time.work_id
+        FROM
+        `work` ,
+        work_time
+        WHERE
+        `work`.work_id = work_time.work_id AND
+        `work`.employee_id =#{employeeId} AND
+        `work`.work_date = #{workDate}
+    </select>
+    <select id="findWorkListByEmployeeId" resultType="com.ys.hospital.pojo.Work">
+        SELECT
+        `work`.work_id,
+        `work`.work_week,
+        `work`.employee_id,
+        `work`.work_morning,
+        `work`.work_afternoon,
+        `work`.room_id,
+        `work`.work_deal,
+        `work`.work_date
+        FROM
+        `work`
+        WHERE
+        `work`.work_date > curdate() AND
+        `work`.employee_id = #{employeeId}
     </select>
 
     <!--新增Work数据-->
     <insert id="insertWork" keyProperty="workId" useGeneratedKeys="true">
-        insert into work(work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date)
+        insert into `work`(work_week, employee_id, work_morning, work_afternoon, room_id, work_deal, work_date)
         values (#{workWeek}, #{employeeId}, #{workMorning}, #{workAfternoon}, #{roomId}, #{workDeal}, #{workDate})
     </insert>
 
     <!--修改Work记录-->
     <update id="updateWork">
-        update work
+        update `work`
         <set>
             <if test="workWeek != null">
                 work_week = #{workWeek},
@@ -90,7 +166,7 @@
 
     <!--通过主键删除一条Work记录-->
     <delete id="deleteWorkById">
-        delete from work where work_id = #{workId}
+        delete from `work` where work_id = #{workId}
     </delete>
 
 </mapper>

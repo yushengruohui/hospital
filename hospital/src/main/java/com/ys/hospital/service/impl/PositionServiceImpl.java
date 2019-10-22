@@ -19,7 +19,7 @@ import java.util.List;
 @Service("positionService")
 public class PositionServiceImpl implements PositionService {
     private static final Logger logger = LoggerFactory.getLogger(PositionServiceImpl.class);
-    
+
     @Resource
     private PositionMapper positionMapper;
 
@@ -37,7 +37,7 @@ public class PositionServiceImpl implements PositionService {
      * 新增Position数据
      *
      * @param position 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertPosition(Position position) {
@@ -48,7 +48,7 @@ public class PositionServiceImpl implements PositionService {
      * 修改Position数据
      *
      * @param position 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updatePosition(Position position) {
@@ -59,7 +59,7 @@ public class PositionServiceImpl implements PositionService {
      * 通过主键删除Position数据
      *
      * @param positionId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deletePositionById(Integer positionId) {

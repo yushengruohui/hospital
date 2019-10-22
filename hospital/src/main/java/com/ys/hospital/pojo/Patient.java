@@ -7,7 +7,7 @@ import lombok.Data;
  * (Patient)实体类
  *
  * @author yusheng
- * @since 2019-10-10 08:09:40
+ * @since 2019-10-22 10:54:22
  */
 @Data
 public class Patient implements Serializable {

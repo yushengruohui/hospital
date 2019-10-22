@@ -19,15 +19,15 @@ import javax.annotation.Resource;
 @RequestMapping("/check")
 public class CheckController {
     private static final Logger logger = LoggerFactory.getLogger(CheckController.class);
-    
+
     @Resource
     private CheckService checkService;
-    
+
     @RequestMapping("/test")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }

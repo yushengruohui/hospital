@@ -11,19 +11,23 @@
         <result property="branchId" column="branch_id" jdbcType="INTEGER"/>
         <result property="appointmentPrice" column="appointment_price" jdbcType="NUMERIC"/>
         <result property="appointmentPayTime" column="appointment_pay_time" jdbcType="TIMESTAMP"/>
+        <association property="branch" javaType="com.ys.hospital.pojo.Branch"/>
+        <association property="employee" javaType="com.ys.hospital.pojo.Employee"/>
     </resultMap>
 
     <!--查询所有Appointment信息-->
     <select id="queryAllAppointment" resultMap="AppointmentMap">
         select
-          appointment_id, appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price, appointment_pay_time
+        appointment_id, appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price,
+        appointment_pay_time
         from appointment
     </select>
 
     <!--根据实体类Appointment的相关属性查询实体类Appointment-->
     <select id="queryAppointmentByParam" resultMap="AppointmentMap">
         select
-          appointment_id, appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price, appointment_pay_time
+        appointment_id, appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price,
+        appointment_pay_time
         from appointment
         <where>
             <if test="appointmentId != null">
@@ -52,11 +56,70 @@
             </if>
         </where>
     </select>
+    <!--    根据患者id查询患者预约记录-->
+    <select id="getAppointmentListByPatientId" resultMap="AppointmentMap">
+        SELECT
+        employee.employee_id,
+        employee.employee_name,
+        employee.employee_password,
+        employee.employee_online,
+        employee.employee_last_login_time,
+        branch.branch_id,
+        branch.branch_name,
+        branch.department_id,
+        appointment.appointment_id,
+        appointment.appointment_time,
+        appointment.appointment_status,
+        appointment.patient_id,
+        appointment.employee_id,
+        appointment.branch_id,
+        appointment.appointment_price,
+        appointment.appointment_pay_time
+        FROM
+        employee ,
+        branch ,
+        appointment
+        WHERE
+        appointment.employee_id = employee.employee_id AND
+        appointment.branch_id = branch.branch_id AND
+        appointment.patient_id = #{patientId}
+        order by appointment.appointment_pay_time desc
+    </select>
+    <!--    根据预约单id查询预约单信息-->
+    <select id="getAppointmentByAppointmentId" resultMap="AppointmentMap">
+        SELECT
+        employee.employee_id,
+        employee.employee_name,
+        employee.employee_password,
+        employee.employee_online,
+        employee.employee_last_login_time,
+        branch.branch_id,
+        branch.branch_name,
+        branch.department_id,
+        appointment.appointment_id,
+        appointment.appointment_time,
+        appointment.appointment_status,
+        appointment.patient_id,
+        appointment.employee_id,
+        appointment.branch_id,
+        appointment.appointment_price,
+        appointment.appointment_pay_time
+        FROM
+        employee ,
+        branch ,
+        appointment
+        WHERE
+        appointment.employee_id = employee.employee_id AND
+        appointment.branch_id = branch.branch_id AND
+        appointment.appointment_id = #{appointmentId}
+    </select>
 
     <!--新增Appointment数据-->
     <insert id="insertAppointment" keyProperty="appointmentId" useGeneratedKeys="true">
-        insert into appointment(appointment_time, appointment_status, patient_id, employee_id, branch_id, appointment_price, appointment_pay_time)
-        values (#{appointmentTime}, #{appointmentStatus}, #{patientId}, #{employeeId}, #{branchId}, #{appointmentPrice}, #{appointmentPayTime})
+        insert into appointment(appointment_time, appointment_status, patient_id, employee_id, branch_id,
+        appointment_price, appointment_pay_time)
+        values (#{appointmentTime}, #{appointmentStatus}, #{patientId}, #{employeeId}, #{branchId}, #{appointmentPrice},
+        #{appointmentPayTime})
     </insert>
 
     <!--修改Appointment记录-->

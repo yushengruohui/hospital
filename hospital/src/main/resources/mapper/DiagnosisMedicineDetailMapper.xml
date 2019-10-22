@@ -12,14 +12,14 @@
     <!--查询所有DiagnosisMedicineDetail信息-->
     <select id="queryAllDiagnosisMedicineDetail" resultMap="DiagnosisMedicineDetailMap">
         select
-          diagnosis_medicine_detail_id, medicine_id, medicine_number, diagnosis_medicine_id
+        diagnosis_medicine_detail_id, medicine_id, medicine_number, diagnosis_medicine_id
         from diagnosis_medicine_detail
     </select>
 
     <!--根据实体类DiagnosisMedicineDetail的相关属性查询实体类DiagnosisMedicineDetail-->
     <select id="queryDiagnosisMedicineDetailByParam" resultMap="DiagnosisMedicineDetailMap">
         select
-          diagnosis_medicine_detail_id, medicine_id, medicine_number, diagnosis_medicine_id
+        diagnosis_medicine_detail_id, medicine_id, medicine_number, diagnosis_medicine_id
         from diagnosis_medicine_detail
         <where>
             <if test="diagnosisMedicineDetailId != null">

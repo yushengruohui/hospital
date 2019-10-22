@@ -19,15 +19,15 @@ import javax.annotation.Resource;
 @RequestMapping("/device")
 public class DeviceController {
     private static final Logger logger = LoggerFactory.getLogger(DeviceController.class);
-    
+
     @Resource
     private DeviceService deviceService;
-    
+
     @RequestMapping("/test")
     public String testDome() {
         logger.info("testDome success");
         return "redirect:/";
     }
-    
-    
+
+
 }

@@ -19,7 +19,7 @@ import java.util.List;
 @Service("titleService")
 public class TitleServiceImpl implements TitleService {
     private static final Logger logger = LoggerFactory.getLogger(TitleServiceImpl.class);
-    
+
     @Resource
     private TitleMapper titleMapper;
 
@@ -37,7 +37,7 @@ public class TitleServiceImpl implements TitleService {
      * 新增Title数据
      *
      * @param title 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertTitle(Title title) {
@@ -48,7 +48,7 @@ public class TitleServiceImpl implements TitleService {
      * 修改Title数据
      *
      * @param title 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateTitle(Title title) {
@@ -59,10 +59,21 @@ public class TitleServiceImpl implements TitleService {
      * 通过主键删除Title数据
      *
      * @param titleId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteTitleById(Integer titleId) {
         return this.titleMapper.deleteTitleById(titleId);
+    }
+
+    /**
+     * 根据主键查询title对象
+     *
+     * @param titleId
+     * @return title
+     */
+    @Override
+    public Title getTitleByTitleId(Integer titleId) {
+        return this.titleMapper.getTitleByTitleId(titleId);
     }
 }

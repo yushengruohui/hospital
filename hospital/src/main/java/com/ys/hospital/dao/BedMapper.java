@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Bed;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,15 +33,21 @@ public interface BedMapper {
      * 新增Bed数据
      *
      * @param bed 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertBed(Bed bed);
 
     /**
+     * 通过bedID查找信息
+     * @param bedId
+     * @return
+     */
+    List<Bed> findBedById(int bedId);
+    /**
      * 修改Bed数据
      *
      * @param bed 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateBed(Bed bed);
 
@@ -48,8 +55,14 @@ public interface BedMapper {
      * 通过主键删除数据
      *
      * @param bedId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteBedById(Integer bedId);
 
+    /**
+     * 通过病床状态获取病床信息
+     * @param bedStatus
+     * @return
+     */
+    List<Bed> queryBedByStatus(Integer bedStatus);
 }

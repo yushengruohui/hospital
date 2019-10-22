@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.InpatientDetail;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface InpatientDetailMapper {
      * 新增InpatientDetail数据
      *
      * @param inpatientDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertInpatientDetail(InpatientDetail inpatientDetail);
 
@@ -40,7 +41,7 @@ public interface InpatientDetailMapper {
      * 修改InpatientDetail数据
      *
      * @param inpatientDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateInpatientDetail(InpatientDetail inpatientDetail);
 
@@ -48,8 +49,14 @@ public interface InpatientDetailMapper {
      * 通过主键删除数据
      *
      * @param inpatientDetailId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteInpatientDetailById(Integer inpatientDetailId);
 
+    /**
+     * 通过住院表ID查询住院明细
+     * @param inpatientId
+     * @return
+     */
+    List<InpatientDetail> queryInpatientDetailByInpatientId(Integer inpatientId);
 }

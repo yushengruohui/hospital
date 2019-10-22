@@ -73,4 +73,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return this.employeeMapper.queryEmployeeByParam(employee);
     }
+
+    /**
+     * 根据主键查询员工信息（包括员工详情）
+     *
+     * @param employeeId
+     * @return employee(员工及其详情信息)
+     */
+    @Override
+    public Employee getEmployeeByEmployeeId(Integer employeeId) {
+        return this.employeeMapper.getEmployeeByEmployeeId(employeeId);
+    }
+
+    @Override
+    public List<Employee> getDoctorEmployees() {
+        return employeeMapper.getDoctorEmployees();
+    }
 }

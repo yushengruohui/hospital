@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -18,5 +19,5 @@ public class Power implements Serializable {
     private String powerType;
     //是否拥有某功能模块的权限：1：有权限，0：无权限
     private Integer powerStatus;
-    
+
 }

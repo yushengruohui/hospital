@@ -19,7 +19,7 @@ import java.util.List;
 @Service("powerDetailService")
 public class PowerDetailServiceImpl implements PowerDetailService {
     private static final Logger logger = LoggerFactory.getLogger(PowerDetailServiceImpl.class);
-    
+
     @Resource
     private PowerDetailMapper powerDetailMapper;
 
@@ -37,7 +37,7 @@ public class PowerDetailServiceImpl implements PowerDetailService {
      * 新增PowerDetail数据
      *
      * @param powerDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertPowerDetail(PowerDetail powerDetail) {
@@ -48,7 +48,7 @@ public class PowerDetailServiceImpl implements PowerDetailService {
      * 修改PowerDetail数据
      *
      * @param powerDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updatePowerDetail(PowerDetail powerDetail) {
@@ -59,7 +59,7 @@ public class PowerDetailServiceImpl implements PowerDetailService {
      * 通过主键删除PowerDetail数据
      *
      * @param powerDetailId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deletePowerDetailById(Integer powerDetailId) {

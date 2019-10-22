@@ -15,7 +15,7 @@
     <!--查询所有Department信息-->
     <select id="queryAllDepartment" resultMap="DepartmentMap">
         select
-          department_id, department_name
+        department_id, department_name
         from department
     </select>
 

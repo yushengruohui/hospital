@@ -44,4 +44,30 @@ public interface AppointmentService {
     int deleteAppointmentById(Integer appointmentId);
 
     List<Appointment> findUntreatedAppointment(Integer employeeId);
+
+    List<Appointment> findTreatedAppointment(Integer employeeId);
+
+    /**
+     * 根据实体类Appointment的相关属性查询实体类Appointment
+     *
+     * @param appointment 实例对象
+     * @return 对象Appointment列表
+     */
+    List<Appointment> queryAppointmentByParam(Appointment appointment);
+
+    /**
+     * 根据患者Id查询患者预约记录
+     *
+     * @param patientId
+     * @return
+     */
+    List<Appointment> getAppointmentListByPatientId(Integer patientId);
+
+    /**
+     * 根据预约单id查询预约单信息（级联查询）
+     *
+     * @param appointmentId
+     * @return 预约单信息
+     */
+    Appointment getAppointmentByAppointmentId(Integer appointmentId);
 }

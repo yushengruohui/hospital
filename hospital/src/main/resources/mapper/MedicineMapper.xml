@@ -24,14 +24,18 @@
     <!--查询所有Medicine信息-->
     <select id="queryAllMedicine" resultMap="MedicineMap">
         select
-          medicine_id, medicine_name, medicine_type, medicine_use, medicine_price, medicine_inventory, medicine_efficacy, medicine_valid, medicine_components, medicine_production_date, medicine_production_address, medicine_specifications, medicine_character, medicine_confict, medicine_save, medicine_approval
+        medicine_id, medicine_name, medicine_type, medicine_use, medicine_price, medicine_inventory, medicine_efficacy,
+        medicine_valid, medicine_components, medicine_production_date, medicine_production_address,
+        medicine_specifications, medicine_character, medicine_confict, medicine_save, medicine_approval
         from medicine
     </select>
 
     <!--根据实体类Medicine的相关属性查询实体类Medicine-->
     <select id="queryMedicineByParam" resultMap="MedicineMap">
         select
-          medicine_id, medicine_name, medicine_type, medicine_use, medicine_price, medicine_inventory, medicine_efficacy, medicine_valid, medicine_components, medicine_production_date, medicine_production_address, medicine_specifications, medicine_character, medicine_confict, medicine_save, medicine_approval
+        medicine_id, medicine_name, medicine_type, medicine_use, medicine_price, medicine_inventory, medicine_efficacy,
+        medicine_valid, medicine_components, medicine_production_date, medicine_production_address,
+        medicine_specifications, medicine_character, medicine_confict, medicine_save, medicine_approval
         from medicine
         <where>
             <if test="medicineId != null">
@@ -85,10 +89,35 @@
         </where>
     </select>
 
+    <select id="queryMedicineNameByParam" resultType="java.lang.String">
+        <bind name="_medicineTip" value="'%' + medicineTip + '%'"/>
+        select medicine_name
+        from medicine
+        where medicine_name like #{_medicineTip}
+        limit 1
+    </select>
+    <select id="queryMedicineId" resultType="java.lang.Integer">
+        select medicine_id
+        from medicine
+        where medicine_name = #{medicineName}
+        limit 1
+    </select>
+    <select id="queryMedicinePrice" resultType="java.lang.Double">
+        select medicine_price
+        from medicine
+        where medicine_id = #{medicineId}
+        limit 1
+    </select>
+
     <!--新增Medicine数据-->
     <insert id="insertMedicine" keyProperty="medicineId" useGeneratedKeys="true">
-        insert into medicine(medicine_name, medicine_type, medicine_use, medicine_price, medicine_inventory, medicine_efficacy, medicine_valid, medicine_components, medicine_production_date, medicine_production_address, medicine_specifications, medicine_character, medicine_confict, medicine_save, medicine_approval)
-        values (#{medicineName}, #{medicineType}, #{medicineUse}, #{medicinePrice}, #{medicineInventory}, #{medicineEfficacy}, #{medicineValid}, #{medicineComponents}, #{medicineProductionDate}, #{medicineProductionAddress}, #{medicineSpecifications}, #{medicineCharacter}, #{medicineConfict}, #{medicineSave}, #{medicineApproval})
+        insert into medicine(medicine_name, medicine_type, medicine_use, medicine_price, medicine_inventory,
+        medicine_efficacy, medicine_valid, medicine_components, medicine_production_date, medicine_production_address,
+        medicine_specifications, medicine_character, medicine_confict, medicine_save, medicine_approval)
+        values (#{medicineName}, #{medicineType}, #{medicineUse}, #{medicinePrice}, #{medicineInventory},
+        #{medicineEfficacy}, #{medicineValid}, #{medicineComponents}, #{medicineProductionDate},
+        #{medicineProductionAddress}, #{medicineSpecifications}, #{medicineCharacter}, #{medicineConfict},
+        #{medicineSave}, #{medicineApproval})
     </insert>
 
     <!--修改Medicine记录-->

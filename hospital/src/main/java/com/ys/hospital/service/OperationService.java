@@ -1,6 +1,7 @@
 package com.ys.hospital.service;
 
 import com.ys.hospital.pojo.Operation;
+
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public interface OperationService {
      * 通过主键删除数据
      *
      * @param operationId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteOperationById(Integer operationId);
 

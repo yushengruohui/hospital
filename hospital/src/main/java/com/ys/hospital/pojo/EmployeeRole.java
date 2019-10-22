@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -18,5 +19,5 @@ public class EmployeeRole implements Serializable {
     private Integer roleId;
     //外键：员工id
     private Integer employeeId;
-    
+
 }

@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Appointment;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface AppointmentMapper {
      * 新增Appointment数据
      *
      * @param appointment 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertAppointment(Appointment appointment);
 
@@ -40,7 +41,7 @@ public interface AppointmentMapper {
      * 修改Appointment数据
      *
      * @param appointment 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateAppointment(Appointment appointment);
 
@@ -48,8 +49,23 @@ public interface AppointmentMapper {
      * 通过主键删除数据
      *
      * @param appointmentId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteAppointmentById(Integer appointmentId);
 
+    /**
+     * 根据患者Id查询患者预约记录
+     *
+     * @param patientId
+     * @return
+     */
+    List<Appointment> getAppointmentListByPatientId(Integer patientId);
+
+    /**
+     * 根据预约单id查询预约单信息（级联查询）
+     *
+     * @param appointmentId
+     * @return 预约单信息
+     */
+    Appointment getAppointmentByAppointmentId(Integer appointmentId);
 }

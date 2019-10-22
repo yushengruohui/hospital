@@ -19,7 +19,7 @@ import java.util.List;
 @Service("bedService")
 public class BedServiceImpl implements BedService {
     private static final Logger logger = LoggerFactory.getLogger(BedServiceImpl.class);
-    
+
     @Resource
     private BedMapper bedMapper;
 
@@ -34,21 +34,34 @@ public class BedServiceImpl implements BedService {
     }
 
     /**
+     * 根据实体类Bed的相关属性查询实体类Bed
+     * @param bed 属性
+     * @return 实例对象
+     */
+    @Override
+    public List<Bed> queryBedByParam(Bed bed){
+        return this.bedMapper.queryBedByParam(bed);
+    }
+    /**
      * 新增Bed数据
      *
      * @param bed 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertBed(Bed bed) {
         return this.bedMapper.insertBed(bed);
     }
 
+    @Override
+    public List<Bed> findBedById(int bedId){
+        return this.bedMapper.findBedById(bedId);
+    }
     /**
      * 修改Bed数据
      *
      * @param bed 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateBed(Bed bed) {
@@ -59,10 +72,15 @@ public class BedServiceImpl implements BedService {
      * 通过主键删除Bed数据
      *
      * @param bedId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteBedById(Integer bedId) {
         return this.bedMapper.deleteBedById(bedId);
+    }
+
+    @Override
+    public List<Bed> queryBedByStatus(Integer bedStatus) {
+        return this.bedMapper.queryBedByStatus(bedStatus);
     }
 }

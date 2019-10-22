@@ -17,14 +17,14 @@
     <!--查询所有Bed信息-->
     <select id="queryAllBed" resultMap="BedMap">
         select
-          bed_id, bed_name, bed_status, bed_entry_time, bed_leave_time, bed_price, patient_id, room_id, employee_id
+        bed_id, bed_name, bed_status, bed_entry_time, bed_leave_time, bed_price, patient_id, room_id, employee_id
         from bed
     </select>
 
     <!--根据实体类Bed的相关属性查询实体类Bed-->
     <select id="queryBedByParam" resultMap="BedMap">
         select
-          bed_id, bed_name, bed_status, bed_entry_time, bed_leave_time, bed_price, patient_id, room_id, employee_id
+        bed_id, bed_name, bed_status, bed_entry_time, bed_leave_time, bed_price, patient_id, room_id, employee_id
         from bed
         <where>
             <if test="bedId != null">
@@ -59,10 +59,19 @@
 
     <!--新增Bed数据-->
     <insert id="insertBed" keyProperty="bedId" useGeneratedKeys="true">
-        insert into bed(bed_name, bed_status, bed_entry_time, bed_leave_time, bed_price, patient_id, room_id, employee_id)
-        values (#{bedName}, #{bedStatus}, #{bedEntryTime}, #{bedLeaveTime}, #{bedPrice}, #{patientId}, #{roomId}, #{employeeId})
+        insert into bed(bed_name, bed_status, bed_entry_time, bed_leave_time, bed_price, patient_id, room_id,
+        employee_id)
+        values (#{bedName}, #{bedStatus}, #{bedEntryTime}, #{bedLeaveTime}, #{bedPrice}, #{patientId}, #{roomId},
+        #{employeeId})
     </insert>
 
+    <!--通过bedId查询病床信息-->
+    <select id="findBedById" resultMap="BedMap">
+        select
+            bed_id, bed_name, bed_status, bed_entry_time, bed_leave_time, bed_price, patient_id, room_id, employee_id
+        from bed
+        where bed_id = #{bedId}
+    </select>
     <!--修改Bed记录-->
     <update id="updateBed">
         update bed
@@ -100,4 +109,10 @@
         delete from bed where bed_id = #{bedId}
     </delete>
 
+    <select id="queryBedByStatus" resultMap="BedMap">
+        select
+            bed_id, bed_name
+        from bed
+        where bed_status='0'
+    </select>
 </mapper>

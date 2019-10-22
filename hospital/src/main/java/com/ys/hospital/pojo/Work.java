@@ -2,7 +2,11 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * (Work)实体类
@@ -13,7 +17,7 @@ import lombok.Data;
 @Data
 public class Work implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer workId;
     //1-7:代表星期一到星期日
     private Integer workWeek;
@@ -28,6 +32,11 @@ public class Work implements Serializable {
     //可预约人数
     private Integer workDeal;
     //工作日期
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     private Date workDate;
-    
+    //所在的就诊室
+    private Room room;
+    //所拥有的时间段
+    private WorkTime workTime;
 }

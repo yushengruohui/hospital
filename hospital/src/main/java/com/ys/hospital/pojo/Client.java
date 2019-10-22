@@ -1,6 +1,7 @@
 package com.ys.hospital.pojo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -18,5 +19,5 @@ public class Client implements Serializable {
     private String clientPhone;
     //登录密码
     private String clientPassword;
-    
+
 }

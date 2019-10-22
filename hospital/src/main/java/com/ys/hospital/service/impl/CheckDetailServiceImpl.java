@@ -19,7 +19,7 @@ import java.util.List;
 @Service("checkDetailService")
 public class CheckDetailServiceImpl implements CheckDetailService {
     private static final Logger logger = LoggerFactory.getLogger(CheckDetailServiceImpl.class);
-    
+
     @Resource
     private CheckDetailMapper checkDetailMapper;
 
@@ -37,7 +37,7 @@ public class CheckDetailServiceImpl implements CheckDetailService {
      * 新增CheckDetail数据
      *
      * @param checkDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertCheckDetail(CheckDetail checkDetail) {
@@ -48,7 +48,7 @@ public class CheckDetailServiceImpl implements CheckDetailService {
      * 修改CheckDetail数据
      *
      * @param checkDetail 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateCheckDetail(CheckDetail checkDetail) {
@@ -59,7 +59,7 @@ public class CheckDetailServiceImpl implements CheckDetailService {
      * 通过主键删除CheckDetail数据
      *
      * @param checkDetailId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteCheckDetailById(Integer checkDetailId) {

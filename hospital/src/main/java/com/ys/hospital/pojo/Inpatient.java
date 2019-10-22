@@ -2,6 +2,8 @@ package com.ys.hospital.pojo;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 
 /**
@@ -31,5 +33,6 @@ public class Inpatient implements Serializable {
     private Integer inpatientPayStatus;
     //患者预交费用
     private Double inpatientPrepaidPrice;
-    
+    //住院详情
+    private List<InpatientDetail> inpatientDetails;
 }

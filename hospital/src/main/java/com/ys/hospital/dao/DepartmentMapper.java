@@ -2,6 +2,7 @@ package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Department;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface DepartmentMapper {
      * 新增Department数据
      *
      * @param department 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertDepartment(Department department);
 
@@ -40,7 +41,7 @@ public interface DepartmentMapper {
      * 修改Department数据
      *
      * @param department 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateDepartment(Department department);
 
@@ -48,7 +49,7 @@ public interface DepartmentMapper {
      * 通过主键删除数据
      *
      * @param departmentId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteDepartmentById(Integer departmentId);
 
@@ -57,6 +58,6 @@ public interface DepartmentMapper {
      *
      * @return departmentList
      */
-     public List<Department> getDepartmentList();
+    public List<Department> getDepartmentList();
 
 }

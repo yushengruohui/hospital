@@ -7,7 +7,7 @@ import lombok.Data;
  * (Branch)实体类
  *
  * @author yusheng
- * @since 2019-10-10 08:09:39
+ * @since 2019-10-22 10:54:21
  */
 @Data
 public class Branch implements Serializable {

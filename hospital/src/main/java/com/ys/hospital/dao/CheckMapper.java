@@ -1,7 +1,7 @@
 package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Check;
-import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -32,7 +32,7 @@ public interface CheckMapper {
      * 新增Check数据
      *
      * @param check 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int insertCheck(Check check);
 
@@ -40,7 +40,7 @@ public interface CheckMapper {
      * 修改Check数据
      *
      * @param check 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int updateCheck(Check check);
 
@@ -48,8 +48,10 @@ public interface CheckMapper {
      * 通过主键删除数据
      *
      * @param checkId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteCheckById(Integer checkId);
+
+    double queryPriceByCheckItemId(Integer checkItemId);
 
 }

@@ -10,14 +10,14 @@
     <!--查询所有Title信息-->
     <select id="queryAllTitle" resultMap="TitleMap">
         select
-          title_id, title_name
+        title_id, title_name
         from title
     </select>
 
     <!--根据实体类Title的相关属性查询实体类Title-->
     <select id="queryTitleByParam" resultMap="TitleMap">
         select
-          title_id, title_name
+        title_id, title_name
         from title
         <where>
             <if test="titleId != null">
@@ -27,6 +27,16 @@
                 and title_name = #{titleName}
             </if>
         </where>
+    </select>
+    <!--    根据主键查询title对象-->
+    <select id="getTitleByTitleId" resultType="com.ys.hospital.pojo.Title">
+        SELECT
+        title.title_id,
+        title.title_name
+        FROM
+        title
+        WHERE
+        title.title_id = #{titleId}
     </select>
 
     <!--新增Title数据-->

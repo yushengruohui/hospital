@@ -19,7 +19,7 @@ import java.util.List;
 @Service("employeeRoleService")
 public class EmployeeRoleServiceImpl implements EmployeeRoleService {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeRoleServiceImpl.class);
-    
+
     @Resource
     private EmployeeRoleMapper employeeRoleMapper;
 
@@ -37,7 +37,7 @@ public class EmployeeRoleServiceImpl implements EmployeeRoleService {
      * 新增EmployeeRole数据
      *
      * @param employeeRole 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int insertEmployeeRole(EmployeeRole employeeRole) {
@@ -48,7 +48,7 @@ public class EmployeeRoleServiceImpl implements EmployeeRoleService {
      * 修改EmployeeRole数据
      *
      * @param employeeRole 实例对象
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int updateEmployeeRole(EmployeeRole employeeRole) {
@@ -59,7 +59,7 @@ public class EmployeeRoleServiceImpl implements EmployeeRoleService {
      * 通过主键删除EmployeeRole数据
      *
      * @param employeeRoleId 主键
-     * @return 是否成功(1：成功|0：失败)
+     * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     @Override
     public int deleteEmployeeRoleById(Integer employeeRoleId) {
