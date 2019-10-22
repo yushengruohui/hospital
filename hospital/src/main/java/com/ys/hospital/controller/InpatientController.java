@@ -1,6 +1,7 @@
 package com.ys.hospital.controller;
 
 import com.ys.hospital.pojo.Inpatient;
+import com.ys.hospital.pojo.InpatientNotify;
 import com.ys.hospital.service.InpatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,10 @@ public class InpatientController {
         int count=inpatientService.insertInpatient(inpatient);
         System.out.println(inpatient);
         if(count>0){
+            //更新住院通知的处理状态为1
+            InpatientNotify inpatientNotify=new InpatientNotify();
+            inpatientNotify.setInpatientNotifyId(inpatient.getInpatientNotifyId());
+            inpatientNotify.setInpatientNotifyStatus(1);
             return "/nurse/inpatient_list";
         }
         logger.info("insertInpatient success");

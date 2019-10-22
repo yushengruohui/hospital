@@ -1,5 +1,6 @@
 package com.ys.hospital.controller;
 
+import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.pojo.InpatientNotify;
 import com.ys.hospital.service.InpatientNotifyService;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -40,10 +42,11 @@ public class InpatientNotifyController {
     }
 
     @RequestMapping("/queryInpatientNotifyByEmployeeId")
-    public String queryInpatientNotifyByEmployeeId(Integer employeeId,Integer inpatientNotifyStatus,Model model){
-        List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryInpatientNotifyByEmployeeId(employeeId,inpatientNotifyStatus);
+    public String queryInpatientNotifyByEmployeeId(HttpSession session, Integer inpatientNotifyStatus, Model model){
+        //获取当前登录的用户
+        Employee employee= (Employee) session.getAttribute("employee");
+        List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryInpatientNotifyByEmployeeId(inpatientNotifyStatus);
         model.addAttribute("inpatientNotifies",inpatientNotifies);
-        logger.info("queryInpatientNotifyByEmployeeId success");
         return "/nurse/inpatientNotify_list";
     }
 

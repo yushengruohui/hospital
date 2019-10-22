@@ -21,7 +21,7 @@
         select
             inpatient_notify_id, inpatient_notify_status, inpatient_deal_time, diagnosis_id, employee_id
         from inpatient_notify
-        where employee_id='6' and inpatient_notify_status='0'
+        where employee_id=#{employeeId} and inpatient_notify_status='0'
     </select>
 
     <!--根据实体类InpatientNotify的相关属性查询实体类InpatientNotify-->
