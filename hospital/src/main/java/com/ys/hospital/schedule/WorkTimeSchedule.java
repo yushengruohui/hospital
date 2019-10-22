@@ -8,6 +8,7 @@ import com.ys.hospital.service.EmployeeService;
 import com.ys.hospital.service.RoomService;
 import com.ys.hospital.service.WorkService;
 import com.ys.hospital.service.WorkTimeService;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -31,7 +32,7 @@ public class WorkTimeSchedule {
     @Resource
     private WorkTimeService workTimeService;
 
-    //    @Scheduled(cron = ("0 0 0 * * 1-7"))
+    @Scheduled(cron = ("0 0 0 * * 1-7"))
     public void work() {
 
         System.out.println("我不懂");

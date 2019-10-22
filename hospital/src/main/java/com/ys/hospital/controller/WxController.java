@@ -248,6 +248,7 @@ public class WxController {
         appointment.setAppointmentPayTime(new Date());
         //预约单记录存入到数据库中
         int flag = appointmentService.insertAppointment(appointment);
+        System.out.println(appointment);
         //如果支付成功，将当天的余号-1
         if (flag > 0) {
             //获取日期和时间
