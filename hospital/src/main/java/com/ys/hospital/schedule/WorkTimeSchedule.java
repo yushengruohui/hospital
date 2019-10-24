@@ -57,8 +57,8 @@ public class WorkTimeSchedule {
                 work.setWorkWeek(Integer.valueOf(weekDays[calendar.get(Calendar.DAY_OF_WEEK) - 2]));
                 work.setEmployeeId(employees.get(i).getEmployeeId());
                 //根据医师所在branch查询其所属的roomId
-                room.setBranchId(employees.get(i).getEmployeeDetail().getBranchId());
-                rooms = roomService.queryRoomByParam(room);
+//                room.setBranchId(employees.get(i).getEmployeeDetail().getBranchId());
+                rooms = roomService.getConsultingRooms(employees.get(i).getEmployeeDetail().getBranchId());
                 //如果没有诊室信息
                 if (rooms.size() < 1) {
                     System.out.println("===== 我这种情况不可能出现的 =====");

@@ -51,4 +51,11 @@ public interface RoomService {
      */
     List<Room> queryRoomByParam(Room room);
 
+    /**
+     * 根据科室Id获取其下面的诊室
+     *
+     * @param branchId
+     * @return 诊室列表
+     */
+    List<Room> getConsultingRooms(Integer branchId);
 }

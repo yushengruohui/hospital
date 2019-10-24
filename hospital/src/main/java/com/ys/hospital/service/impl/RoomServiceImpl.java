@@ -76,4 +76,9 @@ public class RoomServiceImpl implements RoomService {
     public List<Room> queryRoomByParam(Room room) {
         return this.roomMapper.queryRoomByParam(room);
     }
+
+    @Override
+    public List<Room> getConsultingRooms(Integer branchId) {
+        return roomMapper.getConsultingRooms(branchId);
+    }
 }
