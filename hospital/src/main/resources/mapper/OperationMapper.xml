@@ -230,9 +230,11 @@
     </select>
     <!--查询所有Operation信息-->
     <select id="queryAllOperations" resultMap="OperationRoomOperationNotifyMap">
-        select *
-        from operation,operation_notify,room
-            WHERE operation.operation_notify_id=operation_notify.operation_notify_id
-              and operation.room_id=room.room_id
+         select *
+                from operation,operation_notify,room
+                    WHERE operation.operation_notify_id=operation_notify.operation_notify_id
+                      and operation.room_id=room.room_id
+                        and operation.operation_status = 1
+                        and operation_notify.employee_id = #{employeeId}
     </select>
 </mapper>

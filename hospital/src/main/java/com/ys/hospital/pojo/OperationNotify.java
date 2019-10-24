@@ -1,8 +1,8 @@
 package com.ys.hospital.pojo;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * (OperationNotify)实体类
@@ -21,5 +21,8 @@ public class OperationNotify implements Serializable {
     private Integer diagnosisId;
     //主刀医师id
     private Integer employeeId;
-
+    //一个手术消息通知对应一个诊断
+    private Diagnosis diagnosis;
+    //一个手术通知对应一个主刀医师
+    private Employee employee;
 }

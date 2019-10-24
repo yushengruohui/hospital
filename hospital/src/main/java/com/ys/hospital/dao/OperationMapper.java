@@ -1,7 +1,6 @@
 package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Operation;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -72,5 +71,5 @@ public interface OperationMapper {
      *
      * @return 对象Operation列表
      */
-    List<Operation> queryAllOperations();
+    List<Operation> queryAllOperations(Integer employeeId);
 }

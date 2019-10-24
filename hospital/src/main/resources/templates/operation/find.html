@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{com/attending::title}"></div>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--================ 网页头部 ================-->
+    <div th:replace="~{com/attending::head}"></div>
+
+    <!--================ 网页左侧导航栏 ================-->
+    <div th:replace="~{com/attending::left_operation}"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-table" id="OperationNotifyTable" lay-filter="tableFilter">
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{com/attending::foot}"></div>
+</div>
+<script type="text/html" id="optBar">
+    <a class="layui-btn layui-btn-xs" lay-event="add_operation" readonly="false">添加手术信息</a>
+</script>
+        <script>
+
+            //JavaScript代码区域
+            layui.use(['layer', 'element', 'table', 'form'], function () {
+                var layer = layui.layer;
+                var element = layui.element;
+                var table = layui.table;
+                var form = layui.form;
+
+                table.render({
+                    elem: '#OperationNotifyTable'
+                    , height: 312
+                    , url: '/operationNotify/queryAllOperationNotify' //数据接口
+                    , method: 'get'
+                    , page: false //开启分页
+                    , cols: [
+                        [
+                            {field: 'operationNotifyId', title: '手术通知id'},
+                            {
+                                field: 'diagnosisContent', title: '诊断为某病', templet: function (operationNotify) {
+                                    return operationNotify.diagnosis.diagnosisContent;
+                                }
+                            },
+                            {
+                                field: 'diagnosisContent', title: '诊断医师', templet: function (operationNotify) {
+                                    return operationNotify.diagnosis.appointment.employee.employeeName;
+                                }
+                            },
+                            {
+                                field: 'diagnosisContent', title: '病人名字', templet: function (operationNotify) {
+                                    return operationNotify.diagnosis.appointment.patient.patientName;
+                                }
+                            },
+                            {
+                                field: 'patientPhone', title: '病人联系方式', templet: function (operationNotify) {
+                                    return operationNotify.diagnosis.appointment.patient.patientPhone;
+                                }
+                            },
+                            {
+                            field: 'operationNotifyStatus', title: '通知情况', width: 90, templet: function (operationNotify) {
+                                return operationNotify.operationNotifyStatus === 1 ? "已通知" : "未通知";}
+                        },
+                            {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                        ]
+                    ]
+                });
+                table.on('tool(tableFilter)', function (obj) {
+                    //获取当前行的数据
+                    var rowData = obj.data;
+
+                    switch (obj.event) {
+
+                        // 修改预约源
+                        case 'add_operation':
+                            layer.open({
+                                type: 1,//类型，新页面
+                                area: ['900px', '600px'],//定义宽和高
+                                title: '添加手术',//题目
+                                shadeClose: false,//点击遮罩层关闭
+                                content: $('#openOperation'), //打开的内容
+                                btn: ["提交", "取消"],//添加两个按钮
+                                success: function (layero, index) {
+                                    alert(rowData.operationNotifyId);
+                                    // var send_data = {
+                                    //     operationNotifyId: rowData.operationNotifyId
+                                    // };
+                                    // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                                    $.ajax({
+                                        url: "/room/findAllRoom?operationNotifyId="+rowData.operationNotifyId,
+                                        type: "get",
+                                        // date: send_data,
+                                        success: function (result) {
+                                            $.each(result, function (index, room) {
+                                                $('#roomId').append(new Option(room.roomName, room.roomId));// 下拉菜单里添加元素
+                                            });
+                                            layui.form.render("select");
+                                        },
+                                        error: function () {
+                                            layer.msg("连接后台失败，服务器异常")
+                                        }
+                                    });
+
+                                },
+                                yes: function (index, layero) {
+                                    //yes默认触发第一个按钮事件
+                                    var send_data = {
+                                        operationNotifyId: rowData.operationNotifyId,
+                                        operationName: $("#operationName").val(),
+                                        operationAssistant: $("#operationAssistant").val(),
+                                        operationAnesthetist: $("#operationAnesthetist").val(),
+                                        operationMedicine: $("#operationMedicine").val(),
+                                        operationDevice: $("#operationDevice").val(),
+                                        operationTime: $("#operationTime").val(),
+                                        operationDescription: $("#operationDescription").val(),
+                                        operationPrice: $("#operationPrice").val(),
+                                        roomId: $('#roomId option:selected').val(),
+                                        operationPayTime: $("#operationPayTime").val(),
+                                        operationPayStatus: $('#operationPayStatus input[name="operationPayStatus"]:checked').val(),
+                                        operationStatus: $('#operationPayStatus input[name="operationStatus"]:checked').val()
+                                    };
+
+                                    $.ajax({
+                                        url: "/operation/updateOperation",
+                                        type: "post",
+                                        data: send_data,
+                                        success: function (result) {
+                                            alert(result);
+                                        },
+                                        error: function () {
+                                            layer.msg("连接后台失败，服务器异常")
+                                        }
+                                    });
+                                    alert("ssa");
+                                    layer.close(index);
+                                    window.location.reload();
+                                },
+                                btn2: function (index, layero) {
+                                    //第二个按钮事件
+
+                                    layer.close(index);
+                                }
+                            });
+                            break;
+                    }
+
+                });
+            });
+        </script>
+
+<!--</body>-->
+<!--&lt;!&ndash;================ 模态框：添加手术 ================&ndash;&gt;-->
+<div id="openOperation" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="operationName">手术名称：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="operationName" id="operationName" placeholder="手术名称"
+                               autocomplete="off"
+                               class="layui-input" th:value="${session.operation1.operationName}" readonly="readonly"/>
+                    </div>
+                </div>
+            </div>
+        <label class="layui-form-label" for="operationAssistant">协助者：</label>
+        <div class="layui-input-block">
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                        <input type="text" name="operationAssistant" id="operationAssistant" placeholder="协助者"
+                               autocomplete="off"
+                               class="layui-input"/>
+                </div>
+            </div>
+        </div>
+            <label class="layui-form-label" for="operationAnesthetist">麻醉师：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="operationAnesthetist" id="operationAnesthetist" placeholder="麻醉师"
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <label class="layui-form-label" for="operationMedicine">所用药品：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="operationMedicine" id="operationMedicine" placeholder="所用药品"
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <label class="layui-form-label" for="operationDevice">所用设备：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="operationDevice" id="operationDevice" placeholder="所用设备"
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <label class="layui-form-label" for="operationTime">手术时间：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="date" name="operationTime" id="operationTime" placeholder="手术时间"
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <label class="layui-form-label" for="operationDescription">手术描述：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="operationDescription" id="operationDescription" placeholder="手术描述"
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <label class="layui-form-label" for="operationPrice">手术费用：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="operationPrice" id="operationPrice" placeholder="手术费用"
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <label class="layui-form-label" for="roomId">手术室：</label>
+                <div class="layui-input-block"><div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <select name="roomId" id="roomId" lay-verify="required" lay-filter="xmFilter">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <label class="layui-form-label" for="operationPayTime">支付时间：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="date" name="operationPayTime" id="operationPayTime" placeholder="支付时间"
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <label class="layui-form-label" for="operationPayStatus">支付情况：</label>
+            <div class="layui-input-block" id="operationPayStatus">
+                <input type="radio" name="operationPayStatus" value="0" title="未支付">
+                <input type="radio" name="operationPayStatus" value="1" title="已支付">
+            </div>
+            <!--<label class="layui-form-label" for="operationStatus">处理情况：</label>-->
+            <!--<div class="layui-input-block" id="operationStatus">-->
+                <!--<input type="radio" name="operationStatus" value="0" title="未处理">-->
+                <!--<input type="radio" name="operationStatus" value="1" title="已处理">-->
+            <!--</div>-->
+        </div>
+    </form>
+</div>
+
+</body>
+
+</html>

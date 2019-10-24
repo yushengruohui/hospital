@@ -3,6 +3,7 @@ package com.ys.hospital.controller;
 import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.pojo.Diagnosis;
 import com.ys.hospital.service.DiagnosisService;
+import com.ys.hospital.service.OperationNotifyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpSession;
 public class PageController {
     @Resource
     private DiagnosisService diagnosisService;
+    @Resource
+    private OperationNotifyService operationNotifyService;
 
     @RequestMapping("/employee/index")
     public String toEmployeeIndex() {
@@ -90,5 +93,14 @@ public class PageController {
     @RequestMapping("/diagnosis/continue_dealing")
     public String toDiagnosisContinueDealing() {
         return "diagnosis/continue_dealing";
+    }
+
+    @RequestMapping("/operation/index")
+    public String toOperation() {
+        return "operation/find";
+    }
+    @RequestMapping("/operation/findopertion")
+    public String tofindopertion() {
+        return "operation/findoperation";
     }
 }

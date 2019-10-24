@@ -1,6 +1,8 @@
 package com.ys.hospital.controller;
 
+import com.ys.hospital.pojo.Operation;
 import com.ys.hospital.pojo.Room;
+import com.ys.hospital.service.OperationService;
 import com.ys.hospital.service.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -24,6 +27,8 @@ public class RoomController {
 
     @Resource
     private RoomService roomService;
+    @Resource
+    private OperationService operationService;
 
     @RequestMapping("/test")
     public String testDome() {
@@ -37,7 +42,10 @@ public class RoomController {
      */
     @RequestMapping("/findAllRoom")
     @ResponseBody
-    public List<Room> findOperationByStatus() {
+    public List<Room> findAllRoom(Operation operation,HttpSession session) {
+       List<Operation> operations= operationService.queryOperationByParam(operation);
+       Operation operation1=operations.get(0);
+       session.setAttribute("operation1",operation1);
         List<Room> rooms = roomService.queryAllRoom();
         return rooms;
     }

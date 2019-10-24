@@ -100,7 +100,7 @@ public class OperationServiceImpl implements OperationService {
      *
      * @return 对象Operation列表
      */
-    public List<Operation> queryAllOperations(){
-        return this.operationMapper.queryAllOperations();
+    public List<Operation> queryAllOperations(Integer employeeId){
+        return this.operationMapper.queryAllOperations(employeeId);
     }
 }

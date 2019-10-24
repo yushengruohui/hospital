@@ -68,5 +68,5 @@ public interface OperationService {
      *
      * @return 对象Operation列表
      */
-    List<Operation> queryAllOperations();
+    List<Operation> queryAllOperations(Integer employeeId);
 }
