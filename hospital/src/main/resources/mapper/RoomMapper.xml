@@ -41,7 +41,7 @@
         select
         room_id, room_name, branch_id, room_address
         from room
-        where branch_id=#{branchId}
+        where branch_id=#{branchId} and room_id like '1%'
     </select>
 
     <!--新增Room数据-->
