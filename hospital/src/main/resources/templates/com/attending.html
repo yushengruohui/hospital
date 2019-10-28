@@ -29,7 +29,7 @@
                 <li class="layui-nav-item" th:if="${session.employee}==null">
                     <a th:href="@{/}">你还没登录，请登录</a>
                 </li>
-                <li class="layui-nav-item"><a th:href="@{/employee/out}">退出登录</a></li>
+                <li class="layui-nav-item"><a th:href="@{/logout}">退出登录</a></li>
             </ul>
         </div>
     </div>
@@ -72,10 +72,10 @@
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
-                        <a href="javascript:;">个人基本信息</a>
+                        <a href="/page/employee/index">个人基本信息</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">修改个人信息</a>
+                        <a href="/page/employee/update">修改个人信息</a>
                     </li>
                 </ul>
             </div>

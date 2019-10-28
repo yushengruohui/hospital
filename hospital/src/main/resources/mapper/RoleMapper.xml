@@ -28,6 +28,13 @@
             </if>
         </where>
     </select>
+    <select id="getRoleByEmployeeId" resultMap="RoleMap">
+        select r.role_id, r.role_name
+        from role as r
+        join employee_role er on r.role_id = er.role_id
+        join employee e on er.employee_id = e.employee_id
+        where e.employee_id=#{employeeId}
+    </select>
 
     <!--新增Role数据-->
     <insert id="insertRole" keyProperty="roleId" useGeneratedKeys="true">

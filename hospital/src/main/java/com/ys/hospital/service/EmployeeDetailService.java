@@ -36,6 +36,14 @@ public interface EmployeeDetailService {
     int updateEmployeeDetail(EmployeeDetail employeeDetail);
 
     /**
+     * 修改数据
+     *
+     * @param employeeDetail 实例对象
+     * @return 实例对象
+     */
+    int updateEmployeeDetailByEmployeeId(EmployeeDetail employeeDetail);
+
+    /**
      * 通过主键删除数据
      *
      * @param employeeDetailId 主键
@@ -44,4 +52,6 @@ public interface EmployeeDetailService {
     int deleteEmployeeDetailById(Integer employeeDetailId);
 
     EmployeeDetail findEmployeeById(Integer employeeId);
+
+    EmployeeDetail queryEmployeeInfoByEmployeeId(Integer employeeId);
 }

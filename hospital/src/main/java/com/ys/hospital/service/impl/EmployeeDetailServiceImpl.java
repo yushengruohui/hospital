@@ -55,6 +55,14 @@ public class EmployeeDetailServiceImpl implements EmployeeDetailService {
         return this.employeeDetailMapper.updateEmployeeDetail(employeeDetail);
     }
 
+    @Override
+    public int updateEmployeeDetailByEmployeeId(EmployeeDetail employeeDetail) {
+        if (employeeDetail == null) {
+            return 0;
+        }
+        return this.employeeDetailMapper.updateEmployeeDetailByEmployeeId(employeeDetail);
+    }
+
     /**
      * 通过主键删除EmployeeDetail数据
      *
@@ -74,5 +82,13 @@ public class EmployeeDetailServiceImpl implements EmployeeDetailService {
         EmployeeDetail employeeDetail = new EmployeeDetail();
         employeeDetail.setEmployeeId(employeeId);
         return this.employeeDetailMapper.queryEmployeeDetailByParam(employeeDetail).get(0);
+    }
+
+    @Override
+    public EmployeeDetail queryEmployeeInfoByEmployeeId(Integer employeeId) {
+        if (employeeId == null) {
+            return null;
+        }
+        return this.employeeDetailMapper.queryEmployeeInfoByEmployeeId(employeeId);
     }
 }

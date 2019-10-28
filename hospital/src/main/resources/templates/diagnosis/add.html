@@ -15,7 +15,7 @@
     <div class="layui-body">
         <div style="padding: 15px;" th:if="${session.appointment}!=null">
             <!--==== 诊断的表单 =====-->
-            <form th:action="@{/diagnosis}" th:method="post" class="layui-form">
+            <form th:action="@{/diagnosis}" method="post" class="layui-form">
                 <div class="layui-form-item">
                     <label class="layui-form-label">医院处方笺</label>
                 </div>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" for="patientName">性别：</label>
+                    <label class="layui-form-label" for="patientName">患者姓名：</label>
                     <div class="layui-input-block">
                         <input type="text" name="patientName" id="patientName" autocomplete="off"
                                class="layui-input"

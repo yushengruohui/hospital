@@ -1,7 +1,6 @@
 package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.EmployeeDetail;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -53,4 +52,7 @@ public interface EmployeeDetailMapper {
      */
     int deleteEmployeeDetailById(Integer employeeDetailId);
 
+    EmployeeDetail queryEmployeeInfoByEmployeeId(Integer employeeId);
+
+    int updateEmployeeDetailByEmployeeId(EmployeeDetail employeeDetail);
 }
