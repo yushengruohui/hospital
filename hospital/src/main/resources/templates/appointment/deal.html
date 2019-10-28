@@ -28,7 +28,7 @@
 
         table.render({
             elem: '#appointmentTable'
-            , height: 312
+            , height: 600
             , url: '/appointment/treatedAppointments' //数据接口
             , method: 'get'
             , page: true //开启分页
@@ -50,7 +50,11 @@
                         return appointment.employee.employeeName;
                     }
                 }
-                    , {field: 'appointmentStatus', title: '预约状态'}
+                    , {
+                    field: 'appointmentStatus', title: '预约状态', templet: function (appointment) {
+                        return appointment.appointmentStatus == 1 ? "已处理" : "未处理";
+                    }
+                }
                 ]
             ]
         });

@@ -104,7 +104,9 @@ public class DiagnosisController {
         } else {
             diagnosis.setDiagnosisStatus("已处理");
         }
+        diagnosisService.insertDiagnosis(diagnosis);
         diagnosis.setDiagnosisTime(new Date());
+
 
         //添加处方，未支付
         DiagnosisMedicine diagnosisMedicine = new DiagnosisMedicine();
@@ -154,8 +156,8 @@ public class DiagnosisController {
 
         }
 
-        //插入诊断记录
-        int flag = diagnosisService.insertDiagnosis(diagnosis);
+        //更新诊断记录
+        int flag = diagnosisService.updateDiagnosis(diagnosis);
 
         //填写完成
         if (flag == 1) {
@@ -168,7 +170,8 @@ public class DiagnosisController {
             session.removeAttribute("diagnosis");
             session.removeAttribute("appointment");
             return "success";
-        } else return "error";
+        } else
+            return "error";
     }
 
     @PostMapping("/diagnosis/checkItem")

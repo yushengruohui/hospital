@@ -36,7 +36,7 @@
 
         table.render({
             elem: '#diagnosis_table'
-            , height: 312
+            , height: 600
             , url: '/diagnosis/dealingDiagnosis' //数据接口
             , method: 'get'
             , page: true //开启分页
@@ -54,8 +54,16 @@
                     }
                 }
                     , {field: 'diagnosisContent', title: '病情'}
-                    , {field: 'diagnosisIsCheck', width: 60, title: '检查'}
-                    , {field: 'diagnosisIsOperation', width: 60, title: '手术'}
+                    , {
+                    field: 'diagnosisIsCheck', width: 120, title: '是否检查', templet: function (diagnosis) {
+                        return diagnosis.diagnosisIsCheck == 1 ? "是" : "否";
+                    }
+                }
+                    , {
+                    field: 'diagnosisIsOperation', width: 120, title: '是否手术', templet: function (diagnosis) {
+                        return diagnosis.diagnosisIsOperation == 1 ? "是" : "否";
+                    }
+                }
                     , {
                     field: 'employeeName', title: '医师', width: 120, templet: function (diagnosis) {
                         return diagnosis.appointment.employee.employeeName;
