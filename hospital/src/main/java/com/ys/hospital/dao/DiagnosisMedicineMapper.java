@@ -53,4 +53,12 @@ public interface DiagnosisMedicineMapper {
      */
     int deleteDiagnosisMedicineById(Integer diagnosisMedicineId);
 
+    /**
+     * 查询所有未处理的取药信息
+     *
+     * @param
+     * @return 对象DiagnosisMedicine列表
+     */
+    List<DiagnosisMedicine> getDiagnosisMedicinesByStatus(Integer payStatus);
+
 }

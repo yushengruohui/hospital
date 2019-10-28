@@ -43,4 +43,19 @@ public interface DiagnosisMedicineService {
      */
     int deleteDiagnosisMedicineById(Integer diagnosisMedicineId);
 
+    /**
+     * 根据实体类DiagnosisMedicine的相关属性查询实体类DiagnosisMedicine
+     *
+     * @param diagnosisMedicine 实例对象
+     * @return 对象DiagnosisMedicine列表
+     */
+    List<DiagnosisMedicine> queryDiagnosisMedicineByParam(DiagnosisMedicine diagnosisMedicine);
+
+    /**
+     * 根据支付状态查询所有的取药信息
+     *
+     * @param
+     * @return 对象DiagnosisMedicine列表
+     */
+    List<DiagnosisMedicine> getDiagnosisMedicinesByStatus(Integer payStatus);
 }

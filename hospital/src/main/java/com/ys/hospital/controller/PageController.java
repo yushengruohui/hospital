@@ -63,6 +63,16 @@ public class PageController {
         return "work/index";
     }
 
+    @RequestMapping("/dispensing/index")
+    public String toDispensingIndex() {
+        return "dispensing/index";
+    }
+
+    @RequestMapping("/dispensing/record")
+    public String toDispensingRecord() {
+        return "/dispensing/record";
+    }
+
     @PostMapping("/diagnosis/addReady")
     @ResponseBody
     public String diagnosisAddReady(@RequestBody Appointment appointment, HttpSession session) {
@@ -99,6 +109,7 @@ public class PageController {
     public String toOperation() {
         return "operation/find";
     }
+
     @RequestMapping("/operation/findopertion")
     public String tofindopertion() {
         return "operation/findoperation";
