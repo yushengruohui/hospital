@@ -19,6 +19,12 @@
         <result property="titleId" column="title_id" jdbcType="INTEGER"/>
     </resultMap>
 
+    <resultMap type="com.ys.hospital.pojo.EmployeeDetail" id="EmployeeInfoMap">
+        <association property="position" javaType="com.ys.hospital.pojo.Position"/>
+        <association property="branch" javaType="com.ys.hospital.pojo.Branch"/>
+        <association property="title" javaType="com.ys.hospital.pojo.Title"/>
+    </resultMap>
+
     <!--查询所有EmployeeDetail信息-->
     <select id="queryAllEmployeeDetail" resultMap="EmployeeDetailMap">
         select
@@ -80,6 +86,37 @@
             </if>
         </where>
     </select>
+    <select id="queryEmployeeInfoByEmployeeId" resultMap="EmployeeInfoMap">
+        SELECT
+            employee_detail.employee_detail_id,
+            employee_detail.employee_detail_gender,
+            employee_detail.employee_detail_birthday,
+            employee_detail.employee_detail_address,
+            employee_detail.employee_detail_phone,
+            employee_detail.employee_detail_identity,
+            employee_detail.employee_detail_entry_time,
+            employee_detail.employee_detail_email,
+            employee_detail.employee_detail_descript,
+            employee_detail.employee_detail_status,
+            employee_detail.employee_id,
+            employee_detail.position_id,
+            employee_detail.branch_id,
+            employee_detail.title_id,
+            p.position_id,
+            p.position_name,
+            b.branch_id,
+            b.branch_name,
+            b.department_id,
+            t.title_id,
+            t.title_name
+        FROM
+            employee_detail
+            LEFT JOIN `position` AS p ON employee_detail.position_id = p.position_id
+            LEFT JOIN branch AS b ON employee_detail.branch_id = b.branch_id
+            LEFT JOIN title AS t ON employee_detail.title_id = t.title_id
+        WHERE
+            employee_detail.employee_id=#{employeeId}
+    </select>
 
     <!--新增EmployeeDetail数据-->
     <insert id="insertEmployeeDetail" keyProperty="employeeDetailId" useGeneratedKeys="true">
@@ -136,6 +173,51 @@
             </if>
         </set>
         where employee_detail_id = #{employeeDetailId}
+    </update>
+    <update id="updateEmployeeDetailByEmployeeId">
+        update employee_detail
+        <set>
+            <if test="employeeDetailGender != null and employeeDetailGender != ''">
+                employee_detail_gender = #{employeeDetailGender},
+            </if>
+            <if test="employeeDetailBirthday != null">
+                employee_detail_birthday = #{employeeDetailBirthday},
+            </if>
+            <if test="employeeDetailAddress != null and employeeDetailAddress != ''">
+                employee_detail_address = #{employeeDetailAddress},
+            </if>
+            <if test="employeeDetailPhone != null and employeeDetailPhone != ''">
+                employee_detail_phone = #{employeeDetailPhone},
+            </if>
+            <if test="employeeDetailIdentity != null and employeeDetailIdentity != ''">
+                employee_detail_identity = #{employeeDetailIdentity},
+            </if>
+            <if test="employeeDetailEntryTime != null">
+                employee_detail_entry_time = #{employeeDetailEntryTime},
+            </if>
+            <if test="employeeDetailEmail != null and employeeDetailEmail != ''">
+                employee_detail_email = #{employeeDetailEmail},
+            </if>
+            <if test="employeeDetailDescript != null and employeeDetailDescript != ''">
+                employee_detail_descript = #{employeeDetailDescript},
+            </if>
+            <if test="employeeDetailStatus != null">
+                employee_detail_status = #{employeeDetailStatus},
+            </if>
+            <if test="employeeId != null">
+                employee_id = #{employeeId},
+            </if>
+            <if test="positionId != null">
+                position_id = #{positionId},
+            </if>
+            <if test="branchId != null">
+                branch_id = #{branchId},
+            </if>
+            <if test="titleId != null">
+                title_id = #{titleId},
+            </if>
+        </set>
+        where employee_id = #{employeeId}
     </update>
 
     <!--通过主键删除一条EmployeeDetail记录-->

@@ -1,7 +1,6 @@
 package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.EmployeeRole;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -52,5 +51,6 @@ public interface EmployeeRoleMapper {
      * @return 是否成功(1 ： 成功 | 0 ： 失败)
      */
     int deleteEmployeeRoleById(Integer employeeRoleId);
+
 
 }

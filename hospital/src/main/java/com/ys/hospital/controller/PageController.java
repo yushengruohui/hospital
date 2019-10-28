@@ -2,9 +2,14 @@ package com.ys.hospital.controller;
 
 import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.pojo.Diagnosis;
+import com.ys.hospital.pojo.Employee;
+import com.ys.hospital.pojo.EmployeeDetail;
 import com.ys.hospital.service.DiagnosisService;
+import com.ys.hospital.service.EmployeeDetailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import com.ys.hospital.service.OperationNotifyService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +30,25 @@ public class PageController {
     private DiagnosisService diagnosisService;
     @Resource
     private OperationNotifyService operationNotifyService;
+    @Resource
+    private EmployeeDetailService employeeDetailService;
 
     @RequestMapping("/employee/index")
-    public String toEmployeeIndex() {
-
+    public String toEmployeeIndex(HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
         return "employee/index";
+    }
+
+    @RequestMapping("/employee/update")
+    public String toEmployeeUpdate(Model model) {
+        String employeeId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Employee employee = new Employee();
+        employee.setEmployeeId(Integer.valueOf(employeeId));
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
+        return "employee/update";
     }
 
     @RequestMapping("/appointment/index")

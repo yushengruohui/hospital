@@ -43,6 +43,10 @@ public class DiagnosisController {
     private OperationNotifyService operationNotifyService;
     @Resource
     private OperationService operationService;
+    @Resource
+    private InpatientService inpatientService;
+    @Resource
+    private InpatientNotifyService inpatientNotifyService;
 
     @GetMapping("/diagnosis/dealingDiagnosis")
     public MyPageInfo<Diagnosis> showDealingDiagnosis(MyPageInfo<Diagnosis> layuiPage, HttpSession session) {
@@ -100,7 +104,9 @@ public class DiagnosisController {
         } else {
             diagnosis.setDiagnosisStatus("已处理");
         }
+        diagnosisService.insertDiagnosis(diagnosis);
         diagnosis.setDiagnosisTime(new Date());
+
 
         //添加处方，未支付
         DiagnosisMedicine diagnosisMedicine = new DiagnosisMedicine();
@@ -150,8 +156,8 @@ public class DiagnosisController {
 
         }
 
-        //插入诊断记录
-        int flag = diagnosisService.insertDiagnosis(diagnosis);
+        //更新诊断记录
+        int flag = diagnosisService.updateDiagnosis(diagnosis);
 
         //填写完成
         if (flag == 1) {
@@ -164,7 +170,8 @@ public class DiagnosisController {
             session.removeAttribute("diagnosis");
             session.removeAttribute("appointment");
             return "success";
-        } else return "error";
+        } else
+            return "error";
     }
 
     @PostMapping("/diagnosis/checkItem")
@@ -232,6 +239,12 @@ public class DiagnosisController {
         //添加一条未处理的手术的记录
         operationService.insertOperation(operation);
 
+        //同时添加一条住院记录
+        InpatientNotify inpatientNotifyDTO = new InpatientNotify();
+        inpatientNotifyDTO.setDiagnosisId(Integer.valueOf(diagnosisId));
+        inpatientNotifyDTO.setInpatientNotifyStatus(0);
+
+        inpatientNotifyService.insertInpatientNotify(inpatientNotifyDTO);
         return "success";
     }
 
