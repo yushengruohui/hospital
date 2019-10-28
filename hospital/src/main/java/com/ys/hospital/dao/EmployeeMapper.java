@@ -66,4 +66,15 @@ public interface EmployeeMapper {
      * @return 医师列表
      */
     List<Employee> getDoctorEmployees();
+
+
+    Employee getPermissionInfo(String employeeId);
+
+    /**
+     * 根据员工详情更新员工基本信息和详情
+     *
+     * @param employeeDTO 员工基本信息和详情
+     * @return 更新结果
+     */
+    int updateEmployeeInfo(Employee employeeDTO);
 }

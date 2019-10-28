@@ -10,6 +10,11 @@
         <result property="employeeLastLoginTime" column="employee_last_login_time" jdbcType="TIMESTAMP"/>
         <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail"/>
     </resultMap>
+    <resultMap type="com.ys.hospital.pojo.Employee" id="PermissionInfoMap">
+        <collection property="roles" ofType="com.ys.hospital.pojo.Role">
+            <collection property="powerDetails" ofType="com.ys.hospital.pojo.PowerDetail"></collection>
+        </collection>
+    </resultMap>
 
     <!--查询所有Employee信息-->
     <select id="queryAllEmployee" resultMap="EmployeeMap">
@@ -106,6 +111,32 @@
         = '医师' )
         AND ( title.title_id = 2 OR title.title_id = 1 )
     </select>
+    <select id="getPermissionInfo" resultMap="PermissionInfoMap">
+        SELECT
+            e.employee_id,
+            e.employee_name,
+            e.employee_password,
+            e.employee_online,
+            e.employee_last_login_time,
+            r.role_id,
+            r.role_name,
+            pd.power_detail_name,
+            pd.power_detail_status,
+            pd.power_detail_method,
+            pd.power_detail_url,
+            pd.power_detail_description,
+            pd.power_id,
+            pd.power_detail_id
+        FROM
+            employee AS e
+            LEFT JOIN employee_role AS er ON e.employee_id = er.employee_id
+            LEFT JOIN role AS r ON er.role_id = r.role_id
+            LEFT JOIN role_power AS rp ON r.role_id = rp.role_id
+            LEFT JOIN power AS p ON rp.power_id = p.power_id
+            LEFT JOIN power_detail AS pd ON p.power_id = pd.power_id
+        WHERE
+            e.employee_id =#{employeeId}
+    </select>
 
     <!--新增Employee数据-->
     <insert id="insertEmployee" keyProperty="employeeId" useGeneratedKeys="true">
@@ -131,6 +162,54 @@
             </if>
         </set>
         where employee_id = #{employeeId}
+    </update>
+    <update id="updateEmployeeInfo">
+        update e
+        <set>
+            <if test="employeeName != null and employeeName != ''">
+                e.employee_name = #{employeeName},
+            </if>
+            <if test="employeePassword != null and employeePassword != ''">
+                e.employee_password = #{employeePassword},
+            </if>
+            <if test="employeeOnline != null">
+                e.employee_online = #{employeeOnline},
+            </if>
+            <if test="employeeLastLoginTime != null">
+                e.employee_last_login_time = #{employeeLastLoginTime},
+            </if>
+            <if test="employeeDetail.employeeDetailGender != null and employeeDetailGender != ''">
+                ed.employee_detail_gender = #{employeeDetail.employeeDetailGender},
+            </if>
+            <if test="employeeDetail.employeeDetailBirthday != null">
+                ed.employee_detail_birthday = #{employeeDetail.employeeDetailBirthday},
+            </if>
+            <if test="employeeDetail.employeeDetailAddress != null and employeeDetailAddress != ''">
+                ed.employee_detail_address = #{employeeDetail.employeeDetailAddress},
+            </if>
+            <if test="employeeDetail.employeeDetailPhone != null and employeeDetailPhone != ''">
+                ed.employee_detail_phone = #{employeeDetail.employeeDetailPhone},
+            </if>
+            <if test="employeeDetail.employeeDetailIdentity != null and employeeDetailIdentity != ''">
+                ed.employee_detail_identity = #{employeeDetail.employeeDetailIdentity},
+            </if>
+            <if test="employeeDetail.employeeDetailEntryTime != null">
+                ed.employee_detail_entry_time = #{employeeDetail.employeeDetailEntryTime},
+            </if>
+            <if test="employeeDetail.employeeDetailEmail != null and employeeDetailEmail != ''">
+                ed.employee_detail_email = #{employeeDetail.employeeDetailEmail},
+            </if>
+            <if test="employeeDetail.employeeDetailDescript != null and employeeDetailDescript != ''">
+                ed.employee_detail_descript = #{employeeDetail.employeeDetailDescript},
+            </if>
+            <if test="employeeDetail.employeeDetailStatus != null">
+                ed.employee_detail_status = #{employeeDetail.employeeDetailStatus},
+            </if>
+
+        </set>
+        from employee e
+        join employee_detail ed on e.employee_id=ed.employee_id
+        where e.employee_id=#{employeeId}
     </update>
 
     <!--通过主键删除一条Employee记录-->

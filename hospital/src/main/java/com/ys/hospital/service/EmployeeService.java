@@ -61,4 +61,5 @@ public interface EmployeeService {
      */
     List<Employee> getDoctorEmployees();
 
+    int updateEmployeeInfo(Employee employeeDTO);
 }

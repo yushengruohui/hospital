@@ -3,6 +3,7 @@ package com.ys.hospital.controller;
 import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.service.EmployeeDetailService;
 import com.ys.hospital.service.EmployeeService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,21 +22,25 @@ public class LoginController {
     @Resource
     private EmployeeDetailService employeeDetailService;
 
-    @RequestMapping("")
-    public String initLogin() {
+    @RequestMapping("/")
+    public String index() {
+        return "redirect:/page/index";
+    }
+
+    @RequestMapping("/login")
+    public String toLogin() {
         return "login";
     }
 
-    @RequestMapping("/employee/out")
-    public String out(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
-    }
-
-    @RequestMapping("/page/login")
+    @RequestMapping("/page/index")
     //@Cacheable(cacheNames = "employee", keyGenerator = "myKeyGenerator")
     //@CachePut(cacheNames = "employee")
-    public String login(Employee employee, HttpSession session) {
+    public String login(HttpSession session) {
+
+        String employeeId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        Employee employee = new Employee();
+        employee.setEmployeeId(Integer.valueOf(employeeId));
         //根据员工id和员工密码查询该用户是否存在
         employee = employeeService.verifyLogin(employee);
 

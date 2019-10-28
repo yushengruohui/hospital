@@ -52,6 +52,9 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public int updateEmployee(Employee employee) {
+        if (employee == null) {
+            return 0;
+        }
         return this.employeeMapper.updateEmployee(employee);
     }
 
@@ -89,4 +92,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getDoctorEmployees() {
         return employeeMapper.getDoctorEmployees();
     }
+
+    @Override
+    public int updateEmployeeInfo(Employee employeeDTO) {
+        if (employeeDTO != null && employeeDTO.getEmployeeDetail() == null) {
+            return employeeMapper.updateEmployee(employeeDTO);
+        } else if (employeeDTO != null && employeeDTO.getEmployeeDetail() != null) {
+            return employeeMapper.updateEmployeeInfo(employeeDTO);
+        }
+        return 0;
+    }
+
 }

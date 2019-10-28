@@ -1,8 +1,8 @@
 package com.ys.hospital.pojo;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * (RolePower)实体类
@@ -19,5 +19,9 @@ public class RolePower implements Serializable {
     private Integer roleId;
     //外键：权限id
     private Integer powerId;
+
+    private Role role;
+
+    private Power power;
 
 }

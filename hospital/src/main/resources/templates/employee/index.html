@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <div th:replace="~{com/attending::title}"></div>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -14,7 +15,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <!--================ 显示员工个人信息 ================-->
-            <form class="layui-form">
+            <form class="layui-form" th:if="${employeeDetail!=null}">
                 <!-- 头条 -->
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;width:700px;">
                     <legend>员工个人信息</legend>
@@ -24,7 +25,7 @@
                     <label class="layui-form-label">员工姓名</label>
                     <div class="layui-input-block">
                         <input type="text" name="employeeName" autocomplete="off" class="layui-input"
-                               style="width:200px;"/>
+                               style="width:200px;" th:value="${session.employee.employeeName}" readonly="readonly"/>
                     </div>
                 </div>
                 <!-- 员工号 -->
@@ -32,7 +33,7 @@
                     <label class="layui-form-label">员工号</label>
                     <div class="layui-input-block">
                         <input type="text" name="employeeId" autocomplete="off" class="layui-input"
-                               style="width:200px;"/>
+                               style="width:200px;" th:value="${session.employee.employeeId}" readonly="readonly"/>
                     </div>
                 </div>
                 <!-- 员工生日和性别 -->
@@ -41,16 +42,19 @@
                         <label class="layui-form-label">生日</label>
                         <div class="layui-input-inline">
                             <input type="text" name="employeeDetailBirthday" autocomplete="off" class="layui-input"
-                                   style="width:200px;"/>
+                                   style="width:200px;"
+                                   th:value="${#dates.format(employeeDetail.employeeDetailBirthday,'yyyy-MM-dd')}"
+                                   readonly="readonly"/>
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">性别</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="employeeDetailGender" autocomplete="off" class="layui-input"
-                                   style="width:200px;">
+                            <input type="radio" name="employeeDetailGender" value="男" title="男" checked
+                                   th:if="${employeeDetail.employeeDetailGender=='男'}">
+                            <input type="radio" name="employeeDetailGender" value="女" title="女" checked
+                                   th:if="${employeeDetail.employeeDetailGender=='女'}">
                         </div>
-                        <div class="layui-form-mid layui-word-aux">待会修改为点选框</div>
                     </div>
                 </div>
                 <!-- 详细地址 -->
@@ -58,7 +62,8 @@
                     <label class="layui-form-label">详细地址</label>
                     <div class="layui-input-block">
                         <input type="text" name="employeeDetailAddress" autocomplete="off" class="layui-input"
-                               style="width:525px;">
+                               style="width:525px;" th:value="${employeeDetail.employeeDetailAddress}"
+                               readonly="readonly">
                     </div>
                 </div>
                 <!-- 员工联系电话和邮箱 -->
@@ -67,14 +72,18 @@
                         <label class="layui-form-label">联系电话</label>
                         <div class="layui-input-inline">
                             <input type="text" name="employeeDetailPhone" autocomplete="off" class="layui-input"
-                                   style="width:200px;"/>
+                                   style="width:200px;" th:value="${employeeDetail.employeeDetailPhone}"
+                                   readonly="readonly"/>
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">邮箱</label>
                         <div class="layui-input-inline">
                             <input type="text" name="employeeDetailEmail" autocomplete="off" class="layui-input"
-                                   style="width:200px;">
+                                   style="width:200px;" th:value="${employeeDetail.employeeDetailEmail}"
+                                   readonly="readonly">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">*
                         </div>
                     </div>
                 </div>
@@ -83,181 +92,65 @@
                     <label class="layui-form-label">身份证</label>
                     <div class="layui-input-block">
                         <input type="text" name="employeeDetailIdentity" autocomplete="off" class="layui-input"
-                               style="width:525px;">
+                               style="width:525px;" th:value="${employeeDetail.employeeDetailIdentity}"
+                               readonly="readonly">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">自定义验证</label>
-                    <div class="layui-input-inline">
-                        <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off"
-                               class="layui-input">
-                    </div>
-
-                </div>
-
-                <div class="layui-form-item">
+                    <!-- employeeDetailEntryTime -->
                     <div class="layui-inline">
-                        <label class="layui-form-label">范围</label>
-                        <div class="layui-input-inline" style="width: 100px;">
-                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 100px;">
-                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">单行选择框</label>
-                    <div class="layui-input-block">
-                        <select name="interest" lay-filter="aihao">
-                            <option value=""></option>
-                            <option value="0">写作</option>
-                            <option value="1" selected="">阅读</option>
-                            <option value="2">游戏</option>
-                            <option value="3">音乐</option>
-                            <option value="4">旅行</option>
-                        </select>
-                    </div>
-                </div>
-
-
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">分组选择框</label>
+                        <label class="layui-form-label">入职时间</label>
                         <div class="layui-input-inline">
-                            <select name="quiz">
-                                <option value="">请选择问题</option>
-                                <optgroup label="城市记忆">
-                                    <option value="你工作的第一个城市">你工作的第一个城市</option>
-                                </optgroup>
-                                <optgroup label="学生时代">
-                                    <option value="你的工号">你的工号</option>
-                                    <option value="你最喜欢的老师">你最喜欢的老师</option>
-                                </optgroup>
-                            </select>
+                            <input type="text" name="employeeDetailEntryTime" autocomplete="off" class="layui-input"
+                                   style="width:200px;"
+                                   th:value="${#dates.format(employeeDetail.employeeDetailEntryTime, 'yyyy-MM-dd')}"
+                                   readonly="readonly"/>
+
                         </div>
                     </div>
+                    <!-- positionId -->
                     <div class="layui-inline">
-                        <label class="layui-form-label">搜索选择框</label>
+                        <label class="layui-form-label">职位</label>
                         <div class="layui-input-inline">
-                            <select name="modules" lay-verify="required" lay-search="">
-                                <option value="">直接选择或搜索选择</option>
-                                <option value="1">layer</option>
-                                <option value="2">form</option>
-                                <option value="3">layim</option>
-                                <option value="4">element</option>
-                                <option value="5">laytpl</option>
-                                <option value="6">upload</option>
-                                <option value="7">laydate</option>
-                                <option value="8">laypage</option>
-                                <option value="9">flow</option>
-                                <option value="10">util</option>
-                                <option value="11">code</option>
-                                <option value="12">tree</option>
-                                <option value="13">layedit</option>
-                                <option value="14">nav</option>
-                                <option value="15">tab</option>
-                                <option value="16">table</option>
-                                <option value="17">select</option>
-                                <option value="18">checkbox</option>
-                                <option value="19">switch</option>
-                                <option value="20">radio</option>
-                            </select>
+                            <input type="text" name="positionName" autocomplete="off" class="layui-input"
+                                   style="width:200px;" th:value="${employeeDetail.position.positionName}"
+                                   readonly="readonly">
                         </div>
                     </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">联动选择框</label>
-                    <div class="layui-input-inline">
-                        <select name="quiz1">
-                            <option value="">请选择省</option>
-                            <option value="浙江" selected="">浙江省</option>
-                            <option value="你的工号">江西省</option>
-                            <option value="你最喜欢的老师">福建省</option>
-                        </select>
+                    <!-- branchId -->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">所属科室</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="branchId" autocomplete="off" class="layui-input"
+                                   style="width:200px;" th:value="${employeeDetail.branch.branchName}"
+                                   readonly="readonly"/>
+                        </div>
                     </div>
-                    <div class="layui-input-inline">
-                        <select name="quiz2">
-                            <option value="">请选择市</option>
-                            <option value="杭州">杭州</option>
-                            <option value="宁波" disabled="">宁波</option>
-                            <option value="温州">温州</option>
-                            <option value="温州">台州</option>
-                            <option value="温州">绍兴</option>
-                        </select>
-                    </div>
-                    <div class="layui-input-inline">
-                        <select name="quiz3">
-                            <option value="">请选择县/区</option>
-                            <option value="西湖区">西湖区</option>
-                            <option value="余杭区">余杭区</option>
-                            <option value="拱墅区">临安市</option>
-                        </select>
-                    </div>
-                    <div class="layui-form-mid layui-word-aux">此处只是演示联动排版，并未做联动交互</div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">复选框</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" name="like[write]" title="写作">
-                        <input type="checkbox" name="like[read]" title="阅读" checked="">
-                        <input type="checkbox" name="like[game]" title="游戏">
+                    <!-- titleId -->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">职称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="titleId" autocomplete="off" class="layui-input"
+                                   style="width:200px;" th:value="${employeeDetail.title.titleName}"
+                                   readonly="readonly">
+                        </div>
                     </div>
                 </div>
 
-                <div class="layui-form-item" pane="">
-                    <label class="layui-form-label">原始复选框</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" name="like1[write]" lay-skin="primary" title="写作" checked="">
-                        <input type="checkbox" name="like1[read]" lay-skin="primary" title="阅读">
-                        <input type="checkbox" name="like1[game]" lay-skin="primary" title="游戏" disabled="">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">开关-默认关</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">开关-默认开</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest"
-                               lay-text="ON|OFF">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">单选框</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="sex" value="男" title="男" checked="">
-                        <input type="radio" name="sex" value="女" title="女">
-                        <input type="radio" name="sex" value="禁" title="禁用" disabled="">
-                    </div>
-                </div>
+                <!-- employeeDetailDescript -->
                 <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">普通文本域</label>
+                    <label class="layui-form-label">简介</label>
                     <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                        <textarea name="employeeDetailDescript" class="layui-textarea" readonly="readonly"
+                                  style="width:525px;">
+                            [[${employeeDetail.employeeDetailDescript}]]
+                        </textarea>
                     </div>
                 </div>
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">编辑器</label>
-                    <div class="layui-input-block">
-                        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content"
-                                  id="LAY_demo_editor"></textarea>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                    </div>
-                </div>
+
             </form>
         </div>
     </div>

@@ -43,6 +43,10 @@ public class DiagnosisController {
     private OperationNotifyService operationNotifyService;
     @Resource
     private OperationService operationService;
+    @Resource
+    private InpatientService inpatientService;
+    @Resource
+    private InpatientNotifyService inpatientNotifyService;
 
     @GetMapping("/diagnosis/dealingDiagnosis")
     public MyPageInfo<Diagnosis> showDealingDiagnosis(MyPageInfo<Diagnosis> layuiPage, HttpSession session) {
@@ -232,6 +236,12 @@ public class DiagnosisController {
         //添加一条未处理的手术的记录
         operationService.insertOperation(operation);
 
+        //同时添加一条住院记录
+        InpatientNotify inpatientNotifyDTO = new InpatientNotify();
+        inpatientNotifyDTO.setDiagnosisId(Integer.valueOf(diagnosisId));
+        inpatientNotifyDTO.setInpatientNotifyStatus(0);
+
+        inpatientNotifyService.insertInpatientNotify(inpatientNotifyDTO);
         return "success";
     }
 

@@ -1,8 +1,8 @@
 package com.ys.hospital.pojo;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * (EmployeeRole)实体类
@@ -20,4 +20,7 @@ public class EmployeeRole implements Serializable {
     //外键：员工id
     private Integer employeeId;
 
+    private Role role;
+
+    private Employee employee;
 }
