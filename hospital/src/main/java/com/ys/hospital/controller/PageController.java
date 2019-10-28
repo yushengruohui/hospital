@@ -89,7 +89,30 @@ public class PageController {
 
     @RequestMapping("/dispensing/record")
     public String toDispensingRecord() {
-        return "/dispensing/record";
+        return "dispensing/record";
+    }
+
+    @RequestMapping("/medicine/index")
+    public String toMedicineIndex() {
+        return "medicine/index";
+    }
+
+    @RequestMapping("/dispensing/employee/index")
+    public String toDispensingEmployeeIndex(HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
+        return "dispensing/employee/index";
+    }
+
+    @RequestMapping("/dispensing/employee/update")
+    public String toDispensingEmployeeUpdate(Model model) {
+        String employeeId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Employee employee = new Employee();
+        employee.setEmployeeId(Integer.valueOf(employeeId));
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
+        return "dispensing/employee/update";
     }
 
     @PostMapping("/diagnosis/addReady")

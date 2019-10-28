@@ -32,7 +32,7 @@ public class WorkTimeSchedule {
     @Resource
     private WorkTimeService workTimeService;
 
-    @Scheduled(cron = ("0 0 0 * * 1-7"))
+//    @Scheduled(cron = ("0 0 0 * * 1-7"))
     public void work() {
 
         System.out.println("我不懂");

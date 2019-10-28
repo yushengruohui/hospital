@@ -59,6 +59,10 @@ public class LoginController {
         if (employee.getEmployeeDetail().getTitleId().equals(2) || employee.getEmployeeDetail().getTitleId().equals(1)) {
             return "appointment/index";
         }
+        //发药药师界面
+        if (employee.getEmployeeDetail().getTitleId().equals(4)) {
+            return "dispensing/index";
+        }
         return "redirect:/";
     }
 }
