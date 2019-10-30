@@ -8,12 +8,25 @@
         <result property="employeePassword" column="employee_password" jdbcType="VARCHAR"/>
         <result property="employeeOnline" column="employee_online" jdbcType="INTEGER"/>
         <result property="employeeLastLoginTime" column="employee_last_login_time" jdbcType="TIMESTAMP"/>
-        <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail"/>
+        <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail">
+        </association>
     </resultMap>
+
     <resultMap type="com.ys.hospital.pojo.Employee" id="PermissionInfoMap">
         <collection property="roles" ofType="com.ys.hospital.pojo.Role">
             <collection property="powerDetails" ofType="com.ys.hospital.pojo.PowerDetail"></collection>
         </collection>
+    </resultMap>
+
+    <resultMap type="com.ys.hospital.pojo.Employee" id="EmployeeInfoMap">
+        <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+        <result property="employeeName" column="employee_name" jdbcType="VARCHAR"/>
+        <result property="employeePassword" column="employee_password" jdbcType="VARCHAR"/>
+        <result property="employeeOnline" column="employee_online" jdbcType="INTEGER"/>
+        <result property="employeeLastLoginTime" column="employee_last_login_time" jdbcType="TIMESTAMP"/>
+        <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail">
+            <association property="title" javaType="com.ys.hospital.pojo.Title"/>
+        </association>
     </resultMap>
 
     <!--查询所有Employee信息-->
@@ -47,7 +60,39 @@
         </where>
     </select>
     <!--    根据主键查询员工信息（包括员工详情）-->
-    <select id="getEmployeeByEmployeeId" resultMap="EmployeeMap">
+    <select id="getEmployeeByEmployeeId" resultMap="EmployeeInfoMap">
+        SELECT
+        employee.employee_id,
+        employee.employee_name,
+        employee.employee_password,
+        employee.employee_online,
+        employee.employee_last_login_time,
+        employee_detail.employee_detail_id,
+        employee_detail.employee_detail_gender,
+        employee_detail.employee_detail_birthday,
+        employee_detail.employee_detail_address,
+        employee_detail.employee_detail_phone,
+        employee_detail.employee_detail_identity,
+        employee_detail.employee_detail_entry_time,
+        employee_detail.employee_detail_email,
+        employee_detail.employee_detail_descript,
+        employee_detail.employee_detail_status,
+        employee_detail.employee_id,
+        employee_detail.position_id,
+        employee_detail.branch_id,
+        employee_detail.title_id,
+        title.title_id,
+        title.title_name
+        FROM
+        employee ,
+        employee_detail,
+        title
+        WHERE
+        employee.employee_id = employee_detail.employee_id AND
+        title.title_id=employee_detail.title_id
+        employee_detail.employee_id = #{employeeId}
+    </select>
+    <select id="getEmployeeListByEmployeeId" resultMap="EmployeeInfoMap">
         SELECT
         employee.employee_id,
         employee.employee_name,
@@ -68,11 +113,14 @@
         employee_detail.position_id,
         employee_detail.branch_id,
         employee_detail.title_id
+        title.title_name
         FROM
         employee ,
-        employee_detail
+        employee_detail,
+        title
         WHERE
         employee.employee_id = employee_detail.employee_id AND
+        title.title_id=employee_detail.title_id
         employee_detail.employee_id = #{employeeId}
     </select>
     <!--    查询医院中所有在职的职位为医师信息-->
@@ -136,6 +184,36 @@
             LEFT JOIN power_detail AS pd ON p.power_id = pd.power_id
         WHERE
             e.employee_id =#{employeeId}
+    </select>
+    <select id="queryEmployeeListByParam" resultMap="EmployeeInfoMap">
+        SELECT
+        employee.employee_id,
+        employee.employee_name,
+        employee.employee_password,
+        employee.employee_online,
+        employee.employee_last_login_time,
+        employee_detail.employee_detail_id,
+        employee_detail.employee_detail_gender,
+        employee_detail.employee_detail_birthday,
+        employee_detail.employee_detail_address,
+        employee_detail.employee_detail_phone,
+        employee_detail.employee_detail_identity,
+        employee_detail.employee_detail_entry_time,
+        employee_detail.employee_detail_email,
+        employee_detail.employee_detail_descript,
+        employee_detail.employee_detail_status,
+        employee_detail.employee_id,
+        employee_detail.position_id,
+        employee_detail.branch_id,
+        title.title_name
+        FROM
+        employee ,
+        employee_detail,
+        title
+        WHERE
+        employee.employee_id = employee_detail.employee_id
+        AND title.title_id=employee_detail.title_id
+        and employee_detail.employee_detail_status=#{employeeDetailStatus}
     </select>
 
     <!--新增Employee数据-->

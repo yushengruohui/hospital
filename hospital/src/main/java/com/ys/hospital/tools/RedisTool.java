@@ -18,15 +18,20 @@ import java.util.concurrent.TimeUnit;
 public class RedisTool {
 
     @SuppressWarnings("rawtypes")
-    @Resource
-    private RedisTemplate redisTemplate;
+
+    private static RedisTemplate redisTemplate;
+
+    @Resource(name = "redisTemplate")
+    public void setRedisTemplate(RedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     /**
      * 批量删除对应的value
      *
      * @param keys
      */
-    public void remove(final String... keys) {
+    public static void remove(final String... keys) {
         for (String key : keys) {
             remove(key);
         }
@@ -38,7 +43,7 @@ public class RedisTool {
      * @param pattern
      */
     @SuppressWarnings("unchecked")
-    public void removePattern(final String pattern) {
+    public static void removePattern(final String pattern) {
         Set<Serializable> keys = redisTemplate.keys(pattern);
         if (keys.size() > 0)
             redisTemplate.delete(keys);
@@ -50,7 +55,7 @@ public class RedisTool {
      * @param key
      */
     @SuppressWarnings("unchecked")
-    public void remove(final String key) {
+    public static void remove(final String key) {
         if (exists(key)) {
             redisTemplate.delete(key);
         }
@@ -63,7 +68,7 @@ public class RedisTool {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public boolean exists(final String key) {
+    public static boolean exists(final String key) {
         return redisTemplate.hasKey(key);
     }
 
@@ -74,7 +79,7 @@ public class RedisTool {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public Object get(final String key) {
+    public static Object get(final String key) {
         Object result = null;
         ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
         result = operations.get(key);
@@ -89,7 +94,7 @@ public class RedisTool {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public boolean set(final String key, Object value) {
+    public static boolean set(final String key, Object value) {
         boolean result = false;
         try {
             ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
@@ -109,7 +114,7 @@ public class RedisTool {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public boolean set(final String key, Object value, Long expireTime) {
+    public static boolean set(final String key, Object value, Long expireTime) {
         boolean result = false;
         try {
             ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();

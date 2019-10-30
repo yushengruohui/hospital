@@ -103,4 +103,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return 0;
     }
 
+    @Override
+    public List<Employee> queryEmployeeByStatus(Integer employeeDetailStatus) {
+        if (employeeDetailStatus == null) {
+            return null;
+        }
+        return employeeMapper.queryEmployeeListByParam(employeeDetailStatus);
+    }
+
 }

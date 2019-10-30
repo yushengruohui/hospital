@@ -4,10 +4,11 @@ import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.pojo.Diagnosis;
 import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.pojo.EmployeeDetail;
+import com.ys.hospital.pojo.vo.EmployeeInfoVO;
 import com.ys.hospital.service.DiagnosisService;
 import com.ys.hospital.service.EmployeeDetailService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import com.ys.hospital.service.OperationNotifyService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -118,8 +119,30 @@ public class PageController {
     public String toOperation() {
         return "operation/find";
     }
+
     @RequestMapping("/operation/findopertion")
     public String tofindopertion() {
         return "operation/findoperation";
+    }
+
+    @RequestMapping("/admin/employee/report")
+    public String toAdminEmployeeReport() {
+        return "admin/employee_report";
+    }
+
+    @RequestMapping("/admin/employee/index")
+    public String toAdminEmployeeIndex() {
+        return "admin/employee_index";
+    }
+
+    @RequestMapping("/admin/employee/add")
+    public String toAdminEmployeeAdd() {
+        return "admin/employee_add";
+    }
+
+    @RequestMapping("/admin/employee/update")
+    public String toAdminEmployeeUpdate(EmployeeInfoVO employeeInfoVO, Model model) {
+        model.addAttribute("employeeInfoVO", employeeInfoVO);
+        return "admin/employee_update";
     }
 }

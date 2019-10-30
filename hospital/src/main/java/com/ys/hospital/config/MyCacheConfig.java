@@ -38,7 +38,7 @@ public class MyCacheConfig extends CachingConfigurerSupport {
                 }
                 sb.deleteCharAt(sb.lastIndexOf(","));
                 sb.append("]");
-                System.out.println("=====" + sb.toString() + "=====");
+                // System.out.println("=====" + sb.toString() + "=====");
 
                 return sb.toString();
             }

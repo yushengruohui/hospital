@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{com/admin::admin_title}"></div>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{com/admin::admin_head}"></div>
+
+    <div th:replace="~{com/admin::admin_left_employee}"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <!--<div class="layui-col-md12">-->
+            <!--    <label>请输入员工编码</label>-->
+            <!--    <button></button>-->
+            <!--</div>-->
+            <table class="layui-table" id="admin_table" lay-filter="admin_employee_index_table_filter">
+            </table>
+            <!--查看员工，显示员工列表，带有修改和删除功能-->
+
+            <!--搜索员工功能-->
+
+            <!--添加员工功能-->
+
+
+        </div>
+    </div>
+
+    <div th:replace="~{com/admin::foot}"></div>
+</div>
+<!--================ 工具条：操作处理 ================-->
+<script type="text/html" id="operation_bar">
+    <a class="layui-btn layui-btn-xs" lay-event="search_event">查看详情</a>
+    <a class="layui-btn layui-btn-xs" lay-event="update_event">修改</a>
+    <a class="layui-btn layui-btn-xs" lay-event="delete_event">删除</a>
+</script>
+<!--================ JavaScript代码区域 ================-->
+<script>
+    layui.use(['element', 'table', 'layer'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var layer = layui.layer;
+
+        table.render({
+            elem: '#admin_table'
+            , height: '600'
+            , url: '/admin/employee/online' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {field: 'employeeId', title: '员工号', fixed: 'left'}
+                    , {field: 'employeeName', title: '员工姓名'}
+                    , {field: 'titleName', title: '员工职称'}
+                    , {field: 'employeeDetailGender', title: '员工性别'}
+                    , {field: 'employeeDetailEntryTime', title: '入职时间', sort: true}
+                    , {title: '操作', fixed: 'right', align: 'center', toolbar: '#operation_bar'}
+                ]
+            ]
+        });
+
+        //监听操作事件
+        table.on('tool(admin_employee_index_table_filter)', function (obj) {
+            //获取当前行的数据
+            var rowData = obj.data;
+            switch (obj.event) {
+                //查看处方
+                case 'search_event':
+                    //显示详情
+                    console.info(rowData);
+                    // layer.open({
+                    //     type: 1,//类型，新页面
+                    //     area: ['50%', '50%'],//定义宽和高
+                    //     title: '查看处方',//题目
+                    //     shadeClose: true,//点击遮罩层关闭
+                    //     content: $('#show_diagnosis_prescription'), //打开的内容
+                    //     btn: ["关闭"],//添加按钮
+                    //     success: function (layero, index) {
+                    //         // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                    //         layer.msg(rowData);
+                    //     },
+                    //     yes: function (index, layero) {
+                    //         //yes默认触发第一个按钮事件
+                    //         layer.close(index);
+                    //     }
+                    // });
+                    break;
+                case 'update_event':
+                    //修改处方
+                    // $.ajax({
+                    //     url: '/page/admin/employee/update',
+                    //     method: 'get',
+                    //     data: rowData
+                    // });
+                    window.location.href = "/page/admin/employee/update";
+                    break;
+                case 'delete_event':
+                    //删除，修改员工为离职状态
+                    layer.msg("success");
+                    window.location.reload();
+                    break;
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
