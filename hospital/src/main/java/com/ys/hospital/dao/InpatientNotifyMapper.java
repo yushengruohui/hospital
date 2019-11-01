@@ -24,10 +24,10 @@ public interface InpatientNotifyMapper {
     /**
      * 通过登陆人Id查询未处理住院通知
      * @param
-     * @param employeeId
+     * @param inpatientNotifyStatus
      * @return
      */
-    List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer employeeId);
+    List<InpatientNotify> queryInpatientNotifyByStatus(Integer inpatientNotifyStatus);
 
     /**
      * 根据实体类InpatientNotify的相关属性查询实体类InpatientNotify

@@ -34,5 +34,7 @@ public class Inpatient implements Serializable {
     //患者预交费用
     private Double inpatientPrepaidPrice;
     //住院详情
-    private List<InpatientDetail> inpatientDetails;
+    private List<InpatientDetail> inpatientDetail;
+    //住院通知单
+    private InpatientNotify inpatientNotify;
 }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{com/inpatient::title}"></div>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--================ 网页头部 ================-->
+    <div th:replace="~{com/inpatient::head}"></div>
+
+    <!--================ 网页左侧导航栏 ================-->
+    <div th:replace="~{com/inpatient::left_inpatient}"></div>
+
+    <!--================ 主体内容区 ================-->
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <!--==== 显示所有病床信息 =====-->
+            <table class="layui-table" id="bed_table" lay-filter="bed_table_filter">
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'table'], function () {
+        var element = layui.element;
+        var table = layui.table;
+
+        table.render({
+            elem: '#bed_table'
+            , height: 500
+            , url: '/bed/queryAllBed' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'bedId', title: '病床ID', fixed: 'left', templet: function (bed) {
+                            return bed.bedId;
+                        }
+                    },
+                    {
+                        field: 'bedName', title: '病床名称', fixed: 'left', templet: function (bed) {
+                            return bed.bedName;
+                        }
+                    },
+                    {
+                        field: 'bedStatus', title: '病床状态', fixed: 'left', templet: function (bed) {
+                            if(bed.bedStatus=='0'){
+                                return "空闲";
+                            }else {
+                                return "占用";
+                            }
+                            // return bed.bedStatus='0'?"空闲":bed.bedStatus;
+                        }
+                    },
+                    {
+                        field: 'bedEntryTime', title: '入住时间', sort: true
+                    },
+                    {
+                        field: 'bedLeaveTime', title: '离开时间', sort: true
+                    },
+                    {
+                        field: 'bedPrice', title: '病床价格', templet: function (bed) {
+                            return bed.bedPrice;
+                        }
+                    },
+                    {
+                        field: 'patientId', title: '患者', templet: function (bed) {
+                            return bed.patientId==null?"空":bed.patientId;
+                        }
+                    },
+                    {
+                        field: 'roomId', title: '病房', templet: function (bed) {
+                            return bed.roomId;
+                        }
+                    },
+                    {
+                        field: 'employeeId', title: '处理护士', templet: function (bed) {
+                            return bed.employeeId==null?"空":bed.employeeId;
+                        }
+                    }
+                ]
+            ]
+        });
+    });
+</script>
+</body>
+</html>

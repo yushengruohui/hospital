@@ -1,8 +1,11 @@
 package com.ys.hospital.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.pojo.InpatientNotify;
 import com.ys.hospital.service.InpatientNotifyService;
+import com.ys.hospital.tools.MyPageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,59 +29,50 @@ public class InpatientNotifyController {
     
     @Resource
     private InpatientNotifyService inpatientNotifyService;
-    
-    @RequestMapping("/test")
-    public String testDome() {
-        logger.info("testDome success");
-        return "redirect:/";
-    }
-
-    /**
-     * 查询所有住院通知
-     * @param model
-     * @return
-     */
-    @RequestMapping("/queryAllInpatientNotify")
-    public String queryAllInpatientNotify(Model model){
-        List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryAllInpatientNotify();
-        model.addAttribute("inpatientNotifies",inpatientNotifies);
-        logger.info("queryAllInpatientNotify success");
-        return "/nurse/inpatientNotify_list";
-    }
 
     @RequestMapping("/queryInpatientNotifyByParam")
     public String queryInpatientNotifyByParam(InpatientNotify inpatientNotify,Model model){
         List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryInpatientNotifyByParam(inpatientNotify);
         model.addAttribute("inpatientNotifies", inpatientNotifies);
-        return "/nurse/inpatientNotify_list";
-    }
-    /**
-     * 通过登录人ID查询未处理住院通知
-     * @param session
-     * @param model
-     * @return
-     */
-    @RequestMapping("/queryInpatientNotifyByEmployeeId")
-    public String queryInpatientNotifyByEmployeeId(HttpSession session,Model model){
-        //获取当前登录的用户
-        Employee employee= (Employee) session.getAttribute("employee");
-        List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryInpatientNotifyByEmployeeId(employee.getEmployeeId());
-        model.addAttribute("inpatientNotifies",inpatientNotifies);
-        return "/nurse/inpatientNotify_list";
+        return "/inpatient/inpatientNotify_list";
     }
 
-    /*@RequestMapping("/toInsertInpatientNotify")
-    public String toInsertInpatientNotify(){
-        logger.info("toInsertInpatientNotify success");
-        return "/nurse/inpatientNotify_insert";
-    }*/
-    /*@RequestMapping("/insertInpatientNotify")
-    public String insertInpatientNotify(InpatientNotify inpatientNotify){
-        int count=inpatientNotifyService.insertInpatientNotify(inpatientNotify);
-        logger.info("insertInpatientNotify success");
-        if(count>0){
-            return "redirect:/inpatientNotify/queryAllInpatientNotify";
-        }
-        return "redirect:/inpatientNotify/insertInpatientNotify";
-    }*/
+    @GetMapping("/queryInpatientNotifyByStatus")
+    @ResponseBody
+    public MyPageInfo<InpatientNotify> inpatientNotifies(MyPageInfo<InpatientNotify> myPageInfo,Integer inpatientNotifyStatus){
+        List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryInpatientNotifyByStatus(inpatientNotifyStatus);
+
+        //开启分页
+        PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
+
+        //处理分页信息
+        myPageInfo.setData(inpatientNotifies);
+        //将用户数据封装到PageInfo 中
+        PageInfo page = new PageInfo(myPageInfo.getData());
+        //设置数据数量
+        myPageInfo.setCount(page.getPageSize());
+        //设置成功代码
+        myPageInfo.setCode("0");
+
+        return myPageInfo;
+    }
+
+    @GetMapping("/queryAllInpatientNotify")
+    @ResponseBody
+    public MyPageInfo<InpatientNotify> inpatientNotifies(MyPageInfo<InpatientNotify> myPageInfo){
+        List<InpatientNotify> inpatientNotifies=inpatientNotifyService.queryAllInpatientNotify();
+        //开启分页
+        PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
+
+        //处理分页信息
+        myPageInfo.setData(inpatientNotifies);
+        //将用户数据封装到PageInfo 中
+        PageInfo page = new PageInfo(myPageInfo.getData());
+        //设置数据数量
+        myPageInfo.setCount(page.getPageSize());
+        //设置成功代码
+        myPageInfo.setCode("0");
+
+        return myPageInfo;
+    }
 }

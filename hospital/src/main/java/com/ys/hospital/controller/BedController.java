@@ -1,8 +1,10 @@
 package com.ys.hospital.controller;
 
-import com.alibaba.druid.support.json.JSONUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ys.hospital.pojo.Bed;
 import com.ys.hospital.service.BedService;
+import com.ys.hospital.tools.MyPageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * (Bed)表控制层
@@ -28,24 +28,50 @@ public class BedController {
     @Resource
     private BedService bedService;
 
-    @RequestMapping("/test")
-    public String testDome() {
-        logger.info("testDome success");
-        return "redirect:/";
-    }
-
-    /*
-    查询所有bed信息
-     */
-    @RequestMapping("/queryAllBed")
-    public String queryAllBed(Model model){
+    @GetMapping("/queryAllBed")
+    @ResponseBody
+    public MyPageInfo<Bed> beds(MyPageInfo<Bed> myPageInfo){
         List<Bed> beds=bedService.queryAllBed();
-        model.addAttribute("beds",beds);
-        logger.info("queryAllBed success!");
+        //开启分页
+        PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
 
-        return "/nurse/bed_list";
+        //处理分页信息
+        myPageInfo.setData(beds);
+        //将用户数据封装到PageInfo 中
+        PageInfo page = new PageInfo(myPageInfo.getData());
+        //设置数据数量
+        myPageInfo.setCount(page.getPageSize());
+        //设置成功代码
+        myPageInfo.setCode("0");
+
+        return myPageInfo;
     }
 
+    @GetMapping("/queryBedByStatus")
+    @ResponseBody
+    public MyPageInfo<Bed> beds(MyPageInfo<Bed> myPageInfo,Integer bedStatus){
+        List<Bed> beds=bedService.queryBedByStatus(bedStatus);
+        //开启分页
+        PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
+
+        //处理分页信息
+        myPageInfo.setData(beds);
+        //将用户数据封装到PageInfo 中
+        PageInfo page = new PageInfo(myPageInfo.getData());
+        //设置数据数量
+        myPageInfo.setCount(page.getPageSize());
+        //设置成功代码
+        myPageInfo.setCode("0");
+
+        return myPageInfo;
+    }
+
+    @RequestMapping("/queryBedByStatu")
+    @ResponseBody
+    public List<Bed> queryBedByStatu(Integer bedStatus){
+        List<Bed> beds=bedService.queryBedByStatus(bedStatus);
+        return beds;
+    }
     /*
     根据实体类Bed的相关属性查询实体类Bed
      */
@@ -55,7 +81,7 @@ public class BedController {
         model.addAttribute("beds",beds);
         logger.info("queryBedByParam success!");
 
-        return "/nurse/bed_list";
+        return "/inpatient/bed_list";
     }
 
     /**
@@ -64,7 +90,7 @@ public class BedController {
      */
     @RequestMapping("/toInsertBed")
     public String toInsertBed(){
-        return "/nurse/bed_insert";
+        return "/inpatient/bed_insert";
     }
 
     /**
@@ -76,10 +102,10 @@ public class BedController {
     public String insertBed(Bed bed){
         int count=bedService.insertBed(bed);
         if(count>0){
-            return "redirect:/nurse/bed_list";
+            return "redirect:/inpatient/bed_list";
         }
         logger.info("insertBed success!");
-        return "redirect:/nurse/bed_insert";
+        return "redirect:/inpatient/bed_insert";
     }
     /*
     根据bedID查询床位信息，返回修改界面
@@ -91,7 +117,7 @@ public class BedController {
         model.addAttribute("beds",beds);
         logger.info("findBedById success!");
 
-        return "/nurse/bed_update";
+        return "/inpatient/bed_update";
     }
     /*
     修改Bed数据
@@ -103,7 +129,7 @@ public class BedController {
         if(count>0){
             return "redirect:/bed/queryAllBed";
         }
-        return "redirect:/nurse/bed_update";
+        return "redirect:/inpatient/bed_update";
     }
 
     @RequestMapping("/deleteBed")
@@ -125,6 +151,6 @@ public class BedController {
     public String queryBedByStatus(Integer bedStatus,Model model){
         List<Bed> beds=bedService.queryBedByStatus(bedStatus);
         model.addAttribute("beds",beds);
-        return "/nurse/inpatient_insert";
+        return "/inpatient/inpatient_insert";
     }*/
 }

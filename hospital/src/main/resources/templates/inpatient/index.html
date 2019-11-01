@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="~{com/inpatient::title}"></div>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{com/inpatient::head}"></div>
+
+    <div th:replace="~{com/inpatient::left_inpatient}"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-table" id="inpatientNotifyTable" lay-filter="tableFilter">
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{com/inpatient::foot}"></div>
+</div>
+<script type="text/html" id="optBar">
+    <a class="layui-btn layui-btn-xs" lay-event="insert">填写住院信息</a>
+</script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'table'], function () {
+        var element = layui.element;
+        var table = layui.table;
+
+        table.render({
+            elem: '#inpatientNotifyTable'
+            , height: 500
+            , url: '/inpatientNotify/queryInpatientNotifyByStatus' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'inpatientNotifyId', title: '住院通知ID', fixed: 'left', templet: function (inpatientNotify) {
+                            return inpatientNotify.inpatientNotifyId;
+                        }
+                    }
+                    , {
+                    field: 'inpatientNotifyStatus', title: '处理状态', templet: function (inpatientNotify) {
+                        return inpatientNotify.inpatientNotifyStatus='0'?"未处理":inpatientNotify.inpatientNotifyStatus;
+                    }
+                }
+                    ,
+                    {
+                        field: 'inpatientDealTime', title: '处理时间', sort: true
+                    }
+                    ,
+                    {
+                    field: 'diagnosisId', title: '所属诊断单ID', templet: function (inpatientNotify) {
+                        return inpatientNotify.diagnosisId;
+                    }
+                }
+                    , {
+                    field: 'employeeId', title: '处理护士', templet: function (inpatientNotify){
+                        return inpatientNotify.employeeId==null?"":inpatientNotify.employeeId;
+                    }}
+                    , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                ]
+            ]
+        });
+
+        //监听事件
+        table.on('tool(tableFilter)', function (obj) {
+            //获取当前行的数据
+            var rowData = obj.data;
+            switch (obj.event) {
+                case 'insert':
+                    //弹出模态框
+                    layer.open({
+                        type: 1,//类型，新页面
+                        area: ['700px', '500px'],//定义宽和高
+                        title: '填写住院信息',//题目
+                        shadeClose: false,//点击遮罩层关闭
+                        content:$('#open_inpatient'),//打开的内容
+                        btn: ["确认","返回"],//添加两个按钮
+
+                        success: function (layero, index) {
+                            $.ajax({
+                                url: "/bed/queryBedByStatu?inpatientNotifyId="+rowData.inpatientNotifyId,
+                                type: "get",
+                                success: function(result){
+                                    $.each(result,function(index,bed){
+                                        $('#bedName').append(new Option(bed.bedName,bed.bedId));
+                                    });
+                                    layui.form.render("select");
+                                },
+                                error: function () {
+                                    layer.msg("连接后台失败，服务器异常")
+                                }
+                            });
+
+                            //弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                            $("#send_inpatientNotifyId").val(rowData.inpatientNotifyId);
+                        },
+                        yes: function (index, layero) {
+                            //yes默认触发第一个按钮事件
+                            var send_data = {
+                                inpatientEntryTime: $("#send_inpatientEntryTime").val(),
+                                // inpatientLeaveTime: $("#send_inpatientLeaveTime").val(),
+                                inpatientStatus: $("#send_inpatientStatus input[name=\"inpatientStatus\"]:checked").val(),
+                                inpatientNotifyId: $("#send_inpatientNotifyId").val(),
+                                bedId: $("#bedName").val(),
+                                // inpatientPrice: $("#send_inpatientPrice").val(),
+                                inpatientPayStatus: $("#send_inpatientPayStatus input[name=\"inpatientPayStatus\"]:checked").val(),
+                                inpatientPrepaidPrice: $("#send_inpatientPrepaidPrice").val()
+                            };
+                            $.ajax({
+                                url: "/inpatient/insertInpatient",
+                                type: "post",
+                                data: send_data,
+                                success: function (result) {
+                                    alert(result);
+                                },
+                                error: function () {
+                                    layer.msg("连接后台失败，服务器异常")
+                                }
+                            });
+                            layer.close(index);
+                            window.location.reload();
+                        },
+                        btn2: function (index, layero) {
+                            //第二个按钮事件
+
+                            layer.close(index);
+                        }
+                    });
+                    break;
+
+            }
+        });
+    });
+
+
+</script>
+<!--================ 模态框：填写住院信息 ================-->
+<div id="open_inpatient" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+
+            <label class="layui-form-label" for="send_inpatientEntryTime">入院时间：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="date" name="send_inpatientEntryTime" id="send_inpatientEntryTime" placeholder="入院时间："
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <!--<label class="layui-form-label" for="send_inpatientLeaveTime">出院时间：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="date" name="send_inpatientLeaveTime" id="send_inpatientLeaveTime" placeholder="出院时间："
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>-->
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="send_inpatientStatus">处理状态:</label>
+                <div class="layui-input-block" id="send_inpatientStatus">
+                    <input lay-filter="StatusFilter" type="radio" name="inpatientStatus" value="0" title="未处理">
+                    <input type="radio" name="inpatientStatus" value="1" title="已处理">
+                </div>
+            </div>
+
+            <label class="layui-form-label" for="send_inpatientNotifyId">所属住院通知ID：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="send_inpatientNotifyId" id="send_inpatientNotifyId"
+                               autocomplete="off" readonly="readonly"
+                               class="layui-input"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="bedName">病床ID：</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <div class="layui-input-block">
+                            <select lay-verify="required" id="bedName" name="bedName">
+                             <option value="">
+                             </option>
+                             </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<label class="layui-form-label" for="send_inpatientPrice">住院总费用：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="send_inpatientPrice" id="send_inpatientPrice" placeholder="住院总费用："
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>-->
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="send_inpatientPayStatus">支付状态:</label>
+                <div class="layui-input-block" id="send_inpatientPayStatus">
+                    <input type="radio" name="inpatientPayStatus" value="0" title="未支付">
+                    <input type="radio" name="inpatientPayStatus" value="1" title="已支付">
+                </div>
+            </div>
+            <label class="layui-form-label" for="send_inpatientPrepaidPrice">患者预交费用：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="send_inpatientPrepaidPrice" id="send_inpatientPrepaidPrice" placeholder="患者预交费用："
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

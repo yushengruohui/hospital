@@ -14,10 +14,7 @@
         <div class="layui-header">
             <div class="layui-logo">医院自动化管理系统</div>
             <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a th:href="@{/page/appointment/index}">预约处理</a></li>
-                <li class="layui-nav-item"><a th:href="@{/page/diagnosis/index}">诊断处理</a></li>
-                <li class="layui-nav-item"><a th:href="@{/page/work/index}">值班管理</a></li>
-                <li class="layui-nav-item"><a th:href="@{/page/employee/index}">个人中心</a></li>
+                <li class="layui-nav-item"><a th:href="@{/page/inpatient/index}">住院管理</a></li>
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item" th:if="${session.employee}!=null">
@@ -32,65 +29,28 @@
         </div>
     </div>
 
-    <!--诊断模块-->
-    <div th:fragment="left_diagnosis">
+    <!--住院模块-->
+    <div th:fragment="left_inpatient">
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
-                        <a href="/page/diagnosis/add">添加诊断</a>
+                        <a href="/page/inpatientNotify/queryInpatientNotifyByStatus">未处理住院通知</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="/page/diagnosis/dealing">正在诊断</a>
+                        <a href="/page/inpatientNotify/queryAllInpatientNotify">所有住院通知</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="/page/diagnosis/record">诊断记录</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!--员工模块-->
-    <div th:fragment="left_employee">
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">个人基本信息</a>
+                        <a href="/page/inpatient/queryAllInpatient">所有住院信息</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">修改个人信息</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!--值班模块-->
-    <div th:fragment="left_work">
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;">值班安排</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-
-    <!--预约模块-->
-    <div th:fragment="left_appointment">
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item">
-                        <a href="/page/appointment/index">待处理预约</a>
+                        <a href="/page/inpatient/queryInpatientByStatus">正在处理住院信息</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="/page/appointment/deal">已处理预约</a>
+                        <a href="/page/bed/queryAllBed">所有病床信息</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="/page/bed/queryBedByStatus">空闲病床</a>
                     </li>
                 </ul>
             </div>

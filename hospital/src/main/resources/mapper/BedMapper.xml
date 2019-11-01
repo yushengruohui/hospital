@@ -111,7 +111,7 @@
 
     <select id="queryBedByStatus" resultMap="BedMap">
         select
-            bed_id, bed_name
+            bed_id, bed_name, bed_status, bed_entry_time, bed_leave_time, bed_price, patient_id, room_id, employee_id
         from bed
         where bed_status='0'
     </select>

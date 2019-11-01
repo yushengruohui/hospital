@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{com/inpatient::title}"></div>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--================ 网页头部 ================-->
+    <div th:replace="~{com/inpatient::head}"></div>
+
+    <!--================ 网页左侧导航栏 ================-->
+    <div th:replace="~{com/inpatient::left_inpatient}"></div>
+
+    <!--================ 主体内容区 ================-->
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <!--==== 住院信息的表单 =====-->
+            <form th:action="@{/inpatient/insertInpatient}" th:method="post" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">添加住院信息</label>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">处理状态：</label>
+                    <div class="layui-input-block">
+                        <input lay-filter="statusFilter" type="radio" name="inpatientStatus" value="1" title="已处理"/>
+                        <input type="radio" name="inpatientStatus" value="0" title="未处理" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="inpatientNotifyId">所属住院通知：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="inpatientNotifyId" id="inpatientNotifyId" autocomplete="off"
+                               class="layui-input"
+                               th:value="${inpatientNotifyId}" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="bedId">病床：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="bedId" id="bedId" autocomplete="off"
+                               class="layui-input" required="required"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="inpatientPrice">住院总费用：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="inpatientPrice" id="inpatientPrice" autocomplete="off"
+                               class="layui-input"
+                               required="required"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">支付状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="InpatientPayStatus" value="1" title="已支付"
+                               lay-filter="payStatusFilter">
+                        <input type="radio" name="InpatientPayStatus" value="0" title="未支付" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="inpatientPrepaidPrice">患者预交费用：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="inpatientPrepaidPrice" id="inpatientPrepaidPrice" autocomplete="off"
+                               class="layui-input" required="required"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formSubmit">提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--================ js代码区域 ================-->
+<script>
+    layui.use(['layer', 'element', 'form'], function () {
+
+        var layer = layui.layer;
+        var element = layui.element;
+        var form = layui.form;
+
+        //监听住院通知
+        // form.on('radio(checkFilter)', function (data) {
+        //     var radio_data = data.value; //被点击的radio的value值
+        // });
+
+        //监听提交
+        form.on('submit(formSubmit)', function (data) {
+            var send_inpatient_data = data.field;
+            $.ajax({
+                type: "post",
+                url: "/inpatient/insertInpatient",
+                data: send_inpatient_data,
+                success: function (data) {
+                    layer.msg(data);
+                    window.location.href = "/page/inpatient/inpatient_list"
+                },
+                error: function () {
+                    layer.msg("连接后台失败");
+                }
+            });
+            return false;
+        });
+
+    });
+
+</script>
+</body>
+</body>
+</html>

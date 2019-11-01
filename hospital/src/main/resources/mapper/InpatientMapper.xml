@@ -14,6 +14,11 @@
         <result property="inpatientPrepaidPrice" column="inpatient_prepaid_price" jdbcType="NUMERIC"/>
     </resultMap>
 
+    <resultMap type="com.ys.hospital.pojo.Inpatient" id="InpatientInfoMap">
+        <!--inpatientNotify-->
+        <association property="inpatientNotify" javaType="com.ys.hospital.pojo.InpatientNotify"/>
+
+    </resultMap>
     <!--查询所有Inpatient信息-->
     <select id="queryAllInpatient" resultMap="InpatientMap">
         select
@@ -22,12 +27,14 @@
         from inpatient
     </select>
 
-    <!--<select id="queryAllInpatients" resultMap="InpatientMap">
+    <!-- 根据状态查询Inpatient信息-->
+    <select id="queryInpatientByStatus" resultMap="InpatientMap">
         select
-            ip.inpatient_id, inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id, inpatient_price, inpatient_pay_status, inpatient_prepaid_price, inpatient_detail_price, inpatient_detail_description, inpatient_detail_date
-        from inpatient ip,inpatient_detail ipd
-        where ip.inpatient_id=ipd.inpatient_id
-    </select>-->
+            inpatient_id, inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id,
+            inpatient_price, inpatient_pay_status, inpatient_prepaid_price
+        from inpatient
+        where inpatient_status='0'
+    </select>
     <!--根据实体类Inpatient的相关属性查询实体类Inpatient-->
     <select id="queryInpatientByParam" resultMap="InpatientMap">
         select
@@ -117,4 +124,17 @@
         delete from inpatient where inpatient_id = #{inpatientId}
     </delete>
 
+    <!-- 通过-->
+    <select id="queryInpatientById" resultType="com.ys.hospital.pojo.Appointment">
+        select
+            appointment.patient_id
+        from
+            inpatient
+            join inpatient_notify on inpatient.inpatient_notify_id = inpatient_notify.inpatient_notify_id
+            join diagnosis on inpatient_notify.diagnosis_id = diagnosis.diagnosis_id
+            join appointment on diagnosis.appointment_id = appointment.appointment_id
+        where
+            inpatient.inpatient_id = #{inpatientId}
+
+    </select>
 </mapper>
