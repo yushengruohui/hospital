@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{com/inpatient::title}"></div>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--================ 网页头部 ================-->
+    <div th:replace="~{com/inpatient::head}"></div>
+
+    <!--================ 网页左侧导航栏 ================-->
+    <div th:replace="~{com/inpatient::left_inpatient}"></div>
+
+    <!--================ 主体内容区 ================-->
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <!--==== 显示未处理住院信息 =====-->
+            <table class="layui-table" id="inpatient_table" lay-filter="inpatient_table_filter">
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="optBar">
+    <a class="layui-btn layui-btn-xs" lay-event="checkDetail">查看明细</a>
+    <a class="layui-btn layui-btn-xs" lay-event="insertDetail">添加明细</a>
+    <a class="layui-btn layui-btn-xs" lay-event="leave">出院</a>
+</script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'table'], function () {
+        var element = layui.element;
+        var table = layui.table;
+
+        table.render({
+            elem: '#inpatient_table'
+            , height: 500
+            , url: '/inpatient/queryInpatientByStatus' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'inpatientId', title: '住院信息ID', fixed: 'left', templet: function (inpatient) {
+                            return inpatient.inpatientId;
+                        }
+                    },
+                    {
+                        field: 'inpatientEntryTime', title: '入院时间', sort: true
+                    },
+                    // {
+                    //     field: 'inpatientLeaveTime', title: '离院时间', sort: true
+                    // },
+                    {
+                        field: 'inpatientStatus', title: '处理状态', templet: function (inpatient) {
+                            return inpatient.inpatientStatus='0'?"正在处理":inpatient.inpatientStatus;
+                        }
+                    },
+                    {
+                        field: 'patientName', title: '患者', templet: function (inpatient) {
+                            return inpatient.inpatientNotify.diagnosis.appointment.patient.patientName;
+                        }
+                    },
+                    {
+                        field: 'bedName', title: '病床', templet: function (inpatient) {
+                            return inpatient.bed.bedName;
+                        }
+                    },
+                    {
+                        field: 'inpatientPrice', title: '住院总费用', templet: function (inpatient) {
+                            return inpatient.inpatientPrice==null?"0":inpatient.inpatientPrice;
+                        }
+                    },
+                    {
+                        field: 'inpatientPayStatus', title: '支付状态', templet: function (inpatient) {
+                            return inpatient.inpatientPayStatus='0'?"未支付":inpatient.inpatientPayStatus;
+                        }
+                    },
+                    {
+                        field: 'inpatientPrepaidPrice', title: '患者预交费用', templet: function (inpatient) {
+                            return inpatient.inpatientPrepaidPrice;
+                        }
+                    }
+                    , {title: '操作', fixed: 'right', align: 'center', width:'250', toolbar: '#optBar'}
+                ]
+            ]
+        });
+
+
+        //点击事件
+        table.on('tool(inpatient_table_filter)', function (obj){
+            //获取当前行的数据
+            var rowData = obj.data;
+            switch (obj.event){
+                case 'leave':
+                    layer.open({
+                        type: 1,//类型，新页面
+                        area: ['900px', '600px'],//定义宽和高
+                        title: '出院信息',//题目
+                        shadeClose: false,//点击遮罩层关闭
+                        content: $('#leave_inpatient'), //打开的内容
+                        btn: ["确认出院","返回"],//添加两个按钮
+                        success: function (layero, index) {
+                            // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                            $("#send_inpatientId").val(rowData.inpatientId);
+                            $("#send_bedId").val(rowData.bed.bedName);
+                            $("#send_inpatientPrice").val(rowData.inpatientPrice);
+                            $("#send_inpatientPrepaidPrice").val(rowData.inpatientPrepaidPrice);
+                            if ((rowData.inpatientPrice)-(rowData.inpatientPrepaidPrice)>0) {
+                                $("#send_inpatientRepairPrice").val((rowData.inpatientPrice)-(rowData.inpatientPrepaidPrice));
+                                // $("#send_inpatientReturnPrice").attr(hidden,"hidden");
+                                // send_inpatientRepairPrice
+                            }else {
+                                $("#send_inpatientReturnPrice").val((rowData.inpatientPrepaidPrice) - (rowData.inpatientPrice))
+                                // $("#send_inpatientRepairPrice").attr(hidden,"hidden");
+                            }
+                            },
+                        yes: function (index, layero) {
+                            //yes默认触发第一个按钮事件
+                            var send_data = {
+                                // inpatientId:$("")
+                                inpatientId:$("#send_inpatientId").val(),
+                                bedId:$("#send_bedId").val(),
+                                inpatientPrice: $("#send_inpatientPrice").val()
+                            };
+                            $.ajax({
+                                url: "/inpatient/leaveInpatient",
+                                type: "post",
+                                data:send_data,
+                                success: function (result) {
+                                    alert(result);
+                                },
+                                error: function () {
+                                    layer.msg("连接后台失败，服务器异常")
+                                }
+                            });
+                            layer.close(index);
+                            window.location.reload();
+                        },
+                        btn2: function (index, layero) {
+                            //第二个按钮事件
+
+                            layer.close(index);
+                        }
+                    });
+                    break;
+                case 'insertDetail':
+                    layer.open({
+                        type: 1,//类型，新页面
+                        area: ['900px', '600px'],//定义宽和高
+                        title: '添加住院明细',//题目
+                        shadeClose: false,//点击遮罩层关闭
+                        content: $('#insert_inpatient_detail'), //打开的内容
+                        btn: ["提交","返回"],//添加两个按钮
+                        success: function (layero, index) {
+                            // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                            $("#inpatientId").val(rowData.inpatientId);
+                        },
+                        yes: function (index, layero) {
+                            //yes默认触发第一个按钮事件
+                            var send_data = {
+                                // inpatientId:$("")
+                                inpatientDetailPrice:$("#send_inpatientDetailPrice").val(),
+                                inpatientDetailDescription:$("#send_inpatientDetailDescription").val(),
+                                inpatientId: $("#inpatientId").val()
+                            };
+                            $.ajax({
+                                url: "/inpatientDetail/insertInpatientDetail",
+                                type: "post",
+                                data:send_data,
+                                success: function (result) {
+                                    alert(result);
+                                },
+                                error: function () {
+                                    layer.msg("连接后台失败，服务器异常")
+                                }
+                            });
+                            layer.close(index);
+                            window.location.reload();
+                        },
+                        btn2: function (index, layero) {
+                            //第二个按钮事件
+
+                            layer.close(index);
+                        }
+                    });
+                    break;
+                case 'checkDetail':
+                    layer.open({
+                        type: 1,//类型，新页面
+                        area: ['900px', '600px'],//定义宽和高
+                        title: '住院明细',//题目
+                        shadeClose: false,//点击遮罩层关闭
+                        content: $('#open_inpatient_detail'), //打开的内容
+                        btn: ["返回"],//添加两个按钮
+                        success: function (layero, index) {
+                            $("#iptable tbody").html("");
+                            var inpatientId1 = {
+                                inpatientId: rowData.inpatientId
+                            }
+                            $.ajax({
+                                url: "/inpatientDetail/queryInpatientDetailByInpatientId",
+                                type: "post",
+                                data: inpatientId1,
+                                success: function(result){
+                                    // $("#open_inpatient_detail").empty();
+                                    $.each(result,function(index,inpatientDetail){
+                                        var inpatientDetailPrice=$("<td></td>").append(inpatientDetail.inpatientDetailPrice);
+                                        var inpatientDetailDescription=$("<td></td>").append(inpatientDetail.inpatientDetailDescription);
+                                        var inpatientDetailDate=$("<td></td>").append(inpatientDetail.inpatientDetailDate);
+                                        $("<tr></tr>").append(inpatientDetailPrice).append(inpatientDetailDescription).append(inpatientDetailDate).appendTo("#open_inpatient_detail tbody");
+                                    });
+                                },
+                                error: function () {
+                                    layer.msg("连接后台失败，服务器异常")
+                                }
+                            });
+                        },
+                        yes: function (index, layero) {
+                            //第二个按钮事件
+
+                            layer.close(index);
+                        }
+                    });
+                    break;
+            }
+        });
+    });
+</script>
+
+<!--================ 模态框：出院信息 ================-->
+<div id="leave_inpatient" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="send_inpatientId">住院ID：</label>
+            <div class="layui-input-block">
+                <input type="text" name="send_inpatientId" id="send_inpatientId"
+                       autocomplete="off" readonly="readonly"
+                       class="layui-input"
+                />
+            </div>
+            <label class="layui-form-label" for="send_bedId">住院病床：</label>
+            <div class="layui-input-block">
+                <input type="text" name="send_bedId" id="send_bedId"
+                       autocomplete="off" readonly="readonly"
+                       class="layui-input"
+                />
+            </div>
+            <label class="layui-form-label" for="send_inpatientPrice">住院总费用：</label>
+            <div class="layui-input-block">
+                <input type="text" name="send_inpatientPrice" id="send_inpatientPrice"
+                       autocomplete="off" readonly="readonly"
+                       class="layui-input"
+                />
+            </div>
+            <label class="layui-form-label" for="send_inpatientPrepaidPrice">患者预交费用：</label>
+            <div class="layui-input-block">
+                <input type="text" name="send_inpatientPrepaidPrice" id="send_inpatientPrepaidPrice"
+                       autocomplete="off" readonly="readonly"
+                       class="layui-input"
+                />
+            </div>
+            <label class="layui-form-label" for="send_inpatientRepairPrice">应补交费用：</label>
+            <div class="layui-input-block">
+                <input type="text" name="send_inpatientRepairPrice" id="send_inpatientRepairPrice"
+                       autocomplete="off" readonly="readonly"
+                       class="layui-input"
+                />
+            </div>
+            <label class="layui-form-label" for="send_inpatientReturnPrice">应找零：</label>
+            <div class="layui-input-block">
+                <input type="text" name="send_inpatientReturnPrice" id="send_inpatientReturnPrice"
+                       autocomplete="off" readonly="readonly"
+                       class="layui-input"
+                />
+            </div>
+        </div>
+    </form>
+</div>
+<!--================ 模态框：添加住院明细 ================-->
+<div id="insert_inpatient_detail" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+
+            <label class="layui-form-label" for="send_inpatientDetailPrice">价格：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="send_inpatientDetailPrice" id="send_inpatientDetailPrice"
+                               autocomplete="off"
+                               class="layui-input"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <label class="layui-form-label" for="send_inpatientDetailDescription">住院观察建议：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <textarea name="send_inpatientDetailDescription" id="send_inpatientDetailDescription"
+                               autocomplete="off"
+                               class="layui-textarea">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <label class="layui-form-label" for="inpatientId">所属住院信息ID：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="inpatientId" id="inpatientId"
+                               autocomplete="off" readonly="readonly"
+                               class="layui-input"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--================ 模态框：查看住院明细 ================-->
+<div id="open_inpatient_detail" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+            <!-- 内容主体区域 -->
+            <table class="layui-table" id="iptable">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>价格</th>
+                    <th>观察建议</th>
+                    <th>时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr></tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+</body>
+</html>

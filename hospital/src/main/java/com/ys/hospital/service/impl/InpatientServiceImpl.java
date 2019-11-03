@@ -1,7 +1,9 @@
 package com.ys.hospital.service.impl;
 
+import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.pojo.Inpatient;
 import com.ys.hospital.dao.InpatientMapper;
+import com.ys.hospital.pojo.Patient;
 import com.ys.hospital.service.InpatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,6 +81,16 @@ public class InpatientServiceImpl implements InpatientService {
     @Override
     public List<Inpatient> queryInpatientByParam(Inpatient inpatient) {
         return this.inpatientMapper.queryInpatientByParam(inpatient);
+    }
+
+    @Override
+    public List<Inpatient> queryInpatientByStatus(Integer inpatientStatus) {
+        return this.inpatientMapper.queryInpatientByStatus(inpatientStatus);
+    }
+
+    @Override
+    public List<Appointment> queryInpatientById(Integer inpatientId) {
+        return this.inpatientMapper.queryInpatientById(inpatientId);
     }
 
 }

@@ -156,4 +156,52 @@ public class PageController {
     public String tofindopertion() {
         return "operation/findoperation";
     }
+
+
+
+
+    @RequestMapping("/inpatient/index")
+    public String toInpatientIndex(){
+        return "/inpatient/index";
+    }
+
+    @RequestMapping("/inpatientNotify/queryAllInpatientNotify")
+    public String queryAllInpatientNotify(){
+        return "/inpatient/inpatientNotify_list";
+    }
+
+    @RequestMapping("/inpatientNotify/queryInpatientNotifyByStatus")
+    public String queryInpatientNotifyByStatus(){
+        return "/inpatient/index";
+    }
+
+    @RequestMapping("/inpatient/insertReady")
+    public String inpatientInsertReady(){
+        return "/page/inpatient/insert";
+    }
+
+    @RequestMapping("/inpatient/insert")
+    public String toInsertInpatient(){
+        return "/inpatient/inpatient_insert";
+    }
+
+    @RequestMapping("/inpatient/queryAllInpatient")
+    public String queryAllInpatient(){
+        return "/inpatient/inpatient_list";
+    }
+
+    @RequestMapping("/inpatient/queryInpatientByStatus")
+    public String queryInpatientByStatus(){
+        return "/inpatient/inpatient_status";
+    }
+
+    @RequestMapping("/bed/queryAllBed")
+    public String queryAllBed(){
+        return "/inpatient/bed_list";
+    }
+
+    @RequestMapping("/bed/queryBedByStatus")
+    public String queryBedByStatus(){
+        return "/inpatient/bed_status";
+    }
 }

@@ -78,6 +78,6 @@
         select
             inpatient_detail_id, inpatient_detail_price, inpatient_detail_description, inpatient_detail_date, inpatient_id
         from inpatient_detail
-        where inpatient_id=#{inpatient.inpatientId}
+        where inpatient_id= #{inpatientId}
     </select>
 </mapper>

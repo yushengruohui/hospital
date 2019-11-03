@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{com/inpatient::title}"></div>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--================ 网页头部 ================-->
+    <div th:replace="~{com/inpatient::head}"></div>
+
+    <!--================ 网页左侧导航栏 ================-->
+    <div th:replace="~{com/inpatient::left_inpatient}"></div>
+
+    <!--================ 主体内容区 ================-->
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <!--==== 显示所有住院通知 =====-->
+            <table class="layui-table" id="inpatientNotify_table" lay-filter="inpatientNotify_table_filter">
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'table'], function () {
+        var element = layui.element;
+        var table = layui.table;
+
+        table.render({
+            elem: '#inpatientNotify_table'
+            , height: 500
+            , url: '/inpatientNotify/queryAllInpatientNotify' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'inpatientNotifyId', title: '住院通知ID', fixed: 'left', templet: function (inpatientNotify) {
+                            return inpatientNotify.inpatientNotifyId;
+                        }
+                    }
+                    , {
+                    field: 'inpatientNotifyStatus', title: '处理状态', templet: function (inpatientNotify) {
+                        if(inpatientNotify.inpatientNotifyStatus=='0'){
+                            return "未处理";
+                        }else {
+                            return "已处理";
+                        }
+                        // return inpatientNotify.inpatientNotifyStatus;
+                    }
+                }
+                    ,
+                    {
+                        field: 'inpatientDealTime', title: '处理时间', sort: true
+                    }
+                    ,
+                    {
+                        field: 'diagnosisId', title: '所属诊断单ID', templet: function (inpatientNotify) {
+                            return inpatientNotify.diagnosisId;
+                        }
+                    }
+                    , {
+                    field: 'employeeName', title: '处理护士', templet: function (inpatientNotify){
+                        return inpatientNotify.employee.employeeName==null?"空":inpatientNotify.employee.employeeName;
+                    }}
+                ]
+            ]
+        });
+    });
+
+
+</script>
+</body>
+</html>
