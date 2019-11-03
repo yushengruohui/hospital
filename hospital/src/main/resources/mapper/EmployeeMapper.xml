@@ -81,15 +81,11 @@
         employee_detail.position_id,
         employee_detail.branch_id,
         employee_detail.title_id,
-        title.title_id,
-        title.title_name
         FROM
         employee ,
-        employee_detail,
-        title
+        employee_detail
         WHERE
         employee.employee_id = employee_detail.employee_id AND
-        title.title_id=employee_detail.title_id
         employee_detail.employee_id = #{employeeId}
     </select>
     <select id="getEmployeeListByEmployeeId" resultMap="EmployeeInfoMap">
@@ -112,7 +108,7 @@
         employee_detail.employee_id,
         employee_detail.position_id,
         employee_detail.branch_id,
-        employee_detail.title_id
+        employee_detail.title_id,
         title.title_name
         FROM
         employee ,

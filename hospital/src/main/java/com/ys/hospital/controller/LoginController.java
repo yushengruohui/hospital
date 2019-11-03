@@ -58,6 +58,9 @@ public class LoginController {
         } else if (employee.getEmployeeDetail().getTitleId().equals(8)) {
             // 院长登录
             return "admin/employee_report";
+        } else if (employee.getEmployeeDetail().getTitleId().equals(3)) {
+            // 主刀医师登录
+            return "redirect:/page/operation/index";
         }
         return "redirect:/";
     }
