@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/layui/layui.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{com/operation::head}"></div>
+
+    <div th:replace="~{com/operation::left_appointment}"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-table" id="appointmentTable" lay-filter="tableFilter">
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{com/operation::foot}"></div>
+</div>
+<script type="text/html" id="optBar">
+    <a class="layui-btn layui-btn-xs" lay-event="arrange">摇号</a>
+    <a class="layui-btn layui-btn-xs" lay-event="diagnosis">填写诊断</a>
+    <a class="layui-btn layui-btn-xs" lay-event="deal">已处理</a>
+</script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'table'], function () {
+        var element = layui.element;
+        var table = layui.table;
+
+        table.render({
+            elem: '#appointmentTable'
+            , height: 600
+            , url: '/appointment/untreatedAppointments' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'patientName', title: '预约人', fixed: 'left', templet: function (appointment) {
+                            return appointment.patient.patientName;
+                        }
+                    }
+                    , {field: 'appointmentTime', title: '预约时间', sort: true}
+                    , {
+                    field: 'branchName', title: '预约科室', templet: function (appointment) {
+                        return appointment.branch.branchName;
+                    }
+                }
+                    , {
+                    field: 'employeeName', title: '医师', templet: function (appointment) {
+                        return appointment.employee.employeeName;
+                    }
+                }
+                    , {
+                    field: 'appointmentStatus', title: '预约状态', templet: function (appointment) {
+                        return appointment.appointmentStatus == 1 ? "已处理" : "未处理";
+                    }
+                }
+                    , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                ]
+            ]
+        });
+
+        //监听事件
+        table.on('tool(tableFilter)', function (obj) {
+            //获取当前行的数据
+            var rowData = obj.data;
+            switch (obj.event) {
+                case 'arrange':
+                    $.ajax({
+                        type: "post",
+                        url: "/queue",
+                        data: {"patientId": rowData.patientId},
+                        success: function (data) {
+                            layer.msg(data);
+                        },
+                        error: function () {
+                            layer.msg("连接后台失败");
+                        }
+                    });
+                    break;
+                case 'diagnosis':
+                    //直接获取所有的检查项
+                    $.ajax({
+                        type: "get",
+                        url: "/checkItem/checkItems"
+                    });
+                    $.ajax({
+                        url: "/page/diagnosis/addReady",
+                        type: "post",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            "appointmentId":
+                            rowData.appointmentId,
+                            "appointmentTime":
+                            rowData.appointmentTime,
+                            "appointmentStatus":
+                            rowData.appointmentStatus,
+                            "patientId":
+                            rowData.patientId,
+                            "employeeId":
+                            rowData.employeeId,
+                            "branchId":
+                            rowData.branchId,
+                            "appointmentPrice":
+                            rowData.appointmentPrice,
+                            "appointmentPayTime":
+                            rowData.appointmentPayTime,
+                            "patient":
+                                {
+                                    "patientId":
+                                    rowData.patient.patientId,
+                                    "patientPhone":
+                                    rowData.patient.patientPhone,
+                                    "patientName":
+                                    rowData.patient.patientName,
+                                    "patientGender":
+                                    rowData.patient.patientGender,
+                                    "patientIdentity":
+                                    rowData.patient.patientIdentity,
+                                    "patientAddress":
+                                    rowData.patient.patientAddress,
+                                    "clientId":
+                                    rowData.patient.clientId
+                                }
+                            ,
+                            "employee":
+                                {
+                                    "employeeId":
+                                    rowData.employee.employeeId,
+                                    "employeeName":
+                                    rowData.employee.employeeName,
+                                    "employeePassword":
+                                    rowData.employee.employeePassword,
+                                    "employeeOnline":
+                                    rowData.employee.employeeOnline,
+                                    "employeeLastLoginTime":
+                                    rowData.employee.employeeLastLoginTime,
+                                    "employeeDetail":
+                                        {
+                                            "employeeDetailId":
+                                            rowData.employee.employeeDetail.employeeDetailId,
+                                            "employeeDetailGender":
+                                            rowData.employee.employeeDetail.employeeDetailGender,
+                                            "employeeDetailBirthday":
+                                            rowData.employee.employeeDetail.employeeDetailBirthday,
+                                            "employeeDetailAddress":
+                                            rowData.employee.employeeDetail.employeeDetailAddress,
+                                            "employeeDetailPhone":
+                                            rowData.employee.employeeDetail.employeeDetailPhone,
+                                            "employeeDetailIdentity":
+                                            rowData.employee.employeeDetail.employeeDetailIdentity,
+                                            "employeeDetailEntryTime":
+                                            rowData.employee.employeeDetail.employeeDetailEntryTime,
+                                            "employeeDetailEmail":
+                                            rowData.employee.employeeDetail.employeeDetailEmail,
+                                            "employeeDetailDescript":
+                                            rowData.employee.employeeDetail.employeeDetailDescript,
+                                            "employeeDetailStatus":
+                                            rowData.employee.employeeDetail.employeeDetailStatus,
+                                            "employeeId":
+                                            rowData.employee.employeeDetail.employeeId,
+                                            "positionId":
+                                            rowData.employee.employeeDetail.positionId,
+                                            "branchId":
+                                            rowData.employee.employeeDetail.branchId,
+                                            "titleId":
+                                            rowData.employee.employeeDetail.titleId
+                                        }
+                                }
+                            ,
+                            "branch":
+                                {
+                                    "branchId":
+                                    rowData.branch.branchId,
+                                    "branchName":
+                                    rowData.branch.branchName,
+                                    "departmentId":
+                                    rowData.branch.departmentId
+                                }
+                        })
+
+                        ,
+                        success: function (data) {
+                            window.location.href = data;
+                        }
+                        ,
+                        error: function () {
+                            layer.msg("连接后台失败");
+                        }
+                    });
+                    break;
+                case 'deal':
+                    $.ajax({
+                        type: "put",
+                        url: "/appointment",
+                        data: {
+                            "appointmentId": rowData.appointmentId
+                        },
+                        success: function (result) {
+                            layer.msg(result);
+                            location.reload();
+                        },
+                        error: function () {
+                            layer.msg("连接后台失败");
+                        }
+                    });
+                    break;
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="title">
     <meta charset="utf-8">
-    <title>医院自动化管理系统</title>
+    <title>有间医院自动化管理系统</title>
     <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
     <script th:src="@{/webjars/layui/layui.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -14,7 +14,8 @@
         <div class="layui-header">
             <div class="layui-logo">医院自动化管理系统</div>
             <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a th:href="@{/page/inpatient/index}">住院管理</a></li>
+                <li class="layui-nav-item"><a th:href="@{/page/operation/index}">手术管理</a></li>
+                <!--<li class="layui-nav-item"><a th:href="@{/page/employee/index}">个人中心</a></li>-->
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item" th:if="${session.employee}!=null">
@@ -29,28 +30,14 @@
         </div>
     </div>
 
-    <!--住院模块-->
-    <div th:fragment="left_inpatient">
+
+    <!--手术模块-->
+    <div th:fragment="left_operation">
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
-                        <a href="/page/inpatientNotify/queryInpatientNotifyByStatus">未处理住院通知</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="/page/inpatientNotify/queryAllInpatientNotify">已处理住院通知</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="/page/inpatient/queryAllInpatient">所有住院信息</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="/page/inpatient/queryInpatientByStatus">正在处理住院信息</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="/page/bed/queryAllBed">已入住病床信息</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="/page/bed/queryBedByStatus">空闲病床</a>
+                        <a href="/page/operation/findopertion">查看手术</a>
                     </li>
                 </ul>
             </div>

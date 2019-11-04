@@ -6,10 +6,10 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <!--================ 网页头部 ================-->
-    <div th:replace="~{com/attending::head}"></div>
+    <div th:replace="~{com/operation::head}"></div>
 
     <!--================ 网页左侧导航栏 ================-->
-    <div th:replace="~{com/attending::left_operation}"></div>
+    <div th:replace="~{com/operation::left_operation}"></div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div th:replace="~{com/attending::foot}"></div>
+    <div th:replace="~{com/operation::foot}"></div>
 </div>
 <script type="text/html" id="optBar">
     <a class="layui-btn layui-btn-xs" lay-event="add_operation" readonly="false">添加手术信息</a>
@@ -63,9 +63,13 @@
                                 }
                             },
                             {
-                            field: 'operationNotifyStatus', title: '通知情况', width: 90, templet: function (operationNotify) {
-                                return operationNotify.operationNotifyStatus === 1 ? "已通知" : "未通知";}
-                        },
+                                field: 'operationNotifyStatus',
+                                title: '通知情况',
+                                width: 90,
+                                templet: function (operationNotify) {
+                                    return operationNotify.operationNotifyStatus === 1 ? "已通知" : "未通知";
+                                }
+                            },
                             {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
                         ]
                     ]
@@ -92,7 +96,7 @@
                                     // };
                                     // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
                                     $.ajax({
-                                        url: "/room/findAllRoom?operationNotifyId="+rowData.operationNotifyId,
+                                        url: "/room/findAllRoom?operationNotifyId=" + rowData.operationNotifyId,
                                         type: "get",
                                         // date: send_data,
                                         success: function (result) {
@@ -264,8 +268,8 @@
             </div>
             <!--<label class="layui-form-label" for="operationStatus">处理情况：</label>-->
             <!--<div class="layui-input-block" id="operationStatus">-->
-                <!--<input type="radio" name="operationStatus" value="0" title="未处理">-->
-                <!--<input type="radio" name="operationStatus" value="1" title="已处理">-->
+            <!--<input type="radio" name="operationStatus" value="0" title="未处理">-->
+            <!--<input type="radio" name="operationStatus" value="1" title="已处理">-->
             <!--</div>-->
         </div>
     </form>
