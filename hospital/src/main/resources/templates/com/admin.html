@@ -1,68 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="title">
+<div th:fragment="admin_title">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>医院自动化管理系统</title>
+    <title>有间医院自动化管理系统</title>
     <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
     <script th:src="@{/webjars/layui/layui.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </div>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <!-- 头部区域 -->
-    <div th:fragment="head">
+    <div th:fragment="admin_head">
         <div class="layui-header">
-            <div class="layui-logo">医院自动化管理系统</div>
+            <div class="layui-logo">有间医院自动化管理系统</div>
             <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a th:href="@{/page/admin/index}">员工管理</a></li>
-                <li class="layui-nav-item"><a th:href="@{/page/power/index}">权限管理</a></li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/page/admin/employee/report}">员工管理</a>
+                </li>
+                <!-- <li class="layui-nav-item"><a th:href="@{/page/admin/power/index}">权限管理</a></li> -->
+                <li class="layui-nav-item">
+                    <a th:href="@{/page/admin/report}">医药报表</a>
+                </li>
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
-                    <a th:href="@{/page/employee/index}">管理员</a>
+                    <a>院长</a>
                 </li>
-                <li class="layui-nav-item"><a th:href="@{/employee/out}">退出登录</a></li>
+                <li class="layui-nav-item"><a th:href="@{/logout}">退出登录</a></li>
             </ul>
-        </div>
-    </div>
-
-    <!--用户管理模块-->
-    <div th:fragment="left_admin">
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;">查看员工</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">添加员工</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">修改员工</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </div>
 
     <!--员工模块-->
-    <div th:fragment="left_employee">
+    <div th:fragment="admin_left_employee">
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;">个人基本信息</a>
+                <ul class="layui-nav layui-nav-tree">
+                    <li class="layui-nav-item">
+                        <a th:href="@{/page/admin/employee/report}">员工报表</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">修改个人信息</a>
+                        <a th:href="@{/page/admin/employee/index}">查看员工</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a th:href="@{/page/admin/employee/add}">添加员工</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!--权限管理模块-->
-    <div th:fragment="left_power">
+    <!--医药模块-->
+    <div th:fragment="admin_left_medicine">
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree">
+                    <li class="layui-nav-item">
+                        <a th:href="@{/page/admin/medicine/report}">医药报表</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a th:href="@{/page/admin/medicine/index}">库存情况</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--权限模块-->
+    <div th:fragment="admin_left_permission">
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
@@ -78,11 +83,6 @@
                 </ul>
             </div>
         </div>
-    </div>
-
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
     </div>
 
     <div th:fragment="foot">

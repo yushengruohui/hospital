@@ -22,9 +22,10 @@ import java.util.Map;
 @Aspect
 @Configuration
 public class MyDatabaseTransactionManagerConfig {
-    //连接超时
+    // 连接超时
     private static final int AOP_TIME_OUT = 50000;
-    //切点
+
+    // 切点
     private static final String AOP_POINTCUT_EXPRESSION = "execution(* com.ys.hospital.service..*.*(..))";
 
     @Resource
@@ -67,8 +68,7 @@ public class MyDatabaseTransactionManagerConfig {
         methodMap.put("*", readOnlyTx);
         source.setNameMap(methodMap);
 
-        TransactionInterceptor txAdvice = new TransactionInterceptor(transactionManager, source);
-        return txAdvice;
+        return new TransactionInterceptor(transactionManager, source);
     }
 
     @Bean(name = "txAdviceAdvisor")

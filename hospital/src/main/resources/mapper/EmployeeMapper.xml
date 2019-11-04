@@ -15,6 +15,18 @@
             <collection property="powerDetails" ofType="com.ys.hospital.pojo.PowerDetail"></collection>
         </collection>
     </resultMap>
+    <resultMap type="com.ys.hospital.pojo.Employee" id="OnlineEmployeeInfoMap">
+        <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+        <result property="employeeName" column="employee_name" jdbcType="VARCHAR"/>
+        <result property="employeePassword" column="employee_password" jdbcType="VARCHAR"/>
+        <result property="employeeOnline" column="employee_online" jdbcType="INTEGER"/>
+        <result property="employeeLastLoginTime" column="employee_last_login_time" jdbcType="TIMESTAMP"/>
+        <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail">
+            <association property="title" javaType="com.ys.hospital.pojo.Title">
+            </association>
+        </association>
+
+    </resultMap>
 
     <!--查询所有Employee信息-->
     <select id="queryAllEmployee" resultMap="EmployeeMap">
@@ -137,6 +149,38 @@
         WHERE
             e.employee_id =#{employeeId}
     </select>
+    <select id="queryEmployeeListByStatus" resultType="com.ys.hospital.pojo.Employee">
+        SELECT
+            e.employee_id,
+            e.employee_name,
+            e.employee_password,
+            e.employee_online,
+            e.employee_last_login_time,
+            ed.employee_detail_id,
+            ed.employee_detail_gender,
+            ed.employee_detail_birthday,
+            ed.employee_detail_address,
+            ed.employee_detail_phone,
+            ed.employee_detail_identity,
+            ed.employee_detail_entry_time,
+            ed.employee_detail_email,
+            ed.employee_detail_descript,
+            ed.employee_detail_status,
+            ed.employee_id,
+            ed.position_id,
+            ed.branch_id,
+            ed.title_id,
+            t.title_id,
+            t.title_name
+        FROM
+            employee AS e
+            JOIN employee_detail AS ed ON e.employee_id = ed.employee_id
+            JOIN title AS t ON ed.title_id = t.title_id
+        WHERE
+            ed.employee_detail_status = "1"
+            AND e.employee_online = "1"
+    </select>
+
 
     <!--新增Employee数据-->
     <insert id="insertEmployee" keyProperty="employeeId" useGeneratedKeys="true">
