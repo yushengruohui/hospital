@@ -28,7 +28,7 @@ public interface EmployeeMapper {
      */
     Employee queryEmployeeByParam(Employee employee);
 
-    List<Employee> queryEmployeeListByParam(Integer employeeDetailStatus);
+    List<Employee> queryEmployeeListByStatus(Integer employeeDetailStatus);
 
     /**
      * 新增Employee数据

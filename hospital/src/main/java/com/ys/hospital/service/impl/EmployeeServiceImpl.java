@@ -108,7 +108,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeDetailStatus == null) {
             return null;
         }
-        return employeeMapper.queryEmployeeListByParam(employeeDetailStatus);
+        return employeeMapper.queryEmployeeListByStatus(employeeDetailStatus);
     }
 
 }

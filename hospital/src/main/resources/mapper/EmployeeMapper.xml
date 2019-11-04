@@ -8,25 +8,24 @@
         <result property="employeePassword" column="employee_password" jdbcType="VARCHAR"/>
         <result property="employeeOnline" column="employee_online" jdbcType="INTEGER"/>
         <result property="employeeLastLoginTime" column="employee_last_login_time" jdbcType="TIMESTAMP"/>
-        <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail">
-        </association>
+        <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail"/>
     </resultMap>
-
     <resultMap type="com.ys.hospital.pojo.Employee" id="PermissionInfoMap">
         <collection property="roles" ofType="com.ys.hospital.pojo.Role">
             <collection property="powerDetails" ofType="com.ys.hospital.pojo.PowerDetail"></collection>
         </collection>
     </resultMap>
-
-    <resultMap type="com.ys.hospital.pojo.Employee" id="EmployeeInfoMap">
+    <resultMap type="com.ys.hospital.pojo.Employee" id="OnlineEmployeeInfoMap">
         <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
         <result property="employeeName" column="employee_name" jdbcType="VARCHAR"/>
         <result property="employeePassword" column="employee_password" jdbcType="VARCHAR"/>
         <result property="employeeOnline" column="employee_online" jdbcType="INTEGER"/>
         <result property="employeeLastLoginTime" column="employee_last_login_time" jdbcType="TIMESTAMP"/>
         <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail">
-            <association property="title" javaType="com.ys.hospital.pojo.Title"/>
+            <association property="title" javaType="com.ys.hospital.pojo.Title">
+            </association>
         </association>
+
     </resultMap>
 
     <!--查询所有Employee信息-->
@@ -60,7 +59,7 @@
         </where>
     </select>
     <!--    根据主键查询员工信息（包括员工详情）-->
-    <select id="getEmployeeByEmployeeId" resultMap="EmployeeInfoMap">
+    <select id="getEmployeeByEmployeeId" resultMap="EmployeeMap">
         SELECT
         employee.employee_id,
         employee.employee_name,
@@ -80,43 +79,12 @@
         employee_detail.employee_id,
         employee_detail.position_id,
         employee_detail.branch_id,
-        employee_detail.title_id,
+        employee_detail.title_id
         FROM
         employee ,
         employee_detail
         WHERE
         employee.employee_id = employee_detail.employee_id AND
-        employee_detail.employee_id = #{employeeId}
-    </select>
-    <select id="getEmployeeListByEmployeeId" resultMap="EmployeeInfoMap">
-        SELECT
-        employee.employee_id,
-        employee.employee_name,
-        employee.employee_password,
-        employee.employee_online,
-        employee.employee_last_login_time,
-        employee_detail.employee_detail_id,
-        employee_detail.employee_detail_gender,
-        employee_detail.employee_detail_birthday,
-        employee_detail.employee_detail_address,
-        employee_detail.employee_detail_phone,
-        employee_detail.employee_detail_identity,
-        employee_detail.employee_detail_entry_time,
-        employee_detail.employee_detail_email,
-        employee_detail.employee_detail_descript,
-        employee_detail.employee_detail_status,
-        employee_detail.employee_id,
-        employee_detail.position_id,
-        employee_detail.branch_id,
-        employee_detail.title_id,
-        title.title_name
-        FROM
-        employee ,
-        employee_detail,
-        title
-        WHERE
-        employee.employee_id = employee_detail.employee_id AND
-        title.title_id=employee_detail.title_id
         employee_detail.employee_id = #{employeeId}
     </select>
     <!--    查询医院中所有在职的职位为医师信息-->
@@ -181,36 +149,38 @@
         WHERE
             e.employee_id =#{employeeId}
     </select>
-    <select id="queryEmployeeListByParam" resultMap="EmployeeInfoMap">
+    <select id="queryEmployeeListByStatus" resultType="com.ys.hospital.pojo.Employee">
         SELECT
-        employee.employee_id,
-        employee.employee_name,
-        employee.employee_password,
-        employee.employee_online,
-        employee.employee_last_login_time,
-        employee_detail.employee_detail_id,
-        employee_detail.employee_detail_gender,
-        employee_detail.employee_detail_birthday,
-        employee_detail.employee_detail_address,
-        employee_detail.employee_detail_phone,
-        employee_detail.employee_detail_identity,
-        employee_detail.employee_detail_entry_time,
-        employee_detail.employee_detail_email,
-        employee_detail.employee_detail_descript,
-        employee_detail.employee_detail_status,
-        employee_detail.employee_id,
-        employee_detail.position_id,
-        employee_detail.branch_id,
-        title.title_name
+            e.employee_id,
+            e.employee_name,
+            e.employee_password,
+            e.employee_online,
+            e.employee_last_login_time,
+            ed.employee_detail_id,
+            ed.employee_detail_gender,
+            ed.employee_detail_birthday,
+            ed.employee_detail_address,
+            ed.employee_detail_phone,
+            ed.employee_detail_identity,
+            ed.employee_detail_entry_time,
+            ed.employee_detail_email,
+            ed.employee_detail_descript,
+            ed.employee_detail_status,
+            ed.employee_id,
+            ed.position_id,
+            ed.branch_id,
+            ed.title_id,
+            t.title_id,
+            t.title_name
         FROM
-        employee ,
-        employee_detail,
-        title
+            employee AS e
+            JOIN employee_detail AS ed ON e.employee_id = ed.employee_id
+            JOIN title AS t ON ed.title_id = t.title_id
         WHERE
-        employee.employee_id = employee_detail.employee_id
-        AND title.title_id=employee_detail.title_id
-        and employee_detail.employee_detail_status=#{employeeDetailStatus}
+            ed.employee_detail_status = "1"
+            AND e.employee_online = "1"
     </select>
+
 
     <!--新增Employee数据-->
     <insert id="insertEmployee" keyProperty="employeeId" useGeneratedKeys="true">
