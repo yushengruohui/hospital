@@ -45,9 +45,6 @@
                             return inpatient.inpatientId;
                         }
                     },
-                    {
-                        field: 'inpatientEntryTime', title: '入院时间', sort: true
-                    },
                     // {
                     //     field: 'inpatientLeaveTime', title: '离院时间', sort: true
                     // },
@@ -80,8 +77,11 @@
                         field: 'inpatientPrepaidPrice', title: '患者预交费用', templet: function (inpatient) {
                             return inpatient.inpatientPrepaidPrice;
                         }
-                    }
-                    , {title: '操作', fixed: 'right', align: 'center', width:'250', toolbar: '#optBar'}
+                    },
+                    {
+                        field: 'inpatientEntryTime', width:170, title: '入院时间', sort: true
+                    },
+                    {title: '操作', fixed: 'right', align: 'center', width:250, toolbar: '#optBar'}
                 ]
             ]
         });

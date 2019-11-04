@@ -45,12 +45,6 @@
                         }
                     },
                     {
-                        field: 'inpatientEntryTime', title: '入院时间', sort: true
-                    },
-                    {
-                        field: 'inpatientLeaveTime', title: '离院时间', sort: true
-                    },
-                    {
                     field: 'inpatientStatus', title: '处理状态', templet: function (inpatient) {
                             if(inpatient.inpatientStatus=='0'){
                                 return "未处理";
@@ -66,7 +60,7 @@
                         }
                     },
                     {
-                        field: 'bedName', title: '病床', templet: function (inpatient) {
+                        field: 'bedName', width: 70, title: '病床', templet: function (inpatient) {
                             return inpatient.bed.bedName;
                         }
                     },
@@ -94,8 +88,14 @@
                         field: 'employeeName', title: '处理护士', templet: function (inpatient) {
                             return inpatient.inpatientNotify.employee.employeeName;
                         }
-                    }
-                    , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                    },
+                    {
+                        field: 'inpatientEntryTime', width: 170,title: '入院时间', sort: true
+                    },
+                    {
+                        field: 'inpatientLeaveTime', width: 170,title: '离院时间', sort: true
+                    },
+                    {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
                 ]
             ]
         });

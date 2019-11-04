@@ -51,12 +51,6 @@
                         }
                     },
                     {
-                        field: 'bedEntryTime', title: '入住时间', sort: true
-                    },
-                    {
-                        field: 'bedLeaveTime', title: '离开时间', sort: true
-                    },
-                    {
                         field: 'bedPrice', title: '病床价格', templet: function (bed) {
                             return bed.bedPrice;
                         }
@@ -75,6 +69,12 @@
                         field: 'employeeId', title: '处理护士', templet: function (bed) {
                             return bed.employeeId==null?"空":bed.employeeId;
                         }
+                    },
+                    {
+                        field: 'bedEntryTime', width:170, title: '入住时间', sort: true
+                    },
+                    {
+                        field: 'bedLeaveTime', width:170, title: '离开时间', sort: true
                     }
                 ]
             ]
