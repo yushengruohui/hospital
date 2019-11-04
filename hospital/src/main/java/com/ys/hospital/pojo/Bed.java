@@ -32,5 +32,8 @@ public class Bed implements Serializable {
     private Integer roomId;
     //归于护士管理
     private Integer employeeId;
-
+    //患者信息
+    private Patient patient;
+    //护士信息
+    private Employee employee;
 }

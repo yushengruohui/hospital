@@ -10,6 +10,15 @@
         <result property="diagnosisMedicinePayStatus" column="diagnosis_medicine_pay_status" jdbcType="INTEGER"/>
         <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
         <result property="diagnosisId" column="diagnosis_id" jdbcType="INTEGER"/>
+        <association property="diagnosis" javaType="com.ys.hospital.pojo.Diagnosis">
+            <association property="appointment" javaType="com.ys.hospital.pojo.Appointment">
+                <association property="employee" javaType="com.ys.hospital.pojo.Employee">
+                    <association property="employeeDetail" javaType="com.ys.hospital.pojo.EmployeeDetail"/>
+                </association>
+                <association property="patient" javaType="com.ys.hospital.pojo.Patient"/>
+            </association>
+        </association>
+
     </resultMap>
 
     <!--查询所有DiagnosisMedicine信息-->
@@ -49,6 +58,63 @@
                 and diagnosis_id = #{diagnosisId}
             </if>
         </where>
+    </select>
+
+    <!--查询所有未处理的取药信息-->
+    <select id="getDiagnosisMedicinesByStatus" resultMap="DiagnosisMedicineMap">
+        SELECT
+        diagnosis_medicine.diagnosis_medicine_id,
+        diagnosis_medicine.diagnosis_medicine_price,
+        diagnosis_medicine.diagnosis_medicine_status,
+        diagnosis_medicine.diagnosis_medicine_pay_time,
+        diagnosis_medicine.diagnosis_medicine_pay_status,
+        diagnosis_medicine.employee_id,
+        diagnosis_medicine.diagnosis_id,
+        diagnosis.diagnosis_id,
+        diagnosis.diagnosis_time,
+        diagnosis.diagnosis_content,
+        diagnosis.diagnosis_prescription,
+        diagnosis.diagnosis_status,
+        diagnosis.diagnosis_is_check,
+        diagnosis.diagnosis_is_operation,
+        diagnosis.appointment_id,
+        employee.employee_id,
+        employee.employee_name,
+        employee.employee_password,
+        employee.employee_online,
+        employee.employee_last_login_time,
+        employee_detail.employee_detail_id,
+        employee_detail.employee_detail_gender,
+        employee_detail.employee_detail_birthday,
+        employee_detail.employee_detail_address,
+        employee_detail.employee_detail_phone,
+        employee_detail.employee_detail_identity,
+        employee_detail.employee_detail_entry_time,
+        employee_detail.employee_detail_email,
+        employee_detail.employee_detail_descript,
+        employee_detail.employee_detail_status,
+        employee_detail.employee_id,
+        employee_detail.position_id,
+        employee_detail.branch_id,
+        employee_detail.title_id,
+        patient.patient_id,
+        patient.patient_phone,
+        patient.patient_name,
+        patient.patient_gender,
+        patient.patient_identity,
+        patient.patient_address,
+        patient.client_id
+        FROM
+        diagnosis_medicine
+        INNER JOIN diagnosis ON diagnosis_medicine.diagnosis_id = diagnosis.diagnosis_id
+        INNER JOIN appointment ON diagnosis.appointment_id = appointment.appointment_id
+        INNER JOIN employee ON appointment.employee_id = employee.employee_id
+        INNER JOIN employee_detail ON employee_detail.employee_id = employee.employee_id
+        INNER JOIN patient ON patient.patient_id = appointment.patient_id
+        WHERE
+        diagnosis_medicine.diagnosis_medicine_status = #{payStatus}
+        ORDER BY
+        diagnosis_medicine.diagnosis_medicine_pay_time ASC
     </select>
 
     <!--新增DiagnosisMedicine数据-->

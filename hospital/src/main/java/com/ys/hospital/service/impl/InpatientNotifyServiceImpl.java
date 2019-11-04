@@ -34,8 +34,8 @@ public class InpatientNotifyServiceImpl implements InpatientNotifyService {
         return this.inpatientNotifyMapper.queryAllInpatientNotify();
     }
 
-    public List<InpatientNotify> queryInpatientNotifyByEmployeeId(Integer inpatientNotifyStatus){
-        return this.inpatientNotifyMapper.queryInpatientNotifyByEmployeeId(inpatientNotifyStatus);
+    public List<InpatientNotify> queryInpatientNotifyByStatus(Integer inpatientNotifyStatus){
+        return this.inpatientNotifyMapper.queryInpatientNotifyByStatus(inpatientNotifyStatus);
     }
     /**
      * 新增InpatientNotify数据
@@ -68,5 +68,9 @@ public class InpatientNotifyServiceImpl implements InpatientNotifyService {
     @Override
     public int deleteInpatientNotifyById(Integer inpatientNotifyId) {
         return this.inpatientNotifyMapper.deleteInpatientNotifyById(inpatientNotifyId);
+    }
+
+    public List<InpatientNotify> queryInpatientNotifyByParam(InpatientNotify inpatientNotify){
+        return this.inpatientNotifyMapper.queryInpatientNotifyByParam(inpatientNotify);
     }
 }

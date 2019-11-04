@@ -19,6 +19,28 @@
                 <!--<li class="layui-nav-item"><a th:href="@{/page/operation/index}">手术管理</a></li>-->
                 <li class="layui-nav-item"><a th:href="@{/page/work/index}">值班管理</a></li>
                 <li class="layui-nav-item"><a th:href="@{/page/employee/index}">个人中心</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item" th:if="${session.employee}!=null">
+                    <a th:href="@{/page/employee/index}">[[${session.employee.employeeName}]]</a>
+                </li>
+
+                <li class="layui-nav-item" th:if="${session.employee}==null">
+                    <a th:href="@{/}">你还没登录，请登录</a>
+                </li>
+                <li class="layui-nav-item"><a th:href="@{/logout}">退出登录</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 发药药师头部区域 -->
+    <div th:fragment="dispensing_head">
+        <div class="layui-header">
+            <div class="layui-logo">医院自动化管理系统</div>
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a th:href="@{/page/dispensing/index}">取药管理</a></li>
+                <li class="layui-nav-item"><a th:href="@{/page/medicine/index}">药品查看</a></li>
+                <li class="layui-nav-item"><a th:href="@{/page/dispensing/employee/index}">个人中心</a></li>
 
             </ul>
             <ul class="layui-nav layui-layout-right">
@@ -31,6 +53,37 @@
                 </li>
                 <li class="layui-nav-item"><a th:href="@{/logout}">退出登录</a></li>
             </ul>
+        </div>
+    </div>
+
+    <!--发药药师个人中心模块-->
+    <div th:fragment="left_dispensing_employee">
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="/page/dispensing/employee/index">个人基本信息</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="/page/dispensing/employee/update">修改个人信息</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--发药模块-->
+    <div th:fragment="left_dispensing">
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="/page/dispensing/index">发药处理</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="/page/dispensing/record">取药记录</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -52,6 +105,7 @@
             </div>
         </div>
     </div>
+
 
     <!--手术模块-->
     <div th:fragment="left_operation">

@@ -21,5 +21,6 @@ public class DiagnosisMedicineDetail implements Serializable {
     private Integer medicineNumber;
     //所属诊断单药品
     private Integer diagnosisMedicineId;
+    private Medicine medicine;
 
 }

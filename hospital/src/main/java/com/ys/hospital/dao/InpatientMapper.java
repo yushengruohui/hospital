@@ -1,6 +1,8 @@
 package com.ys.hospital.dao;
 
+import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.pojo.Inpatient;
+import com.ys.hospital.pojo.Patient;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -60,4 +62,12 @@ public interface InpatientMapper {
      */
     int deleteInpatientById(Integer inpatientId);
 
+    /**
+     * 通过住院信息状态查询住院信息
+     * @param inpatientStatus
+     * @return
+     */
+    List<Inpatient> queryInpatientByStatus(Integer inpatientStatus);
+
+    List<Appointment> queryInpatientById(Integer inpatientId);
 }

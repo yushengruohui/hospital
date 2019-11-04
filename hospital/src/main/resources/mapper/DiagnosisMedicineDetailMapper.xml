@@ -7,6 +7,7 @@
         <result property="medicineId" column="medicine_id" jdbcType="INTEGER"/>
         <result property="medicineNumber" column="medicine_number" jdbcType="INTEGER"/>
         <result property="diagnosisMedicineId" column="diagnosis_medicine_id" jdbcType="INTEGER"/>
+        <association property="medicine" javaType="com.ys.hospital.pojo.Medicine"/>
     </resultMap>
 
     <!--查询所有DiagnosisMedicineDetail信息-->
@@ -35,6 +36,35 @@
                 and diagnosis_medicine_id = #{diagnosisMedicineId}
             </if>
         </where>
+    </select>
+    <!--根据处方id查询处方详情-->
+    <select id="getDiagnosisMedicineDetailsByDiagnosisMedicineId" resultMap="DiagnosisMedicineDetailMap">
+        SELECT
+        diagnosis_medicine_detail.diagnosis_medicine_detail_id,
+        diagnosis_medicine_detail.medicine_id,
+        diagnosis_medicine_detail.medicine_number,
+        diagnosis_medicine_detail.diagnosis_medicine_id,
+        medicine.medicine_id,
+        medicine.medicine_name,
+        medicine.medicine_type,
+        medicine.medicine_use,
+        medicine.medicine_price,
+        medicine.medicine_inventory,
+        medicine.medicine_efficacy,
+        medicine.medicine_valid,
+        medicine.medicine_components,
+        medicine.medicine_production_date,
+        medicine.medicine_production_address,
+        medicine.medicine_specifications,
+        medicine.medicine_character,
+        medicine.medicine_confict,
+        medicine.medicine_save,
+        medicine.medicine_approval
+        FROM
+        medicine
+        INNER JOIN diagnosis_medicine_detail ON diagnosis_medicine_detail.medicine_id = medicine.medicine_id
+        WHERE
+        diagnosis_medicine_detail.diagnosis_medicine_id=#{diagnosisMedicineId}
     </select>
 
     <!--新增DiagnosisMedicineDetail数据-->

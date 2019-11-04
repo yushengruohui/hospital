@@ -23,5 +23,8 @@ public class InpatientNotify implements Serializable {
     private Integer diagnosisId;
     //处理住院的护士
     private Integer employeeId;
-    
+    //诊断单
+    private Diagnosis diagnosis;
+    //护士
+    private Employee employee;
 }

@@ -83,6 +83,39 @@ public class PageController {
         return "work/index";
     }
 
+    @RequestMapping("/dispensing/index")
+    public String toDispensingIndex() {
+        return "dispensing/index";
+    }
+
+    @RequestMapping("/dispensing/record")
+    public String toDispensingRecord() {
+        return "dispensing/record";
+    }
+
+    @RequestMapping("/medicine/index")
+    public String toMedicineIndex() {
+        return "medicine/index";
+    }
+
+    @RequestMapping("/dispensing/employee/index")
+    public String toDispensingEmployeeIndex(HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
+        return "dispensing/employee/index";
+    }
+
+    @RequestMapping("/dispensing/employee/update")
+    public String toDispensingEmployeeUpdate(Model model) {
+        String employeeId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Employee employee = new Employee();
+        employee.setEmployeeId(Integer.valueOf(employeeId));
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
+        return "dispensing/employee/update";
+    }
+
     @PostMapping("/diagnosis/addReady")
     @ResponseBody
     public String diagnosisAddReady(@RequestBody Appointment appointment, HttpSession session) {
@@ -123,6 +156,54 @@ public class PageController {
     @RequestMapping("/operation/findopertion")
     public String tofindopertion() {
         return "operation/findoperation";
+    }
+
+
+
+
+    @RequestMapping("/inpatient/index")
+    public String toInpatientIndex(){
+        return "/inpatient/index";
+    }
+
+    @RequestMapping("/inpatientNotify/queryAllInpatientNotify")
+    public String queryAllInpatientNotify(){
+        return "/inpatient/inpatientNotify_list";
+    }
+
+    @RequestMapping("/inpatientNotify/queryInpatientNotifyByStatus")
+    public String queryInpatientNotifyByStatus(){
+        return "/inpatient/index";
+    }
+
+    @RequestMapping("/inpatient/insertReady")
+    public String inpatientInsertReady(){
+        return "/page/inpatient/insert";
+    }
+
+    @RequestMapping("/inpatient/insert")
+    public String toInsertInpatient(){
+        return "/inpatient/inpatient_insert";
+    }
+
+    @RequestMapping("/inpatient/queryAllInpatient")
+    public String queryAllInpatient(){
+        return "/inpatient/inpatient_list";
+    }
+
+    @RequestMapping("/inpatient/queryInpatientByStatus")
+    public String queryInpatientByStatus(){
+        return "/inpatient/inpatient_status";
+    }
+
+    @RequestMapping("/bed/queryAllBed")
+    public String queryAllBed(){
+        return "/inpatient/bed_list";
+    }
+
+    @RequestMapping("/bed/queryBedByStatus")
+    public String queryBedByStatus(){
+        return "/inpatient/bed_status";
     }
 
     @RequestMapping("/admin/employee/report")

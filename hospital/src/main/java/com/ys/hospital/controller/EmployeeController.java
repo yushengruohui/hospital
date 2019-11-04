@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.sql.SQLOutput;
 
 /**
  * (Employee)表控制层
@@ -67,5 +68,29 @@ public class EmployeeController {
         employeeDetailService.updateEmployeeDetailByEmployeeId(employeeDetailDTO);
 
         return "redirect:/page/employee/index";
+    }
+
+    //修改发药药师个人信息
+    @RequestMapping("/updateDispensingEmployee")
+    public String updateDispensingEmployee(EmployeeOnUpdateDTO employeeOnUpdateDTO) {
+        String employeeIdString = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer employeeId = Integer.valueOf(employeeIdString);
+        employeeOnUpdateDTO.setEmployeeId(employeeId);
+
+        Employee employeeDTO = new Employee();
+        EmployeeDetail employeeDetailDTO = new EmployeeDetail();
+
+        BeanTool.copy(employeeOnUpdateDTO, employeeDTO);
+
+        BeanTool.copy(employeeOnUpdateDTO, employeeDetailDTO);
+
+        employeeDTO.setEmployeeDetail(employeeDetailDTO);
+
+        //更新用户基本信息
+        employeeService.updateEmployee(employeeDTO);
+
+        employeeDetailService.updateEmployeeDetailByEmployeeId(employeeDetailDTO);
+
+        return "redirect:/page/dispensing/employee/index";
     }
 }

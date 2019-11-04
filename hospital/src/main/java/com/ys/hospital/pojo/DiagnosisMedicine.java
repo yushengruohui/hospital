@@ -28,5 +28,7 @@ public class DiagnosisMedicine implements Serializable {
     private Integer employeeId;
     //所属诊断单
     private Integer diagnosisId;
+    private Diagnosis diagnosis;
+    private Employee employee;
 
 }

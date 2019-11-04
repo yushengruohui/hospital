@@ -53,4 +53,11 @@ public interface DiagnosisMedicineDetailMapper {
      */
     int deleteDiagnosisMedicineDetailById(Integer diagnosisMedicineDetailId);
 
+    /**
+     * 根据处方id查询处方详情
+     * @param diagnosisMedicineId
+     * @return
+     */
+    List<DiagnosisMedicineDetail> getDiagnosisMedicineDetailsByDiagnosisMedicineId(Integer diagnosisMedicineId);
+
 }

@@ -65,4 +65,14 @@ public class DiagnosisMedicineServiceImpl implements DiagnosisMedicineService {
     public int deleteDiagnosisMedicineById(Integer diagnosisMedicineId) {
         return this.diagnosisMedicineMapper.deleteDiagnosisMedicineById(diagnosisMedicineId);
     }
+
+    @Override
+    public List<DiagnosisMedicine> queryDiagnosisMedicineByParam(DiagnosisMedicine diagnosisMedicine) {
+        return diagnosisMedicineMapper.queryDiagnosisMedicineByParam(diagnosisMedicine);
+    }
+
+    @Override
+    public List<DiagnosisMedicine> getDiagnosisMedicinesByStatus(Integer payStatus) {
+        return diagnosisMedicineMapper.getDiagnosisMedicinesByStatus(payStatus);
+    }
 }

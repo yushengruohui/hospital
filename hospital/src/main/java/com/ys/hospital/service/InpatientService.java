@@ -1,6 +1,9 @@
 package com.ys.hospital.service;
 
+import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.pojo.Inpatient;
+import com.ys.hospital.pojo.InpatientNotify;
+import com.ys.hospital.pojo.Patient;
 
 import java.util.List;
 
@@ -56,4 +59,13 @@ public interface InpatientService {
      * @return
      */
     List<Inpatient> queryInpatientByParam(Inpatient inpatient);
+
+    /**
+     * 通过住院信息状态查询住院信息
+     * @param inpatientStatus
+     * @return
+     */
+    List<Inpatient> queryInpatientByStatus(Integer inpatientStatus);
+
+    List<Appointment> queryInpatientById(Integer inpatientId);
 }

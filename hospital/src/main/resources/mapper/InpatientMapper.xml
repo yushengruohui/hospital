@@ -14,20 +14,99 @@
         <result property="inpatientPrepaidPrice" column="inpatient_prepaid_price" jdbcType="NUMERIC"/>
     </resultMap>
 
+    <resultMap type="com.ys.hospital.pojo.Inpatient" id="InpatientInfoMap">
+        <result property="inpatientId" column="inpatient_id" jdbcType="INTEGER"/>
+        <result property="inpatientEntryTime" column="inpatient_entry_time" jdbcType="TIMESTAMP"/>
+        <result property="inpatientLeaveTime" column="inpatient_leave_time" jdbcType="TIMESTAMP"/>
+        <result property="inpatientStatus" column="inpatient_status" jdbcType="INTEGER"/>
+        <result property="inpatientNotifyId" column="inpatient_notify_id" jdbcType="INTEGER"/>
+        <result property="bedId" column="bed_id" jdbcType="INTEGER"/>
+        <result property="inpatientPrice" column="inpatient_price" jdbcType="NUMERIC"/>
+        <result property="inpatientPayStatus" column="inpatient_pay_status" jdbcType="INTEGER"/>
+        <result property="inpatientPrepaidPrice" column="inpatient_prepaid_price" jdbcType="NUMERIC"/>
+        <!--一条住院通知对应一张病床-->
+        <association property="bed" javaType="com.ys.hospital.pojo.Bed">
+            <result property="bedId" column="bed_id" jdbcType="INTEGER"/>
+            <result property="bedName" column="bed_name" jdbcType="VARCHAR"/>
+            <result property="bedStatus" column="bed_status" jdbcType="INTEGER"/>
+            <result property="bedEntryTime" column="bed_entry_time" jdbcType="TIMESTAMP"/>
+            <result property="bedLeaveTime" column="bed_leave_time" jdbcType="TIMESTAMP"/>
+            <result property="bedPrice" column="bed_price" jdbcType="NUMERIC"/>
+            <result property="patientId" column="patient_id" jdbcType="INTEGER"/>
+            <result property="roomId" column="room_id" jdbcType="INTEGER"/>
+            <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+        </association>
+        <!--inpatientNotify-->
+        <!--查找患者-->
+        <association property="inpatientNotify" javaType="com.ys.hospital.pojo.InpatientNotify">
+            <result property="inpatientNotifyId" column="inpatientNotify_id" jdbcType="INTEGER"/>
+            <result property="diagnosisId" column="diagnosis_id" jdbcType="INTEGER"/>
+            <association property="employee" javaType="com.ys.hospital.pojo.Employee">
+                <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+                <result property="employeeName" column="employee_name" jdbcType="VARCHAR"/>
+            </association>
+            <association property="diagnosis" javaType="com.ys.hospital.pojo.Diagnosis">
+                <association property="appointment" javaType="com.ys.hospital.pojo.Appointment">
+                    <association property="patient" javaType="com.ys.hospital.pojo.Patient">
+                        <result property="patientId" column="patient_id" jdbcType="INTEGER"/>
+                        <result property="patientPhone" column="patient_phone" jdbcType="VARCHAR"/>
+                        <result property="patientName" column="patient_name" jdbcType="VARCHAR"/>
+                        <result property="patientGender" column="patient_gender" jdbcType="VARCHAR"/>
+                        <result property="patientIdentity" column="patient_identity" jdbcType="VARCHAR"/>
+                        <result property="patientAddress" column="patient_address" jdbcType="VARCHAR"/>
+                        <result property="clientId" column="client_id" jdbcType="INTEGER"/>
+                    </association>
+                </association>
+            </association>
+        </association>
+
+    </resultMap>
     <!--查询所有Inpatient信息-->
-    <select id="queryAllInpatient" resultMap="InpatientMap">
+    <select id="queryAllInpatient" resultMap="InpatientInfoMap">
         select
-        inpatient_id, inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id,
-        inpatient_price, inpatient_pay_status, inpatient_prepaid_price
+            inpatient.inpatient_id,
+            inpatient.inpatient_entry_time,
+            inpatient.inpatient_leave_time,
+            inpatient.inpatient_status,
+            inpatient.inpatient_notify_id,
+            inpatient.bed_id,
+            inpatient.inpatient_price,
+            inpatient.inpatient_pay_status,
+            inpatient.inpatient_prepaid_price,
+            bed.bed_name,
+            patient.patient_name,
+            employee.employee_name
         from inpatient
+        join inpatient_notify on inpatient.inpatient_notify_id = inpatient_notify.inpatient_notify_id
+        join diagnosis on inpatient_notify.diagnosis_id = diagnosis.diagnosis_id
+        join appointment on diagnosis.appointment_id = appointment.appointment_id
+        join patient on appointment.patient_id = patient.patient_id
+        join bed on inpatient.bed_id = bed.bed_id
+        join employee on inpatient_notify.employee_id = employee.employee_id
     </select>
 
-    <!--<select id="queryAllInpatients" resultMap="InpatientMap">
+    <!-- 根据状态查询Inpatient信息-->
+    <select id="queryInpatientByStatus" resultMap="InpatientInfoMap">
         select
-            ip.inpatient_id, inpatient_entry_time, inpatient_leave_time, inpatient_status, inpatient_notify_id, bed_id, inpatient_price, inpatient_pay_status, inpatient_prepaid_price, inpatient_detail_price, inpatient_detail_description, inpatient_detail_date
-        from inpatient ip,inpatient_detail ipd
-        where ip.inpatient_id=ipd.inpatient_id
-    </select>-->
+            inpatient.inpatient_id,
+            inpatient.inpatient_entry_time,
+            inpatient.inpatient_leave_time,
+            inpatient.inpatient_status,
+            inpatient.inpatient_notify_id,
+            inpatient.bed_id,
+            inpatient.inpatient_price,
+            inpatient.inpatient_pay_status,
+            inpatient.inpatient_prepaid_price,
+            bed.bed_name,
+            patient.patient_name
+        from inpatient
+        join inpatient_notify on inpatient.inpatient_notify_id = inpatient_notify.inpatient_notify_id
+        join diagnosis on inpatient_notify.diagnosis_id = diagnosis.diagnosis_id
+        join appointment on diagnosis.appointment_id = appointment.appointment_id
+        join patient on appointment.patient_id = patient.patient_id
+        join bed on inpatient.bed_id = bed.bed_id
+        where inpatient_status='0'
+    </select>
     <!--根据实体类Inpatient的相关属性查询实体类Inpatient-->
     <select id="queryInpatientByParam" resultMap="InpatientMap">
         select
@@ -117,4 +196,17 @@
         delete from inpatient where inpatient_id = #{inpatientId}
     </delete>
 
+    <!-- 通过住院ID查找患者-->
+    <select id="queryInpatientById" resultType="com.ys.hospital.pojo.Appointment">
+        select
+            appointment.patient_id
+        from
+            inpatient
+            join inpatient_notify on inpatient.inpatient_notify_id = inpatient_notify.inpatient_notify_id
+            join diagnosis on inpatient_notify.diagnosis_id = diagnosis.diagnosis_id
+            join appointment on diagnosis.appointment_id = appointment.appointment_id
+        where
+            inpatient.inpatient_id = #{inpatientId}
+
+    </select>
 </mapper>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{com/attending::title}"></div>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{com/attending::dispensing_head}"></div>
+
+    <div th:replace="~{com/attending::left_dispensing}"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-table" id="dispensingTable" lay-filter="tableFilter">
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{com/attending::foot}"></div>
+</div>
+<script type="text/html" id="optBar">
+    <a class="layui-btn layui-btn-xs" lay-event="show_diagnosisMedicineDetail">查看处方详情</a>
+</script>
+<script>
+
+    //JavaScript代码区域
+    layui.use(['layer', 'element', 'table', 'form'], function () {
+        var layer = layui.layer;
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+
+        table.render({
+            elem: '#dispensingTable'
+            , height: 600
+            , url: '/diagnosisMedicine/unTreatDiagnosisMedicines' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'employeeName', title: '开药医师', templet: function (diagnosisMedicine) {
+                            return diagnosisMedicine.diagnosis.appointment.employee.employeeName;
+                        }
+                    },
+                    {
+                        field: 'patientName', title: '患者姓名', templet: function (diagnosisMedicine) {
+                            return diagnosisMedicine.diagnosis.appointment.patient.patientName;
+                        }
+                    },
+                    {
+                        field: 'diagnosisMedicinePrice', title: '医药费'
+                    },
+                    {
+                        field: 'diagnosisMedicinePayTime', title: '开药时间'
+                    }, {
+                    field: 'diagnosisMedicinePayStatus', title: '取药状态', templet: function (diagnosisMedicine) {
+                        return diagnosisMedicine.diagnosisMedicinePayStatus === 1 ? "已取药" : "未取药";
+                    },
+                    field: 'diagnosisMedicinePayStatus', title: '支付状态', templet: function (diagnosisMedicine) {
+                        return diagnosisMedicine.diagnosisMedicinePayStatus === 1 ? "已支付" : "未支付";
+                    }
+                },
+                    {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                ]
+            ]
+        });
+
+        table.on('tool(tableFilter)', function (obj) {
+            //获取当前行的数据
+            var rowData = obj.data;
+
+            switch (obj.event) {
+
+                case 'show_diagnosisMedicineDetail':
+                    layer.open({
+                        type: 1,//类型，新页面
+                        area: ['500px', '300px'],//定义宽和高
+                        title: '处方详情',//题目
+                        shadeClose: true,//点击遮罩层关闭
+                        content: $('#open_diagnosisMedicine_detail'), //打开的内容
+                        btn: ["确定"],//添加两个按钮
+                        success: function (layero, index) {
+                            var diagnosisMedicineId = rowData.diagnosisMedicineId;
+                            table.render({
+                                elem: '#open_diagnosisMedicine_detail'
+                                ,
+                                height: 600
+                                ,
+                                url: '/diagnosisMedicineDetail/diagnosisMedicineDetails?diagnosisMedicineId=' + diagnosisMedicineId //数据接口
+                                ,
+                                method: 'get'
+                                ,
+                                page: true //开启分页
+                                ,
+                                cols: [
+                                    [
+                                        {
+                                            field: 'medicineName',
+                                            title: '药品名称',
+                                            templet: function (diagnosisMedicineDetail) {
+                                                return diagnosisMedicineDetail.medicine.medicineName;
+                                            }
+                                        },
+                                        {
+                                            field: 'medicineNumber',
+                                            title: '药品数量',
+                                            templet: function (diagnosisMedicineDetail) {
+                                                return diagnosisMedicineDetail.medicineNumber;
+                                            }
+                                        },
+                                        {
+                                            field: 'medicinePrice',
+                                            title: '药品单价',
+                                            templet: function (diagnosisMedicineDetail) {
+                                                return diagnosisMedicineDetail.medicine.medicinePrice;
+                                            }
+                                        }
+                                    ]
+                                ]
+                            });
+
+                        },
+                        yes: function (index, layero) {
+                            //yes默认触发第一个按钮事件
+                            layer.close(index);
+                            window.location.reload();
+                        }
+                    });
+                    break;
+                case 'update_diagnosisMedicine':
+                    $.ajax({
+                        url: "/diagnosisMedicine/diagnosisMedicine",
+                        type: "put",
+                        data: {
+                            diagnosisMedicineId: rowData.diagnosisMedicineId,
+                            diagnosisMedicinePrice: rowData.diagnosisMedicinePrice,
+                            diagnosisMedicineStatus: 1,
+                            diagnosisMedicinePayStatus: 1,
+                            diagnosisId: rowData.diagnosisId
+                        },
+                        success: function (result) {
+                            window.location.reload();
+                        },
+                        error: function () {
+                            layer.msg("连接后台失败，服务器异常")
+                        }
+                    });
+            }
+
+        });
+    });
+
+</script>
+</body>
+
+<!--================ 模态框：处方详情显示================-->
+<div id="open_diagnosisMedicine_detail" style="display: none" hidden="hidden">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+            <!-- 内容主体区域 -->
+            <div>
+                <table class="layui-table" id="diagnosisMedicine_detail" lay-filter="tableFilter">
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+</html>
