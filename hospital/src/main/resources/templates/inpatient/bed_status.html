@@ -56,8 +56,8 @@
                         }
                     },
                     {
-                        field: 'patientId', title: '患者', templet: function (bed) {
-                            return bed.patientId==null?"空":bed.patientId;
+                        field: 'patientName', title: '患者', templet: function (bed) {
+                            return bed.patient==null?"空":bed.patient.patientName;
                         }
                     },
                     {
@@ -66,8 +66,8 @@
                         }
                     },
                     {
-                        field: 'employeeId', title: '处理护士', templet: function (bed) {
-                            return bed.employeeId==null?"空":bed.employeeId;
+                        field: 'employeeName', title: '处理护士', templet: function (bed) {
+                            return bed.employee==null?"空":bed.employee.employeeName;
                         }
                     },
                     {
