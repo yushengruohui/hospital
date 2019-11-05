@@ -248,6 +248,8 @@ public class WxController {
         appointment.setAppointmentPayTime(new Date());
         //预约单记录存入到数据库中
         int flag = appointmentService.insertAppointment(appointment);
+        //将String转换数组
+        char num[] = time.toCharArray();//把字符串转换为字符数组
         System.out.println(appointment);
         //如果支付成功，将当天的余号-1
         if (flag > 0) {
@@ -259,8 +261,16 @@ public class WxController {
             //获取当天时间段挂号详情
             WorkTime workTime = work.getWorkTime();
             System.out.println(workTime);
-            //获取时间段
-            String workDetail = time.substring(11, 16);
+            String workDetail=null;
+            //如果时间字符为15
+            if(num.length==15){
+                //获取时间段
+               workDetail = time.substring(10, 15);
+            }else if(num.length==16){
+                //获取时间段
+                workDetail = time.substring(11, 16);
+            }
+
             System.out.println(workDetail);
 
             //根据传入的时间段决定对那个时间段的余号进行-1
