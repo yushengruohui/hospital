@@ -37,7 +37,7 @@
         table.render({
             elem: '#checkTable'
             , height: 600
-            , url: '/check/unchecks' //数据接口
+            , url: '/check/ischecks' //数据接口
             , method: 'get'
             , page: true //开启分页
             , cols: [
@@ -60,6 +60,11 @@
                     		return '已处理';
                     }
                     	}
+                    ,
+                    {field:'employeeId', title:'检查护士', templet:function(check){
+                    	return check.employee.employeeName;
+                    }
+                    }	
                     , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
                 ]
             ]

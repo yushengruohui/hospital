@@ -52,6 +52,8 @@ public class LoginController {
         //根据员工的不同职称，跳转到相应的界面
         if (employee.getEmployeeDetail().getTitleId().equals(2) || employee.getEmployeeDetail().getTitleId().equals(1)) {
             return "appointment/index";
+        }else if(employee.getEmployeeDetail().getTitleId().equals(6)) {
+        	return "check/index";
         }
         return "redirect:/";
     }

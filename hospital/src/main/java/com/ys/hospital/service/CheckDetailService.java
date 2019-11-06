@@ -1,5 +1,6 @@
 package com.ys.hospital.service;
 
+import com.ys.hospital.pojo.Check;
 import com.ys.hospital.pojo.CheckDetail;
 
 import java.util.List;
@@ -43,4 +44,7 @@ public interface CheckDetailService {
      */
     int deleteCheckDetailById(Integer checkDetailId);
 
+	List<CheckDetail> queryCheckDetailByParam(CheckDetail checkDetail);
+
+    
 }

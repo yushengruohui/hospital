@@ -1,5 +1,6 @@
 package com.ys.hospital.service.impl;
 
+import com.ys.hospital.pojo.Check;
 import com.ys.hospital.pojo.CheckDetail;
 import com.ys.hospital.dao.CheckDetailMapper;
 import com.ys.hospital.service.CheckDetailService;
@@ -65,4 +66,12 @@ public class CheckDetailServiceImpl implements CheckDetailService {
     public int deleteCheckDetailById(Integer checkDetailId) {
         return this.checkDetailMapper.deleteCheckDetailById(checkDetailId);
     }
+
+	@Override
+	public List<CheckDetail> queryCheckDetailByParam(CheckDetail checkDetail) {
+		if(checkDetail == null) {
+			return null;
+		}
+		return checkDetailMapper.queryCheckDetailByParam(checkDetail);
+	}
 }

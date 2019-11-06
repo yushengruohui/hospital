@@ -35,7 +35,7 @@ public class EmployeeController {
 
 
     @RequestMapping("/login")
-    @Cacheable(cacheNames = "employee")
+//    @Cacheable(cacheNames = "employee")
     //@CachePut(cacheNames = "employee")
     public String login(Employee employee, HttpSession session) {
         //根据员工id和员工密码查询该用户是否存在
