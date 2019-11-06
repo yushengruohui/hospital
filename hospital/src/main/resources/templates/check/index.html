@@ -10,23 +10,23 @@
 </head>
 
 <body class="layui-layout-body">
-	<div class = "layui-layout layui-layout-admin">
-		<div th:replace = "~{com/attending::head_check}"></div>
+	<div class="layui-layout layui-layout-admin">
+		<div th:replace="~{com/check::head_check}"></div>
 		
-		<div th:replace = "~{com/attending::left_check}"></div>
+		<div th:replace="~{com/check::left_check}"></div>
 		
-		<div class = "layui-body">
+		<div class="layui-body">
 			<!-- 主体内容 -->
-			<div style = "padding:15px">
-				<table class = "layui-table" id = "checkTable" lay-filter = "tableFilter"></table>
+			<div style="padding:15px">
+				<table class="layui-table" id="checkTable" lay-filter="tableFilter"></table>
 			</div>
 		</div>
 		
-		<div th:replace="~{com/attending::foot}"></div>
+		<div th:replace="~{com/check::foot}"></div>
 	</div>
 	
 	<script type="text/html" id="optBar">
-		<a class = "layui-btn layui-btn-xs" lay-event = "check">查看详情</a>
+		<a class="layui-btn layui-btn-xs" lay-event="check">查看详情</a>
 	</script>
 	<script>
     //JavaScript代码区域
@@ -53,13 +53,14 @@
                         return check.doctor;
                     }
                 }
-                    , {field: 'checkStatus', title: '检查状态',templet:function(check){
-                    	if(check.checkStatus == 0)
-                    		return '待处理';
-                    	else
-                    		return '已处理';
+                    , {
+                    field: 'checkStatus', title: '检查状态', templet: function (check) {
+                        if (check.checkStatus == 0)
+                            return '待处理';
+                        else
+                            return '已处理';
                     }
-                    	}
+                }
                     , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
                 ]
             ]
@@ -71,13 +72,13 @@
             var rowData = obj.data;
             switch (obj.event) {
                 case 'check':
-                   
+
                     $.ajax({
                         url: "/checkDetail/indexready",
                         type: "get",
                         data: {
-                            checkId:rowData.checkId,
-                            diagnosisId:rowData.diagnosisId
+                            checkId: rowData.checkId,
+                            diagnosisId: rowData.diagnosisId
                         }
 
                         ,
@@ -90,7 +91,7 @@
                         }
                     });
                     break;
-                
+
             }
         });
     });

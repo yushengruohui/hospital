@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <div th:replace="~{com/check::title}"></div>
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{com/check::head_check}"></div>
+
+    <div th:replace="~{com/check::left_check_employee}"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <!--================ 显示员工个人信息 ================-->
+            <form class="layui-form" th:if="${employeeDetail!=null}">
+                <!-- 头条 -->
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;width:700px;">
+                    <legend>员工个人信息</legend>
+                </fieldset>
+                <!-- 员工姓名 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">员工姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="employeeName" autocomplete="off" class="layui-input"
+                               style="width:200px;" th:value="${session.employee.employeeName}" readonly="readonly"/>
+                    </div>
+                </div>
+                <!-- 员工号 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">员工号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="employeeId" autocomplete="off" class="layui-input"
+                               style="width:200px;" th:value="${session.employee.employeeId}" readonly="readonly"/>
+                    </div>
+                </div>
+                <!-- 员工生日和性别 -->
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">生日</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="employeeDetailBirthday" autocomplete="off" class="layui-input"
+                                   style="width:200px;"
+                                   th:value="${#dates.format(employeeDetail.employeeDetailBirthday,'yyyy-MM-dd')}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="employeeDetailGender" value="男" title="男" checked
+                                   th:if="${employeeDetail.employeeDetailGender=='男'}">
+                            <input type="radio" name="employeeDetailGender" value="女" title="女" checked
+                                   th:if="${employeeDetail.employeeDetailGender=='女'}">
+                        </div>
+                    </div>
+                </div>
+                <!-- 详细地址 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">详细地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="employeeDetailAddress" autocomplete="off" class="layui-input"
+                               style="width:525px;" th:value="${employeeDetail.employeeDetailAddress}"
+                               readonly="readonly">
+                    </div>
+                </div>
+                <!-- 员工联系电话和邮箱 -->
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">联系电话</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="employeeDetailPhone" autocomplete="off" class="layui-input"
+                                   style="width:200px;" th:value="${employeeDetail.employeeDetailPhone}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">邮箱</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="employeeDetailEmail" autocomplete="off" class="layui-input"
+                                   style="width:200px;" th:value="${employeeDetail.employeeDetailEmail}"
+                                   readonly="readonly">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">*
+                        </div>
+                    </div>
+                </div>
+                <!-- employeeDetailIdentity -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">身份证</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="employeeDetailIdentity" autocomplete="off" class="layui-input"
+                               style="width:525px;" th:value="${employeeDetail.employeeDetailIdentity}"
+                               readonly="readonly">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <!-- employeeDetailEntryTime -->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">入职时间</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="employeeDetailEntryTime" autocomplete="off" class="layui-input"
+                                   style="width:200px;"
+                                   th:value="${#dates.format(employeeDetail.employeeDetailEntryTime, 'yyyy-MM-dd')}"
+                                   readonly="readonly"/>
+
+                        </div>
+                    </div>
+                    <!-- positionId -->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">职位</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="positionName" autocomplete="off" class="layui-input"
+                                   style="width:200px;" th:value="${employeeDetail.position.positionName}"
+                                   readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <!-- titleId -->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">职称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="titleId" autocomplete="off" class="layui-input"
+                                   style="width:200px;" th:value="${employeeDetail.title.titleName}"
+                                   readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- employeeDetailDescript -->
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">简介</label>
+                    <div class="layui-input-block">
+                        <textarea name="employeeDetailDescript" class="layui-textarea" readonly="readonly"
+                                  style="width:525px;">
+                            [[${employeeDetail.employeeDetailDescript}]]
+                        </textarea>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="~{com/check::foot}"></div>
+</div>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'form'], function () {
+        var element = layui.element;
+        var element = layui.form;
+
+    });
+
+</script>
+</body>
+</html>

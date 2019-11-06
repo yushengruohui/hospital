@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="~{com/attending::title}"></div>
+    <div th:replace="~{com/check::title}"></div>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <!--================ 网页头部 ================-->
-    <div th:replace="~{com/attending::head_check}"></div>
+    <div th:replace="~{com/check::head_check}"></div>
 
     <!--================ 网页左侧导航栏 ================-->
-    <div th:replace="~{com/attending::left_check}"></div>
+    <div th:replace="~{com/check::left_check}"></div>
 
     <!--================ 主体内容区 ================-->
     <div class="layui-body">
@@ -94,7 +94,7 @@
         var element = layui.element;
         var form = layui.form;
 
-        
+
         //监听提交
         form.on('submit(formSubmit)', function (data) {
             var send_diagnosis_data = data.field;
