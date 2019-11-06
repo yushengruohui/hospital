@@ -3,6 +3,7 @@ package com.ys.hospital.controller;
 import com.ys.hospital.pojo.Patient;
 import com.ys.hospital.pojo.Employee;
 
+import java.lang.reflect.Constructor;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -393,7 +394,31 @@ public class WxController {
     @RequestMapping("/test")
     public void test() {
 
-        System.out.println(initWorkTimeTool.initWorkTime(2019009));
+    }
+
+    //查看用户是否有支付密码
+    @RequestMapping("/findPswFromClient")
+    public String findPswFromClient(Integer clientId){
+        Client client=new Client();
+        client.setClientId(clientId);
+        Client client1=clientService.findClientByClient(client);
+        if (client1.getClientPassword().equals("")){
+            client1.setClientPassword("");
+        }
+        return client1.getClientPassword();
+    }
+
+    //保存用户密码
+    @RequestMapping("/savePsw")
+    public int savePsw(String clientPassword,Integer clientId){
+        //根据用户Id查询用户信息
+        Client selectClient=new Client();
+        selectClient.setClientId(clientId);
+        Client client=clientService.findClientByClient(selectClient);
+        //修改用户信息
+        client.setClientPassword(clientPassword);
+        int flag=clientService.updateClient(client);
+        return flag;
     }
 
 

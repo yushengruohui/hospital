@@ -12,6 +12,10 @@
             parameterType="com.ys.hospital.pojo.Client">
         insert into client(client_phone,client_password) values (#{clientPhone},#{clientPassword})
     </insert>
+    <update id="updateClient">
+        update client set client_phone=#{clientPhone},client_password=#{clientPassword}
+        where client_id=#{clientId}
+    </update>
     <!--    查询所有用户信息-->
     <select id="findAllClient" resultType="com.ys.hospital.pojo.Client">
         select * from client
@@ -26,7 +30,7 @@
         client
         <where>
             <if test="clientId!=null">
-                client_id=#{clirntId}
+                client_id=#{clientId}
             </if>
             <if test="clientPhone!=null">
                 and client_phone=#{clientPhone}
