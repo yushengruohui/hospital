@@ -41,5 +41,10 @@ public class ClientServiceImpl implements ClientService {
         return client;
     }
 
+    @Override
+    public int updateClient(Client client) {
+        return clientMapper.updateClient(client);
+    }
+
 
 }

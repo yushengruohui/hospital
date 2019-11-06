@@ -83,7 +83,7 @@
         appointment.employee_id = employee.employee_id AND
         appointment.branch_id = branch.branch_id AND
         appointment.patient_id = #{patientId}
-        order by appointment.appointment_pay_time desc
+        order by appointment.appointment_time desc
     </select>
     <!--    根据预约单id查询预约单信息-->
     <select id="getAppointmentByAppointmentId" resultMap="AppointmentMap">

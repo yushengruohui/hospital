@@ -51,7 +51,8 @@ public class InitWorkTimeTool {
             //获取诊室列表
             Room room = new Room();
             room.setBranchId(employee.getEmployeeDetail().getBranchId());
-            List<Room> rooms = roomService.queryRoomByParam(room);
+            //获取科目下面的诊室列表
+            List<Room> rooms = roomService.getConsultingRooms(room.getBranchId());
             //获取一周星期与日期
             //获取今天日期和星期几
             Calendar calendar = Calendar.getInstance();
