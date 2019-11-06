@@ -149,7 +149,23 @@
         WHERE
             e.employee_id =#{employeeId}
     </select>
-    <select id="queryEmployeeListByStatus" resultType="com.ys.hospital.pojo.Employee">
+    <select id="countEmployeeListByStatus" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            employee_detail
+        WHERE
+            employee_detail_status = #{employeeDetailStatus}
+    </select>
+    <select id="countEmployeeListByOnlineStatus" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            employee
+        WHERE
+            employee_online = #{loginStatus}
+    </select>
+    <select id="findEmployeeByLoginStatus" resultType="com.ys.hospital.pojo.vo.EmployeeInfoVO">
         SELECT
             e.employee_id,
             e.employee_name,
@@ -171,21 +187,52 @@
             ed.branch_id,
             ed.title_id,
             t.title_id,
-            t.title_name
+            t.title_name,
+            r.role_name,
+            b.branch_name
         FROM
             employee AS e
-            JOIN employee_detail AS ed ON e.employee_id = ed.employee_id
-            JOIN title AS t ON ed.title_id = t.title_id
+            LEFT JOIN employee_detail AS ed ON e.employee_id = ed.employee_id
+            LEFT JOIN title AS t ON ed.title_id = t.title_id
+            left join employee_role er on e.employee_id = er.employee_id
+            left join role r on er.role_id = r.role_id
+            left join branch b on ed.branch_id = b.branch_id
         WHERE
-            ed.employee_detail_status = "1"
-            AND e.employee_online = "1"
+            e.employee_online = #{loginStatus}
     </select>
 
 
     <!--新增Employee数据-->
     <insert id="insertEmployee" keyProperty="employeeId" useGeneratedKeys="true">
-        insert into employee(employee_name, employee_password, employee_online, employee_last_login_time)
-        values (#{employeeName}, #{employeePassword}, #{employeeOnline}, #{employeeLastLoginTime})
+        insert into `employee`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="employeeName != null and employeeName != ''">
+                employee_name,
+            </if>
+            <if test="employeePassword != null and employeePassword != ''">
+                employee_password,
+            </if>
+            <if test="employeeOnline != null">
+                employee_online,
+            </if>
+            <if test="employeeLastLoginTime != null and employeeLastLoginTime != ''">
+                employee_last_login_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="employeeName != null and employeeName != ''">
+                #{employeeName},
+            </if>
+            <if test="employeePassword != null and employeePassword != ''">
+                #{employeePassword},
+            </if>
+            <if test="employeeOnline != null">
+                #{employeeOnline},
+            </if>
+            <if test="employeeLastLoginTime != null and employeeLastLoginTime != ''">
+                #{employeeLastLoginTime},
+            </if>
+        </trim>
     </insert>
 
     <!--修改Employee记录-->

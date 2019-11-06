@@ -1,6 +1,7 @@
 package com.ys.hospital.service;
 
 import com.ys.hospital.pojo.Role;
+import com.ys.hospital.pojo.vo.PermissionIndexVO;
 
 import java.util.List;
 
@@ -43,4 +44,7 @@ public interface RoleService {
      */
     int deleteRoleById(Integer roleId);
 
+    Role queryRoleByParam(Role role);
+
+    PermissionIndexVO queryRolePermissionDetail(Integer roleId);
 }

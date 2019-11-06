@@ -1,7 +1,6 @@
 package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Appointment;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -68,4 +67,6 @@ public interface AppointmentMapper {
      * @return 预约单信息
      */
     Appointment getAppointmentByAppointmentId(Integer appointmentId);
+
+    int countAppointmentByStatus(Integer status);
 }

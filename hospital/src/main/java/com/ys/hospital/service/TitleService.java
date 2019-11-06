@@ -51,4 +51,5 @@ public interface TitleService {
      */
     Title getTitleByTitleId(Integer titleId);
 
+    Title queryTitleByParam(Title title);
 }

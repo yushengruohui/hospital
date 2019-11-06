@@ -1,7 +1,7 @@
 package com.ys.hospital.service.impl;
 
-import com.ys.hospital.pojo.EmployeeRole;
 import com.ys.hospital.dao.EmployeeRoleMapper;
+import com.ys.hospital.pojo.EmployeeRole;
 import com.ys.hospital.service.EmployeeRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,5 +64,13 @@ public class EmployeeRoleServiceImpl implements EmployeeRoleService {
     @Override
     public int deleteEmployeeRoleById(Integer employeeRoleId) {
         return this.employeeRoleMapper.deleteEmployeeRoleById(employeeRoleId);
+    }
+
+    @Override
+    public EmployeeRole queryEmployeeRoleByParam(EmployeeRole employeeRole) {
+        if (employeeRole == null) {
+            return null;
+        }
+        return this.employeeRoleMapper.queryEmployeeRoleByParam(employeeRole).get(0);
     }
 }

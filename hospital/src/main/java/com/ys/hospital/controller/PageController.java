@@ -4,7 +4,7 @@ import com.ys.hospital.pojo.Appointment;
 import com.ys.hospital.pojo.Diagnosis;
 import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.pojo.EmployeeDetail;
-import com.ys.hospital.pojo.vo.EmployeeInfoVO;
+import com.ys.hospital.pojo.dto.AdminEmployeeUpdateDTO;
 import com.ys.hospital.service.DiagnosisService;
 import com.ys.hospital.service.EmployeeDetailService;
 import com.ys.hospital.service.OperationNotifyService;
@@ -158,51 +158,48 @@ public class PageController {
         return "operation/findoperation";
     }
 
-
-
-
     @RequestMapping("/inpatient/index")
-    public String toInpatientIndex(){
+    public String toInpatientIndex() {
         return "/inpatient/index";
     }
 
     @RequestMapping("/inpatientNotify/queryAllInpatientNotify")
-    public String queryAllInpatientNotify(){
+    public String queryAllInpatientNotify() {
         return "/inpatient/inpatientNotify_list";
     }
 
     @RequestMapping("/inpatientNotify/queryInpatientNotifyByStatus")
-    public String queryInpatientNotifyByStatus(){
+    public String queryInpatientNotifyByStatus() {
         return "/inpatient/index";
     }
 
     @RequestMapping("/inpatient/insertReady")
-    public String inpatientInsertReady(){
+    public String inpatientInsertReady() {
         return "/page/inpatient/insert";
     }
 
     @RequestMapping("/inpatient/insert")
-    public String toInsertInpatient(){
+    public String toInsertInpatient() {
         return "/inpatient/inpatient_insert";
     }
 
     @RequestMapping("/inpatient/queryAllInpatient")
-    public String queryAllInpatient(){
+    public String queryAllInpatient() {
         return "/inpatient/inpatient_list";
     }
 
     @RequestMapping("/inpatient/queryInpatientByStatus")
-    public String queryInpatientByStatus(){
+    public String queryInpatientByStatus() {
         return "/inpatient/inpatient_status";
     }
 
     @RequestMapping("/bed/queryAllBed")
-    public String queryAllBed(){
+    public String queryAllBed() {
         return "/inpatient/bed_list";
     }
 
     @RequestMapping("/bed/queryBedByStatus")
-    public String queryBedByStatus(){
+    public String queryBedByStatus() {
         return "/inpatient/bed_status";
     }
 
@@ -222,8 +219,19 @@ public class PageController {
     }
 
     @RequestMapping("/admin/employee/update")
-    public String toAdminEmployeeUpdate(EmployeeInfoVO employeeInfoVO, Model model) {
-        model.addAttribute("employeeInfoVO", employeeInfoVO);
+    public String toAdminEmployeeUpdate(AdminEmployeeUpdateDTO employee, Model model) {
+        model.addAttribute("employee", employee);
+        // System.out.println("employee = " + employee);
         return "admin/employee_update";
+    }
+
+    @RequestMapping("/admin/permission/index")
+    public String toAdminPermissionIndex() {
+        return "admin/permission_index";
+    }
+
+    @RequestMapping("/admin/permission/add")
+    public String toAdminPermissionAdd() {
+        return "admin/permission_add";
     }
 }

@@ -9,64 +9,46 @@
 
     <div th:replace="~{com/admin::admin_head}"></div>
 
-    <div th:replace="~{com/admin::admin_left_employee}"></div>
+    <div th:replace="~{com/admin::admin_left_permission}"></div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <form class="layui-form">
-                <!-- 头条 -->
-                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;width:700px;">
-                    <legend>员工报表</legend>
-                </fieldset>
-                <!--员工在职人数-->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">在职人数</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="employeeNumber" autocomplete="off" class="layui-input"
-                               style="width:200px;" th:value="109" readonly="readonly"/>
-                    </div>
-                </div>
-                <!--员工在线情况-->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">在线人数</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="employeeId" autocomplete="off" class="layui-input" style="width:200px;"
-                               th:value="38" readonly="readonly"/>
-                    </div>
-                </div>
-                <!--医院就诊情况-->
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">预约数</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="employeeDetailBirthday" autocomplete="off" class="layui-input"
-                                   style="width:200px;" th:value="10086" readonly="readonly"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">诊断数</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="employeeDetailGender" th:value="10010" style="width:200px;"
-                                   readonly="readonly" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-
-            </form>
-
-
+            <table class="layui-table" id="admin_table" lay-filter="admin_employee_index_table_filter">
+            </table>
         </div>
     </div>
 
     <!--<div th:replace="~{com/admin::foot}" ></div >-->
 </div>
+<!--================ 工具条：操作处理 ================-->
+<script type="text/html" id="operation_bar">
+    <a class="layui-btn layui-btn-xs" lay-event="search_event">查看详情</a>
+    <a class="layui-btn layui-btn-xs" lay-event="update_event">修改</a>
+    <a class="layui-btn layui-btn-xs" lay-event="delete_event">删除</a>
+</script>
 <script>
     //JavaScript代码区域
-    layui.use(['element', 'table'], function () {
+    layui.use(['element', 'table', 'layer'], function () {
         var element = layui.element;
         var table = layui.table;
+        var layer = layui.layer;
 
+        var my_table = table.render({
+            elem: '#admin_table'
+            , height: '600'
+            , url: '/admin/permission/detail' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {field: 'roleName', title: '角色', fixed: 'left'}
+                    , {field: 'powerDetailUrl', title: '能请求的url'}
+                    , {field: 'powerDetailMethod', title: '请求方式'}
+                    , {field: 'powerDetailDescription', title: '权限描述'}
+                ]
+            ]
+        });
     });
 
 </script>

@@ -1,6 +1,7 @@
 package com.ys.hospital.service;
 
 import com.ys.hospital.pojo.Employee;
+import com.ys.hospital.pojo.vo.EmployeeInfoVO;
 
 import java.util.List;
 
@@ -63,5 +64,9 @@ public interface EmployeeService {
 
     int updateEmployeeInfo(Employee employeeDTO);
 
-    List<Employee> queryEmployeeByStatus(Integer employeeDetailStatus);
+    int countEmployeeByStatus(Integer employeeDetailStatus);
+
+    List<EmployeeInfoVO> findEmployeeByLoginStatus(Integer loginStatus);
+
+    int countOnlineEmployee(Integer loginStatus);
 }

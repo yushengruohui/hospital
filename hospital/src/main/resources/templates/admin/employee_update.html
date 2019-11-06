@@ -13,7 +13,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <!--员工添加功能-->
-            <form class="layui-form" method="post">
+            <form class="layui-form">
                 <!-- 头条 -->
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;width:700px;">
                     <legend>修改员工信息</legend>
@@ -22,67 +22,49 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">员工姓名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="employeeName" autocomplete="off" class="layui-input"
-                               style="width:200px;" th:value="主治医师1号"/>
+                        <input type="text" name="employeeName" id="employeeName" autocomplete="off" class="layui-input"
+                               style="width:200px;" th:value="${employee.employeeName}"/>
                     </div>
                 </div>
-                <!-- 员工号 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">员工号</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="employeeId" autocomplete="off" class="layui-input" style="width:200px;"
-                               th:value="2019001"/>
-                    </div>
-                </div>
-                <!-- 员工生日和性别 -->
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">密码</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="employeeDetailBirthday" autocomplete="off" class="layui-input"
-                                   style="width:200px;"
-                                   th:value="123456"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label" for="employeeDetailGender">性别</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="employeeDetailGender" id="employeeDetailGender"
-                                   th:value="男" autocomplete="off"
-                                   class="layui-input" style="width:200px;"/>
-                        </div>
-                    </div>
-                </div>
+
                 <!-- employeeDetailIdentity -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">角色</label>
                     <div class="layui-input-block">
-                        <input type="text" name="employeeDetailIdentity" autocomplete="off" class="layui-input"
-                               style="width:525px;" th:value="医师"/>
+                        <input type="text" name="roleName" id="roleName" autocomplete="off" class="layui-input"
+                               style="width:525px;" th:value="${employee.roleName}"/>
                     </div>
                 </div>
                 <!-- employeeDetailDescript -->
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">职称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="employeeDetailDescript" autocomplete="off" class="layui-input"
-                               style="width:525px;" th:value="主治医师"/>
+                        <input type="text" name="titleName" id="titleName" autocomplete="off" class="layui-input"
+                               style="width:525px;" th:value="${employee.titleName}"/>
                     </div>
                 </div>
                 <!-- employee -->
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">科室</label>
                     <div class="layui-input-block">
-                        <input type="text" name="branchName" autocomplete="off" class="layui-input"
-                               style="width:525px;" th:value="呼吸内科"/>
+                        <input type="text" name="branchName" id="branchName" autocomplete="off" class="layui-input"
+                               style="width:525px;" th:value="${employee.branchName}"/>
+                    </div>
+                </div>
+                <!-- employee -->
+                <div class="layui-form-item layui-form-text" hidden="hidden">
+                    <div class="layui-input-block">
+                        <input type="text" name="employeeId" id="employeeId" autocomplete="off" class="layui-input"
+                               style="width:525px;" th:value="${employee.employeeId}"/>
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit type="submit">确定修改</button>
+                        <button class="layui-btn" onclick="submit_event()">确定修改</button>
                         <button type="reset" class="layui-btn layui-btn-primary">取消</button>
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
@@ -91,11 +73,34 @@
 </div>
 <script>
     //JavaScript代码区域
-    layui.use('element', function () {
+    layui.use(['element', 'form'], function () {
         var element = layui.element;
+        var form = layui.form;
 
     });
 
+    function submit_event() {
+        var my_data =
+            {
+                "employeeId": $("#employeeId").val(),
+                "employeeName": $("#employeeName").val(),
+                "roleName": $("#roleName").val(),
+                "titleName": $("#titleName").val(),
+                "branchName": $("#branchName").val()
+            };
+        console.info(JSON.stringify(my_data));
+        $.ajax({
+            type: "put",
+            url: "/admin/employee",
+            data: my_data,
+            success: function () {
+                window.location.href = "/page/index";
+            },
+            error: function () {
+                console.info("连接后台有问题");
+            }
+        });
+    }
 </script>
 </body>
 </html>

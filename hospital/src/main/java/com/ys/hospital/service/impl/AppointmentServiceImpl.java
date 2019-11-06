@@ -2,10 +2,10 @@ package com.ys.hospital.service.impl;
 
 import com.ys.hospital.dao.AppointmentMapper;
 import com.ys.hospital.pojo.Appointment;
+import com.ys.hospital.service.AppointmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import com.ys.hospital.service.AppointmentService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -113,5 +113,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment getAppointmentByAppointmentId(Integer appointmentId) {
         return appointmentMapper.getAppointmentByAppointmentId(appointmentId);
+    }
+
+    @Override
+    public int countAppointmentByStatus(Integer status) {
+        if (status == null)
+            return 0;
+        return this.appointmentMapper.countAppointmentByStatus(status);
     }
 }

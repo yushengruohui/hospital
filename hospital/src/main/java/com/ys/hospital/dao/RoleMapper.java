@@ -1,6 +1,7 @@
 package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Role;
+import com.ys.hospital.pojo.vo.PermissionIndexVO;
 
 import java.util.List;
 
@@ -53,4 +54,6 @@ public interface RoleMapper {
     int deleteRoleById(Integer roleId);
 
     Role getRoleByEmployeeId(Integer employeeId);
+
+    PermissionIndexVO queryRolePermissionDetail(Integer roleId);
 }

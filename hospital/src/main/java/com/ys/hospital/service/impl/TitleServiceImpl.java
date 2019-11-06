@@ -1,7 +1,7 @@
 package com.ys.hospital.service.impl;
 
-import com.ys.hospital.pojo.Title;
 import com.ys.hospital.dao.TitleMapper;
+import com.ys.hospital.pojo.Title;
 import com.ys.hospital.service.TitleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,5 +75,13 @@ public class TitleServiceImpl implements TitleService {
     @Override
     public Title getTitleByTitleId(Integer titleId) {
         return this.titleMapper.getTitleByTitleId(titleId);
+    }
+
+    @Override
+    public Title queryTitleByParam(Title title) {
+        if (title == null) {
+            return null;
+        }
+        return this.titleMapper.queryTitleByParam(title).get(0);
     }
 }

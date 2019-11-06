@@ -43,4 +43,5 @@ public interface EmployeeRoleService {
      */
     int deleteEmployeeRoleById(Integer employeeRoleId);
 
+    EmployeeRole queryEmployeeRoleByParam(EmployeeRole employeeRole);
 }

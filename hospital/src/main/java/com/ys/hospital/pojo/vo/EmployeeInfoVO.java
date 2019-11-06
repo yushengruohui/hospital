@@ -47,4 +47,6 @@ public class EmployeeInfoVO implements Serializable {
     private Integer employeeDetailStatus;
 
     private String titleName;
+    private String roleName;
+    private String branchName;
 }

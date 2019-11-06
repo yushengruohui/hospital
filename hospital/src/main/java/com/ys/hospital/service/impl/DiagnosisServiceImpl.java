@@ -83,4 +83,11 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     public List<Diagnosis> queryDealtDiagnosis(Integer employeeId) {
         return this.diagnosisMapper.queryDealtDiagnosis(employeeId);
     }
+
+    @Override
+    public int countDiagnosisByStatus(String status) {
+        if (status.isEmpty())
+            return 0;
+        return this.diagnosisMapper.countDiagnosisByStatus(status);
+    }
 }
