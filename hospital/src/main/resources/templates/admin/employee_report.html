@@ -19,20 +19,29 @@
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;width:700px;">
                     <legend>员工报表</legend>
                 </fieldset>
-                <!--员工在职人数-->
+                <!--员工总数-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">员工总数</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="employeeTotalNumber" id="employeeTotalNumber" autocomplete="off" class="layui-input"
+                               style="width:200px;" readonly="readonly"/>
+                    </div>
+                </div>
+                <!--在职人数-->
                 <div class="layui-form-item">
                     <label class="layui-form-label">在职人数</label>
                     <div class="layui-input-block">
-                        <input type="text" name="employeeNumber" autocomplete="off" class="layui-input"
-                               style="width:200px;" th:value="109" readonly="readonly"/>
+                        <input type="text" name="employeeOnlineNumber" id="employeeOnlineNumber" autocomplete="off" class="layui-input"
+                               style="width:200px;" readonly="readonly"/>
                     </div>
                 </div>
+
                 <!--员工在线情况-->
                 <div class="layui-form-item">
                     <label class="layui-form-label">在线人数</label>
                     <div class="layui-input-block">
-                        <input type="text" name="employeeId" autocomplete="off" class="layui-input" style="width:200px;"
-                               th:value="38" readonly="readonly"/>
+                        <input type="text" name="onlineNumber" id="onlineNumber" autocomplete="off" class="layui-input" style="width:200px;"
+                               readonly="readonly"/>
                     </div>
                 </div>
                 <!--医院就诊情况-->
@@ -40,14 +49,14 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">预约数</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="employeeDetailBirthday" autocomplete="off" class="layui-input"
-                                   style="width:200px;" th:value="10086" readonly="readonly"/>
+                            <input type="text" name="appointmentNumber" id="appointmentNumber" autocomplete="off" class="layui-input"
+                                   style="width:200px;" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">诊断数</label>
+                        <label class="layui-form-label">已诊断数</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="employeeDetailGender" th:value="10010" style="width:200px;"
+                            <input type="text" name="diagnosisNumber" id="diagnosisNumber" style="width:200px;"
                                    readonly="readonly" autocomplete="off" class="layui-input">
                         </div>
                     </div>
@@ -63,12 +72,29 @@
 </div>
 <script>
     //JavaScript代码区域
-    layui.use(['element', 'table'], function () {
+    layui.use(['element'], function () {
         var element = layui.element;
-        var table = layui.table;
 
     });
 
+    $(function () {
+        //页面一加载就访问后台，获取一些常用数据
+        $.ajax({
+            type: "get",
+            url: "/admin/employee/report",
+            success: function (data) {
+                $("#onlineNumber").val(data.onlineNumber);
+                $("#employeeOnlineNumber").val(data.employeeOnlineNumber);
+                $("#appointmentNumber").val(data.appointmentNumber);
+                $("#diagnosisNumber").val(data.diagnosisNumber);
+                $("#employeeTotalNumber").val(data.employeeTotalNumber);
+            },
+            error: function () {
+                console.info("连接后台有问题");
+            }
+        });
+
+    });
 </script>
 </body>
 </html>

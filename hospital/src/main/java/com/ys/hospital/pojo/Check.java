@@ -27,4 +27,20 @@ public class Check implements Serializable {
     //所属诊断单
     private Integer diagnosisId;
 
+    private Employee employee;
+    
+    private Diagnosis diagnosis;
+    
+    private Appointment appointment;
+    
+    private Patient patient;
+    
+    private CheckDetail checkDetail;
+    
+    private CheckItem checkItem;
+    
+    private Room room;
+    
+    private String doctor;
+    
 }

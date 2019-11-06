@@ -1,7 +1,8 @@
 package com.ys.hospital.service.impl;
 
-import com.ys.hospital.pojo.Role;
 import com.ys.hospital.dao.RoleMapper;
+import com.ys.hospital.pojo.Role;
+import com.ys.hospital.pojo.vo.PermissionIndexVO;
 import com.ys.hospital.service.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,5 +65,23 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int deleteRoleById(Integer roleId) {
         return this.roleMapper.deleteRoleById(roleId);
+    }
+
+    @Override
+    public Role queryRoleByParam(Role role) {
+
+        if (role == null)
+            return null;
+        if (this.roleMapper.queryRoleByParam(role).size() == 0)
+            return null;
+        return this.roleMapper.queryRoleByParam(role).get(0);
+    }
+
+    @Override
+    public PermissionIndexVO queryRolePermissionDetail(Integer roleId) {
+        if (roleId == null) {
+            return null;
+        }
+        return this.roleMapper.queryRolePermissionDetail(roleId);
     }
 }

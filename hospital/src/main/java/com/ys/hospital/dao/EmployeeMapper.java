@@ -1,6 +1,7 @@
 package com.ys.hospital.dao;
 
 import com.ys.hospital.pojo.Employee;
+import com.ys.hospital.pojo.vo.EmployeeInfoVO;
 
 import java.util.List;
 
@@ -28,7 +29,9 @@ public interface EmployeeMapper {
      */
     Employee queryEmployeeByParam(Employee employee);
 
-    List<Employee> queryEmployeeListByStatus(Integer employeeDetailStatus);
+    int countEmployeeListByStatus(Integer employeeDetailStatus);
+
+    int countEmployeeListByOnlineStatus(Integer loginStatus);
 
     /**
      * 新增Employee数据
@@ -79,4 +82,6 @@ public interface EmployeeMapper {
      * @return 更新结果
      */
     int updateEmployeeInfo(Employee employeeDTO);
+
+    List<EmployeeInfoVO> findEmployeeByLoginStatus(Integer loginStatus);
 }

@@ -70,4 +70,6 @@ public interface AppointmentService {
      * @return 预约单信息
      */
     Appointment getAppointmentByAppointmentId(Integer appointmentId);
+
+    int countAppointmentByStatus(Integer status);
 }

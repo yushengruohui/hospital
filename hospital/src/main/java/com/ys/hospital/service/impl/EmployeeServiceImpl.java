@@ -2,6 +2,7 @@ package com.ys.hospital.service.impl;
 
 import com.ys.hospital.dao.EmployeeMapper;
 import com.ys.hospital.pojo.Employee;
+import com.ys.hospital.pojo.vo.EmployeeInfoVO;
 import com.ys.hospital.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,11 +105,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> queryEmployeeByStatus(Integer employeeDetailStatus) {
+    public int countEmployeeByStatus(Integer employeeDetailStatus) {
         if (employeeDetailStatus == null) {
-            return null;
+            return 0;
         }
-        return employeeMapper.queryEmployeeListByStatus(employeeDetailStatus);
+        return employeeMapper.countEmployeeListByStatus(employeeDetailStatus);
+    }
+
+    @Override
+    public List<EmployeeInfoVO> findEmployeeByLoginStatus(Integer loginStatus) {
+        if (loginStatus == null)
+            return null;
+        return employeeMapper.findEmployeeByLoginStatus(loginStatus);
+    }
+
+    @Override
+    public int countOnlineEmployee(Integer loginStatus) {
+        if (loginStatus == null)
+            return 0;
+        return this.employeeMapper.countEmployeeListByOnlineStatus(1);
     }
 
 }

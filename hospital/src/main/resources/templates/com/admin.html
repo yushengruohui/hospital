@@ -14,18 +14,12 @@
         <div class="layui-header">
             <div class="layui-logo">有间医院自动化管理系统</div>
             <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item">
-                    <a th:href="@{/page/admin/employee/report}">员工管理</a>
-                </li>
-                <!-- <li class="layui-nav-item"><a th:href="@{/page/admin/power/index}">权限管理</a></li> -->
-                <li class="layui-nav-item">
-                    <a th:href="@{/page/admin/report}">医药报表</a>
-                </li>
+                <li class="layui-nav-item"><a th:href="@{/page/admin/employee/report}">员工管理</a></li>
+                <li class="layui-nav-item"><a th:href="@{/page/admin/permission/index}">权限管理</a></li>
+                <!--<li class="layui-nav-item"><a th:href="@{/page/admin/report}">医药报表</a></li>-->
             </ul>
             <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a>院长</a>
-                </li>
+                <li class="layui-nav-item"><a>院长</a></li>
                 <li class="layui-nav-item"><a th:href="@{/logout}">退出登录</a></li>
             </ul>
         </div>
@@ -72,14 +66,14 @@
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
-                        <a href="javascript:;">查看权限</a>
+                        <a href="/page/admin/permission/index">查看权限</a>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;">添加权限</a>
+                        <a href="/page/admin/permission/add">添加权限</a>
                     </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">修改权限</a>
-                    </li>
+                    <!--<li class="layui-nav-item">-->
+                    <!--    <a href="/page/admin/permission/update">修改权限</a>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </div>

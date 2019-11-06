@@ -48,4 +48,6 @@ public interface DiagnosisService {
     List<Diagnosis> queryDealingDiagnosis(Integer employeeId);
 
     List<Diagnosis> queryDealtDiagnosis(Integer employeeId);
+
+    int countDiagnosisByStatus(String status);
 }

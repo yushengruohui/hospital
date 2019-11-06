@@ -35,6 +35,20 @@
         join employee e on er.employee_id = e.employee_id
         where e.employee_id=#{employeeId}
     </select>
+    <select id="queryRolePermissionDetail" resultType="com.ys.hospital.pojo.vo.PermissionIndexVO">
+        SELECT
+            r.role_name,
+            pd.power_detail_description,
+            pd.power_detail_url,
+            pd.power_detail_method
+        FROM
+            role AS r
+            LEFT JOIN role_power AS rp ON r.role_id = rp.role_id
+            LEFT JOIN power AS p ON rp.power_id = p.power_id
+            LEFT JOIN power_detail AS pd ON p.power_id = pd.power_id
+        WHERE
+            r.role_id=#{roleId}
+    </select>
 
     <!--新增Role数据-->
     <insert id="insertRole" keyProperty="roleId" useGeneratedKeys="true">

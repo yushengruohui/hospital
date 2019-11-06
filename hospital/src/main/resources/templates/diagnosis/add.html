@@ -235,7 +235,7 @@
 </script>
 </body>
 <!--================ 模态框：添加手术 ================-->
-<div id="openOperation" style="display: none">
+<div id="openOperation" style="display: none" th:if="${session.appointment}!=null">
     <form class="layui-form" lay-filter="checkItemFormFilter">
         <div class="layui-form-item">
             <label class="layui-form-label" for="send_operation_name">手术名：</label>
@@ -256,7 +256,7 @@
 </div>
 
 <!--================ 模态框：选择检查项 ================-->
-<div id="openCheck" style="display: none">
+<div id="openCheck" style="display: none" th:if="${session.appointment}!=null">
     <form class="layui-form" lay-filter="checkItemFormFilter">
         <div class="layui-form-item">
             <label class="layui-form-label">检查项：</label>

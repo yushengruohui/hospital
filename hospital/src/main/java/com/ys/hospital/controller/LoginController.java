@@ -61,16 +61,15 @@ public class LoginController {
         } else if (employee.getEmployeeDetail().getTitleId().equals(3)) {
             // 主刀医师登录
             return "redirect:/page/operation/index";
-        }
-        //发药药师界面
-        if (employee.getEmployeeDetail().getTitleId().equals(4)) {
+        } else if (employee.getEmployeeDetail().getTitleId().equals(4)) {
+            // 发药药师界面
             return "dispensing/index";
-        }
-
-
-        //住院护士界面
-        if (employee.getEmployeeDetail().getTitleId().equals(7)) {
+        } else if (employee.getEmployeeDetail().getTitleId().equals(7)) {
+            // 住院护士界面
             return "redirect:/page/inpatient/index";
+        } else if (employee.getEmployeeDetail().getTitleId().equals(6)) {
+            // 检查护士界面
+            return "check/index";
         }
         return "redirect:/";
     }

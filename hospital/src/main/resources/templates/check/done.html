@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>有间医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/layui/layui.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div th:replace="~{com/check::head_check}"></div>
+		
+		<div th:replace="~{com/check::left_check}"></div>
+		
+		<div class="layui-body">
+			<!-- 主体内容 -->
+			<div style="padding:15px">
+				<table class="layui-table" id="checkTable" lay-filter="tableFilter"></table>
+			</div>
+		</div>
+		
+		<div th:replace="~{com/check::foot}"></div>
+	</div>
+	
+	<script type="text/html" id="optBar">
+		<a class="layui-btn layui-btn-xs" lay-event="check">查看详情</a>
+	</script>
+	<script>
+    //JavaScript代码区域
+    layui.use(['element', 'table'], function () {
+        var element = layui.element;
+        var table = layui.table;
+
+        table.render({
+            elem: '#checkTable'
+            , height: 600
+            , url: '/check/ischecks' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'patientName', title: '患者', fixed: 'left', templet: function (check) {
+                            return check.patient.patientName;
+                        }
+                    }
+                    , {field: 'checkTime', title: '检查时间', sort: true}
+                    , {
+                    field: 'room_address', title: '医师', templet: function (check) {
+                        return check.doctor;
+                    }
+                }
+                    , {
+                    field: 'checkStatus', title: '检查状态', templet: function (check) {
+                        if (check.checkStatus == 0)
+                            return '待处理';
+                        else
+                            return '已处理';
+                    }
+                }
+                    ,
+                    {
+                        field: 'employeeId', title: '检查护士', templet: function (check) {
+                            return check.employee.employeeName;
+                        }
+                    }
+                    , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                ]
+            ]
+        });
+
+        //监听事件
+        table.on('tool(tableFilter)', function (obj) {
+            //获取当前行的数据
+            var rowData = obj.data;
+            switch (obj.event) {
+                case 'check':
+
+                    $.ajax({
+                        url: "/checkDetail/indexready",
+                        type: "get",
+                        data: {
+                            checkId: rowData.checkId,
+                            diagnosisId: rowData.diagnosisId
+                        }
+
+                        ,
+                        success: function (result) {
+                            window.location.href = "/page/checkDetail/index";
+                        }
+                        ,
+                        error: function () {
+                            layer.msg("连接后台失败");
+                        }
+                    });
+                    break;
+
+            }
+        });
+    });
+
+
+</script>
+	
+</body>
+</html>

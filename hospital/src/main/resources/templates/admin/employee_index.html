@@ -43,7 +43,7 @@
         var table = layui.table;
         var layer = layui.layer;
 
-        table.render({
+        var my_table = table.render({
             elem: '#admin_table'
             , height: '600'
             , url: '/admin/employee/online' //数据接口
@@ -69,37 +69,42 @@
                 //查看处方
                 case 'search_event':
                     //显示详情
-                    console.info(rowData);
-                    // layer.open({
-                    //     type: 1,//类型，新页面
-                    //     area: ['50%', '50%'],//定义宽和高
-                    //     title: '查看处方',//题目
-                    //     shadeClose: true,//点击遮罩层关闭
-                    //     content: $('#show_diagnosis_prescription'), //打开的内容
-                    //     btn: ["关闭"],//添加按钮
-                    //     success: function (layero, index) {
-                    //         // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
-                    //         layer.msg(rowData);
-                    //     },
-                    //     yes: function (index, layero) {
-                    //         //yes默认触发第一个按钮事件
-                    //         layer.close(index);
-                    //     }
-                    // });
+                    layer.msg("暂时没弄好" + JSON.stringify(rowData));
                     break;
                 case 'update_event':
-                    //修改处方
-                    // $.ajax({
-                    //     url: '/page/admin/employee/update',
-                    //     method: 'get',
-                    //     data: rowData
-                    // });
-                    window.location.href = "/page/admin/employee/update";
+                    var my_data = {
+                        employeeId: rowData.employeeId,
+                        titleName: rowData.titleName,
+                        employeeName: rowData.employeeName,
+                        branchName: rowData.branchName,
+                        roleName: rowData.roleName
+                    };
+                    var my_form = document.createElement("form");
+                    my_form.action = "/page/admin/employee/update";
+                    my_form.method = "post";
+                    my_form.style.display = "none";
+                    for (var x in my_data) {
+                        var opt = document.createElement("textarea");
+                        opt.name = x;
+                        opt.value = my_data[x];
+                        my_form.appendChild(opt);
+                    }
+                    document.body.appendChild(my_form);
+                    my_form.submit();
+                    // window.location.href = "/page/admin/employee/update?"
                     break;
                 case 'delete_event':
                     //删除，修改员工为离职状态
+                    $.ajax({
+                        type: "delete",
+                        url: "/admin/employee",
+                        data: {employeeId: rowData.employeeId},
+                        error: function () {
+                            console.info("连接后台有问题");
+                        }
+                    });
                     layer.msg("success");
-                    window.location.reload();
+                    my_table.reload();
                     break;
             }
         });
