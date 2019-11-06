@@ -43,4 +43,6 @@ public interface CheckItemService {
      */
     int deleteCheckItemById(Integer checkItemId);
 
+    List<CheckItem> queryCheckItemByParam(CheckItem checkItem);
+
 }

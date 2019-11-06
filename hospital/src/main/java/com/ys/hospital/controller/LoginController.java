@@ -71,6 +71,8 @@ public class LoginController {
         //住院护士界面
         if (employee.getEmployeeDetail().getTitleId().equals(7)) {
             return "redirect:/page/inpatient/index";
+        }else if(employee.getEmployeeDetail().getTitleId().equals(6)) {
+        	return "check/index";
         }
         return "redirect:/";
     }

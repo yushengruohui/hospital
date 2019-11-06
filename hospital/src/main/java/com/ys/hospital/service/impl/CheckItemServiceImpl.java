@@ -65,4 +65,12 @@ public class CheckItemServiceImpl implements CheckItemService {
     public int deleteCheckItemById(Integer checkItemId) {
         return this.checkItemMapper.deleteCheckItemById(checkItemId);
     }
+
+	@Override
+	public List<CheckItem> queryCheckItemByParam(CheckItem checkItem) {
+		if(checkItem == null) {
+			return null;
+		}
+		return checkItemMapper.queryCheckItemByParam(checkItem);
+	}
 }

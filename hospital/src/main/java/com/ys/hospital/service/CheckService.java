@@ -44,4 +44,10 @@ public interface CheckService {
     int deleteCheckById(Integer checkId);
 
     double queryPrice(Integer checkItemId);
+
+	List<Check> findUntreatedCheck();
+	
+	List<Check> queryCheckByParam(Check check);
+
+	List<Check> findtreatedCheck();
 }

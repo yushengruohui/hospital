@@ -1,20 +1,27 @@
 package com.ys.hospital.controller;
 
 import com.ys.hospital.pojo.Appointment;
+import com.ys.hospital.pojo.Check;
+import com.ys.hospital.pojo.CheckDetail;
 import com.ys.hospital.pojo.Diagnosis;
 import com.ys.hospital.pojo.Employee;
 import com.ys.hospital.pojo.EmployeeDetail;
 import com.ys.hospital.pojo.dto.AdminEmployeeUpdateDTO;
+import com.ys.hospital.service.CheckDetailService;
+import com.ys.hospital.service.CheckService;
 import com.ys.hospital.service.DiagnosisService;
 import com.ys.hospital.service.EmployeeDetailService;
 import com.ys.hospital.service.OperationNotifyService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -33,6 +40,12 @@ public class PageController {
     private OperationNotifyService operationNotifyService;
     @Resource
     private EmployeeDetailService employeeDetailService;
+
+    @Resource
+    private CheckDetailService checkDetailService;
+
+    @Resource
+    private CheckService checkService;
 
     @RequestMapping("/employee/index")
     public String toEmployeeIndex(HttpSession session, Model model) {
@@ -234,4 +247,40 @@ public class PageController {
     public String toAdminPermissionAdd() {
         return "admin/permission_add";
     }
+
+    @RequestMapping("/check/index")
+    public String toCheckIndex() {
+        return "check/index";
+    }
+
+    @RequestMapping("/check/done")
+    public String toCheckDone() {
+        return "check/done";
+    }
+
+    @RequestMapping("/check/information")
+    public String toCheckInformation() {
+        return "check/information";
+    }
+
+    @RequestMapping("/checkDetail/index")
+    public String toCheckDetailIndex() {
+        return "checkDetail/index";
+    }
+
+    @PostMapping("/checkDetail/writeReady")
+    @ResponseBody
+    public String checkDetailWriteReady(@RequestBody CheckDetail checkDetail, HttpSession session) {
+        session.setAttribute("checkDetail", checkDetail);
+        session.setAttribute("patient", checkDetail.getPatient());
+        session.setAttribute("checkItem", checkDetail.getCheckItem());
+        return "/page/checkDetail/write";
+    }
+
+    @RequestMapping("/checkDetail/write")
+    public String toCheckDetailWrite() {
+        return "checkDetail/write";
+    }
+
+
 }

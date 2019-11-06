@@ -29,4 +29,15 @@ public class CheckDetail implements Serializable {
     //支付时间
     private Date checkDetailPayTime;
 
+    private Diagnosis diagnosis;
+    
+    private Appointment appointment;
+    
+    private Patient patient;
+    
+    private CheckItem checkItem;
+    
+    private Room room;
+    
+    private Employee employee;
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.sql.SQLOutput;
+import javax.servlet.http.HttpSession;
 
 /**
  * (Employee)表控制层

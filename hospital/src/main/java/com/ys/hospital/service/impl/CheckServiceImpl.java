@@ -73,4 +73,26 @@ public class CheckServiceImpl implements CheckService {
         }
         return this.checkMapper.queryPriceByCheckItemId(checkItemId);
     }
+
+	@Override
+	public List<Check> findUntreatedCheck() {
+		Check check = new Check();
+		check.setCheckStatus(0);
+		
+		return checkMapper.queryCheckByParam(check);
+	}
+
+	@Override
+	public List<Check> queryCheckByParam(Check check) {
+		// TODO Auto-generated method stub
+		return checkMapper.queryCheckByParam(check);
+	}
+
+	@Override
+	public List<Check> findtreatedCheck() {
+		Check check = new Check();
+		check.setCheckStatus(1);
+		
+		return checkMapper.queryCheckByParam(check);
+	}
 }
