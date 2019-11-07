@@ -77,7 +77,7 @@ public class AdminController {
         employee.setEmployeeName(employeeAddDTO.getEmployeeName());
         employee.setEmployeePassword("123456");
         employeeService.insertEmployee(employee);
-        initWorkTimeTool.initWorkTime(employee.getEmployeeId());
+
 
         // 添加用户详情
         EmployeeDetail employeeDetail = new EmployeeDetail();
@@ -89,15 +89,15 @@ public class AdminController {
         title.setTitleName(employeeAddDTO.getTitleName());
         title = titleService.queryTitleByParam(title);
         employeeDetail.setTitleId(title.getTitleId());
-        employeeDetailService.insertEmployeeDetail(employeeDetail);
+
         // 如果有科室，添加科室
         if (!employeeAddDTO.getBranchName().isEmpty()) {
             Branch branch = new Branch();
             branch.setBranchName(employeeAddDTO.getBranchName());
             branch = branchService.queryBranchByParam(branch).get(0);
-            if (branch.getBranchId() != null)
-                employeeDetail.setBranchId(branch.getBranchId());
+            employeeDetail.setBranchId(branch.getBranchId());
         }
+        employeeDetailService.insertEmployeeDetail(employeeDetail);
 
         // 添加角色
         Role role = new Role();
@@ -107,6 +107,8 @@ public class AdminController {
         employeeRole.setRoleId(role.getRoleId());
         employeeRole.setEmployeeId(employee.getEmployeeId());
         employeeRoleService.insertEmployeeRole(employeeRole);
+
+        initWorkTimeTool.initWorkTime(employee.getEmployeeId());
         return "success";
     }
 
