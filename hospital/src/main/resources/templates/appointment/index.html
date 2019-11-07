@@ -35,7 +35,7 @@
         var element = layui.element;
         var table = layui.table;
 
-        table.render({
+        var my_table = table.render({
             elem: '#appointmentTable'
             , height: 600
             , url: '/appointment/untreatedAppointments' //数据接口
@@ -207,7 +207,7 @@
                         },
                         success: function (result) {
                             layer.msg(result);
-                            location.reload();
+                            my_table.reload();
                         },
                         error: function () {
                             layer.msg("连接后台失败");

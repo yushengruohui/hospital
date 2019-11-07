@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="~{com/inpatient::title}"></div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>有间医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/layui.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -47,7 +52,7 @@
                     },
                     {
                         field: 'bedStatus', title: '病床状态', fixed: 'left', templet: function (bed) {
-                            return bed.bedStatus='0'?"空闲":bed.bedStatus;
+                            return bed.bedStatus = '0' ? "空闲" : bed.bedStatus;
                         }
                     },
                     {
@@ -57,7 +62,7 @@
                     },
                     {
                         field: 'patientId', title: '患者', templet: function (bed) {
-                            return bed.patientId==null?"空":bed.patientId;
+                            return bed.patientId == null ? "空" : bed.patientId;
                         }
                     },
                     {
@@ -67,14 +72,14 @@
                     },
                     {
                         field: 'employeeId', title: '处理护士', templet: function (bed) {
-                            return bed.employeeId==null?"空":bed.employeeId;
+                            return bed.employeeId == null ? "空" : bed.employeeId;
                         }
                     },
                     {
-                        field: 'bedEntryTime', width:170, title: '入住时间', sort: true
+                        field: 'bedEntryTime', width: 170, title: '入住时间', sort: true
                     },
                     {
-                        field: 'bedLeaveTime', width:170, title: '离开时间', sort: true
+                        field: 'bedLeaveTime', width: 170, title: '离开时间', sort: true
                     }
                 ]
             ]

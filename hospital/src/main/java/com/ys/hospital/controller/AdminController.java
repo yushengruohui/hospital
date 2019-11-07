@@ -10,6 +10,7 @@ import com.ys.hospital.pojo.vo.EmployeeReportVO;
 import com.ys.hospital.pojo.vo.PermissionIndexVO;
 import com.ys.hospital.service.*;
 import com.ys.hospital.tools.BeanTool;
+import com.ys.hospital.tools.InitWorkTimeTool;
 import com.ys.hospital.tools.MyPageInfo;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,8 @@ public class AdminController {
     private RolePowerService rolePowerService;
     @Resource
     private BranchService branchService;
+    @Resource
+    private InitWorkTimeTool initWorkTimeTool;
 
     @GetMapping("/employee")
     public EmployeeInfoVO searchEmployee(Integer employeeId) {
@@ -74,6 +77,7 @@ public class AdminController {
         employee.setEmployeeName(employeeAddDTO.getEmployeeName());
         employee.setEmployeePassword("123456");
         employeeService.insertEmployee(employee);
+        initWorkTimeTool.initWorkTime(employee.getEmployeeId());
 
         // 添加用户详情
         EmployeeDetail employeeDetail = new EmployeeDetail();

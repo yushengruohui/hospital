@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="~{com/admin::admin_title}"></div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>有间医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/layui.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -31,24 +36,30 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">角色</label>
                     <div class="layui-input-block">
-                        <input type="text" name="roleName" id="roleName" autocomplete="off" class="layui-input"
-                               style="width:525px;"/>
+                        <select name="roleName" required>
+                            <option value="">请选择一个角色</option>
+                            <option th:each="role:${roleNames}" th:value="${role}">[[${role}]]</option>
+                        </select>
                     </div>
                 </div>
                 <!-- employeeDetailDescript -->
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">职称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="titleName" id="titleName" autocomplete="off" class="layui-input"
-                               style="width:525px;"/>
+                        <select name="titleName" id="titleName" required>
+                            <option value="">请选择一个职称</option>
+                            <option th:each="title:${titleNames}" th:value="${title}">[[${title}]]</option>
+                        </select>
                     </div>
                 </div>
                 <!-- employee -->
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">科室</label>
                     <div class="layui-input-block">
-                        <input type="text" name="branchName" id="branchName" autocomplete="off" class="layui-input"
-                               style="width:525px;"/>
+                        <select name="branchName" id="branchName">
+                            <option value="">请选择一个科室</option>
+                            <option th:each="branch:${branchNames}" th:value="${branch}">[[${branch}]]</option>
+                        </select>
                     </div>
                 </div>
                 <!-- employee -->
