@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="~{com/inpatient::title}"></div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>有间医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/layui.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </head>
 <body class="layui-layout-body">
@@ -41,7 +45,7 @@
             , cols: [
                 [
                     {
-                        field: 'inpatientId', width: 100, title: '住院信息ID', fixed: 'left', templet: function (inpatient) {
+                        field: 'inpatientId', title: '住院信息ID', fixed: 'left', templet: function (inpatient) {
                             return inpatient.inpatientId;
                         }
                     },
@@ -50,7 +54,7 @@
                     // },
                     {
                         field: 'inpatientStatus', title: '处理状态', templet: function (inpatient) {
-                            return inpatient.inpatientStatus='0'?"正在处理":inpatient.inpatientStatus;
+                            return inpatient.inpatientStatus = '0' ? "正在处理" : inpatient.inpatientStatus;
                         }
                     },
                     {
@@ -70,7 +74,7 @@
                     },
                     {
                         field: 'inpatientPayStatus', title: '支付状态', templet: function (inpatient) {
-                            return inpatient.inpatientPayStatus='0'?"未支付":inpatient.inpatientPayStatus;
+                            return inpatient.inpatientPayStatus = '0' ? "未支付" : inpatient.inpatientPayStatus;
                         }
                     },
                     {
@@ -79,19 +83,19 @@
                         }
                     },
                     {
-                        field: 'inpatientEntryTime', width:170, title: '入院时间', sort: true
+                        field: 'inpatientEntryTime', width: 170, title: '入院时间', sort: true
                     },
-                    {title: '操作', fixed: 'right', align: 'center', width:250, toolbar: '#optBar'}
+                    {title: '操作', fixed: 'right', align: 'center', width: 250, toolbar: '#optBar'}
                 ]
             ]
         });
 
 
         //点击事件
-        table.on('tool(inpatient_table_filter)', function (obj){
+        table.on('tool(inpatient_table_filter)', function (obj) {
             //获取当前行的数据
             var rowData = obj.data;
-            switch (obj.event){
+            switch (obj.event) {
                 case 'leave':
                     layer.open({
                         type: 1,//类型，新页面
@@ -99,22 +103,22 @@
                         title: '出院信息',//题目
                         shadeClose: false,//点击遮罩层关闭
                         content: $('#leave_inpatient'), //打开的内容
-                        btn: ["确认出院","返回"],//添加两个按钮
+                        btn: ["确认出院", "返回"],//添加两个按钮
                         success: function (layero, index) {
                             // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
                             $("#send_inpatientId").val(rowData.inpatientId);
                             $("#send_bedId").val(rowData.bed.bedName);
                             $("#send_inpatientPrice").val(rowData.inpatientPrice);
                             $("#send_inpatientPrepaidPrice").val(rowData.inpatientPrepaidPrice);
-                            if ((rowData.inpatientPrice)-(rowData.inpatientPrepaidPrice)>0) {
-                                $("#send_inpatientRepairPrice").val((rowData.inpatientPrice)-(rowData.inpatientPrepaidPrice));
+                            if ((rowData.inpatientPrice) - (rowData.inpatientPrepaidPrice) > 0) {
+                                $("#send_inpatientRepairPrice").val((rowData.inpatientPrice) - (rowData.inpatientPrepaidPrice));
                                 // $("#send_inpatientReturnPrice").attr(hidden,"hidden");
                                 // send_inpatientRepairPrice
-                            }else {
+                            } else {
                                 $("#send_inpatientReturnPrice").val((rowData.inpatientPrepaidPrice) - (rowData.inpatientPrice))
                                 // $("#send_inpatientRepairPrice").attr(hidden,"hidden");
                             }
-                            },
+                        },
                         yes: function (index, layero) {
                             //yes默认触发第一个按钮事件
                             var send_data = {
@@ -126,7 +130,7 @@
                             $.ajax({
                                 url: "/inpatient/leaveInpatient",
                                 type: "post",
-                                data:send_data,
+                                data: send_data,
                                 success: function (result) {
                                     alert(result);
                                 },
@@ -151,7 +155,7 @@
                         title: '添加住院明细',//题目
                         shadeClose: false,//点击遮罩层关闭
                         content: $('#insert_inpatient_detail'), //打开的内容
-                        btn: ["提交","返回"],//添加两个按钮
+                        btn: ["提交", "返回"],//添加两个按钮
                         success: function (layero, index) {
                             // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
                             $("#inpatientId").val(rowData.inpatientId);
@@ -160,14 +164,14 @@
                             //yes默认触发第一个按钮事件
                             var send_data = {
                                 // inpatientId:$("")
-                                inpatientDetailPrice:$("#send_inpatientDetailPrice").val(),
-                                inpatientDetailDescription:$("#send_inpatientDetailDescription").val(),
+                                inpatientDetailPrice: $("#send_inpatientDetailPrice").val(),
+                                inpatientDetailDescription: $("#send_inpatientDetailDescription").val(),
                                 inpatientId: $("#inpatientId").val()
                             };
                             $.ajax({
                                 url: "/inpatientDetail/insertInpatientDetail",
                                 type: "post",
-                                data:send_data,
+                                data: send_data,
                                 success: function (result) {
                                     alert(result);
                                 },
@@ -202,12 +206,12 @@
                                 url: "/inpatientDetail/queryInpatientDetailByInpatientId",
                                 type: "post",
                                 data: inpatientId1,
-                                success: function(result){
+                                success: function (result) {
                                     // $("#open_inpatient_detail").empty();
-                                    $.each(result,function(index,inpatientDetail){
-                                        var inpatientDetailPrice=$("<td></td>").append(inpatientDetail.inpatientDetailPrice);
-                                        var inpatientDetailDescription=$("<td></td>").append(inpatientDetail.inpatientDetailDescription);
-                                        var inpatientDetailDate=$("<td></td>").append(inpatientDetail.inpatientDetailDate);
+                                    $.each(result, function (index, inpatientDetail) {
+                                        var inpatientDetailPrice = $("<td></td>").append(inpatientDetail.inpatientDetailPrice);
+                                        var inpatientDetailDescription = $("<td></td>").append(inpatientDetail.inpatientDetailDescription);
+                                        var inpatientDetailDate = $("<td></td>").append(inpatientDetail.inpatientDetailDate);
                                         $("<tr></tr>").append(inpatientDetailPrice).append(inpatientDetailDescription).append(inpatientDetailDate).appendTo("#open_inpatient_detail tbody");
                                     });
                                 },
@@ -299,8 +303,8 @@
                 <div class="layui-input-block">
                     <div class="layui-input-block">
                         <textarea name="send_inpatientDetailDescription" id="send_inpatientDetailDescription"
-                               autocomplete="off"
-                               class="layui-textarea">
+                                  autocomplete="off"
+                                  class="layui-textarea">
                         </textarea>
                     </div>
                 </div>

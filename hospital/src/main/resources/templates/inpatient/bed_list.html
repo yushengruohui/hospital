@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="~{com/inpatient::title}"></div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>有间医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/layui.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -49,9 +54,9 @@
                     },
                     {
                         field: 'bedStatus', title: '病床状态', fixed: 'left', templet: function (bed) {
-                            if(bed.bedStatus=='0'){
+                            if (bed.bedStatus == '0') {
                                 return "空闲";
-                            }else {
+                            } else {
                                 return "占用";
                             }
                             // return bed.bedStatus='0'?"空闲":bed.bedStatus;
@@ -78,10 +83,10 @@
                         }
                     },
                     {
-                        field: 'bedEntryTime', width:170, title: '入住时间', sort: true
+                        field: 'bedEntryTime', width: 170, title: '入住时间', sort: true
                     },
                     {
-                        field: 'bedLeaveTime', width:170, title: '离开时间', sort: true
+                        field: 'bedLeaveTime', width: 170, title: '离开时间', sort: true
                     }
                     // ,
                     // {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}

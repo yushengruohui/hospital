@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <div th:replace="~{com/inpatient::title}"></div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>有间医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/layui.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </head>
 <body class="layui-layout-body">
@@ -38,13 +42,16 @@
             , cols: [
                 [
                     {
-                        field: 'inpatientNotifyId', title: '住院通知ID', fixed: 'left', templet: function (inpatientNotify) {
+                        field: 'inpatientNotifyId',
+                        title: '住院通知ID',
+                        fixed: 'left',
+                        templet: function (inpatientNotify) {
                             return inpatientNotify.inpatientNotifyId;
                         }
                     }
                     , {
                     field: 'inpatientNotifyStatus', title: '处理状态', templet: function (inpatientNotify) {
-                        return inpatientNotify.inpatientNotifyStatus='0'?"未处理":inpatientNotify.inpatientNotifyStatus;
+                        return inpatientNotify.inpatientNotifyStatus = '0' ? "未处理" : inpatientNotify.inpatientNotifyStatus;
                     }
                 }
                     ,
@@ -53,14 +60,15 @@
                     }
                     ,
                     {
-                    field: 'diagnosisId', title: '所属诊断单ID', templet: function (inpatientNotify) {
-                        return inpatientNotify.diagnosisId;
+                        field: 'diagnosisId', title: '所属诊断单ID', templet: function (inpatientNotify) {
+                            return inpatientNotify.diagnosisId;
+                        }
+                    }
+                    , {
+                    field: 'employeeId', title: '处理护士', templet: function (inpatientNotify) {
+                        return inpatientNotify.employeeId == null ? "" : inpatientNotify.employeeId;
                     }
                 }
-                    , {
-                    field: 'employeeId', title: '处理护士', templet: function (inpatientNotify){
-                        return inpatientNotify.employeeId==null?"":inpatientNotify.employeeId;
-                    }}
                     , {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
                 ]
             ]
@@ -78,16 +86,16 @@
                         area: ['700px', '500px'],//定义宽和高
                         title: '填写住院信息',//题目
                         shadeClose: false,//点击遮罩层关闭
-                        content:$('#open_inpatient'),//打开的内容
-                        btn: ["确认","返回"],//添加两个按钮
+                        content: $('#open_inpatient'),//打开的内容
+                        btn: ["确认", "返回"],//添加两个按钮
 
                         success: function (layero, index) {
                             $.ajax({
-                                url: "/bed/queryBedByStatu?inpatientNotifyId="+rowData.inpatientNotifyId,
+                                url: "/bed/queryBedByStatu?inpatientNotifyId=" + rowData.inpatientNotifyId,
                                 type: "get",
-                                success: function(result){
-                                    $.each(result,function(index,bed){
-                                        $('#bedName').append(new Option(bed.bedName,bed.bedId));
+                                success: function (result) {
+                                    $.each(result, function (index, bed) {
+                                        $('#bedName').append(new Option(bed.bedName, bed.bedId));
                                     });
                                     layui.form.render("select");
                                 },

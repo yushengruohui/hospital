@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description:
@@ -34,6 +36,15 @@ public class PageController {
 
     @Resource
     private CheckService checkService;
+
+    @Resource
+    private RoleService roleService;
+
+    @Resource
+    private TitleService titleService;
+
+    @Resource
+    private BranchService branchService;
 
     @RequestMapping("/employee/index")
     public String toEmployeeIndex(HttpSession session, Model model) {
@@ -233,7 +244,34 @@ public class PageController {
     }
 
     @RequestMapping("/admin/employee/add")
-    public String toAdminEmployeeAdd() {
+    public String toAdminEmployeeAdd(Model model) {
+        // 前端显示角色名列表
+        List<Role> roles = roleService.queryAllRole();
+        List<String> roleNames = new ArrayList<>();
+        for (int i = 0; i < roles.size(); i++) {
+            String name = roles.get(i).getRoleName();
+            roleNames.add(name);
+        }
+        model.addAttribute("roleNames", roleNames);
+
+        // 前端显示职称列表
+        List<Title> titles = titleService.queryAllTitle();
+        List<String> titleNames = new ArrayList<>();
+        for (int i = 0; i < titles.size(); i++) {
+            String name = titles.get(i).getTitleName();
+            titleNames.add(name);
+        }
+        model.addAttribute("titleNames", titleNames);
+
+        // 前端显示科室列表
+        List<Branch> branches = branchService.queryAllBranch();
+        List<String> branchNames = new ArrayList<>();
+        for (int i = 0; i < branches.size(); i++) {
+            String name = branches.get(i).getBranchName();
+            branchNames.add(name);
+        }
+        model.addAttribute("branchNames", branchNames);
+
         return "admin/employee_add";
     }
 

@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="~{com/inpatient::title}"></div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>有间医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/layui.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -48,11 +53,11 @@
                     field: 'inpatientStatus', width: 100, title: '处理状态', templet: function (inpatient) {
                             if(inpatient.inpatientStatus=='0'){
                                 return "未处理";
-                            }else {
+                            } else {
                                 return "已处理";
                             }
-                        // return inpatient.inpatientStatus;
-                    }
+                            // return inpatient.inpatientStatus;
+                        }
                     },
                     {
                         field: 'patientName', width: 80, title: '患者', templet: function (inpatient) {
@@ -73,7 +78,7 @@
                         field: 'inpatientPayStatus', width: 90, title: '支付状态', templet: function (inpatient) {
                             if(inpatient.inpatientPayStatus=='0'){
                                 return "未支付";
-                            }else {
+                            } else {
                                 return "已支付";
                             }
                             // return inpatient.inpatientPayStatus;
@@ -100,10 +105,10 @@
             ]
         });
         //点击事件
-        table.on('tool(inpatient_table_filter)', function (obj){
+        table.on('tool(inpatient_table_filter)', function (obj) {
             //获取当前行的数据
             var rowData = obj.data;
-            switch (obj.event){
+            switch (obj.event) {
                 case 'checkDetail':
                     layer.open({
                         type: 1,//类型，新页面
@@ -121,11 +126,11 @@
                                 url: "/inpatientDetail/queryInpatientDetailByInpatientId",
                                 type: "post",
                                 data: inpatientId1,
-                                success: function(result){
-                                    $.each(result,function(index,inpatientDetail){
-                                        var inpatientDetailPrice=$("<td></td>").append(inpatientDetail.inpatientDetailPrice);
-                                        var inpatientDetailDescription=$("<td></td>").append(inpatientDetail.inpatientDetailDescription);
-                                        var inpatientDetailDate=$("<td></td>").append(inpatientDetail.inpatientDetailDate);
+                                success: function (result) {
+                                    $.each(result, function (index, inpatientDetail) {
+                                        var inpatientDetailPrice = $("<td></td>").append(inpatientDetail.inpatientDetailPrice);
+                                        var inpatientDetailDescription = $("<td></td>").append(inpatientDetail.inpatientDetailDescription);
+                                        var inpatientDetailDate = $("<td></td>").append(inpatientDetail.inpatientDetailDate);
                                         $("<tr></tr>").append(inpatientDetailPrice).append(inpatientDetailDescription).append(inpatientDetailDate).appendTo("#open_inpatient_detail tbody");
                                     });
                                 },
