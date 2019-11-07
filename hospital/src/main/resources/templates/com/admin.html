@@ -18,6 +18,10 @@
                 <li class="layui-nav-item"><a th:href="@{/page/admin/employee/report}">员工管理</a></li>
                 <li class="layui-nav-item"><a th:href="@{/page/admin/permission/index}">权限管理</a></li>
                 <!--<li class="layui-nav-item"><a th:href="@{/page/admin/report}">医药报表</a></li>-->
+                <li class="layui-nav-item"><a th:href="@{/page/admin/doctor/appointment}">医师管理</a></li>
+                 <li class="layui-nav-item"><a th:href="@{/page/admin/nurse/index}">护士管理</a></li>
+                 <li class="layui-nav-item"><a th:href="@{/page/admin/department/index}">科室管理</a></li>
+                 <li class="layui-nav-item"><a th:href="@{/page/admin/medicine/index}">医药管理</a></li>
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item"><a>院长</a></li>
@@ -79,7 +83,30 @@
             </div>
         </div>
     </div>
-
+    <!--医师模块-->
+    <div th:fragment="admin_left_doctor">
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                     <li class="layui-nav-item">
+                        <a href="/page/admin/permission/index">值班情况</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="/page/admin/permission/index">预约记录</a>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="/page/admin/permission/add">诊断记录</a>
+                    </li>
+                     <li class="layui-nav-item">
+                        <a href="/page/admin/permission/index">手术记录</a>
+                    </li>
+                     <li class="layui-nav-item">
+                        <a href="/page/admin/permission/index">发药记录</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div th:fragment="foot">
         <div class="layui-footer">
             <!-- 底部固定区域 -->
