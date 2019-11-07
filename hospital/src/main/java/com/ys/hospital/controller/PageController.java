@@ -215,6 +215,24 @@ public class PageController {
         return "/inpatient/bed_status";
     }
 
+    @RequestMapping("/inpatient/employee/index")
+    public String toInpatientEmployeeIndex(HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
+        return "inpatient/employee/index";
+    }
+
+    @RequestMapping("/inpatient/employee/update")
+    public String toInpatientEmployeeUpdate(Model model) {
+        String employeeId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Employee employee = new Employee();
+        employee.setEmployeeId(Integer.valueOf(employeeId));
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
+        return "inpatient/employee/update";
+    }
+
     @RequestMapping("/admin/employee/report")
     public String toAdminEmployeeReport() {
         return "admin/employee_report";
@@ -253,7 +271,10 @@ public class PageController {
     public String toAdminNurseCheck() {
         return "admin/nurse/check";
     }
-
+    @RequestMapping("/admin/nurse/checkDetail")
+    public String toAdminNurseCheckDetail(){
+        return "admin/nurse/checkDetail";
+    }
     @RequestMapping("/admin/room/check_room")
     public String toAdminRoomCheckRoom() {
         return "admin/room/check_room";
