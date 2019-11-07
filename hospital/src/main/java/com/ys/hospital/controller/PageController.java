@@ -225,6 +225,60 @@ public class PageController {
         return "admin/employee_index";
     }
 
+    @RequestMapping("/admin/doctor/appointment")
+    public String toAdminDoctorAppointment() {
+        return "admin/doctor/appointment";
+    }
+    @RequestMapping("/admin/doctor/diagnosis")
+    public String toAdminDoctorDiagnosis() {
+        return "admin/doctor/diagnosis";
+    }
+    @RequestMapping("/admin/doctor/operation")
+    public String toAdminDoctorOperation() {
+        return "admin/doctor/operation";
+    }
+    @RequestMapping("/admin/doctor/work")
+    public String toAdminDoctorWork() {
+        return "admin/doctor/work";
+    }
+    @RequestMapping("/admin/doctor/dispensing")
+    public String toAdminDoctorAispensing() {
+        return "admin/doctor/dispensing";
+    }
+    @RequestMapping("/admin/nurse/inpatient")
+    public String toAdminNurseInpatient() {
+        return "admin/nurse/inpatient";
+    }
+    @RequestMapping("/admin/nurse/check")
+    public String toAdminNurseCheck() {
+        return "admin/nurse/check";
+    }
+
+    @RequestMapping("/admin/room/check_room")
+    public String toAdminRoomCheckRoom() {
+        return "admin/room/check_room";
+    }
+
+    @RequestMapping("/admin/room/consult_room")
+    public String toAdminRoomConsultRoom() {
+        return "admin/room/consult_room";
+    }
+
+    @RequestMapping("/admin/room/inpatient_room")
+    public String toAdminRoomInpatientRoom() {
+        return "admin/room/inpatient_room";
+    }
+
+    @RequestMapping("/admin/room/ward_room")
+    public String toAdminRoomWardRoom() {
+        return "admin/room/ward_room";
+    }
+
+    @RequestMapping("/admin/medicine/index")
+    public String toAdminMedicineIndex() {
+        return "admin/medicine/index";
+    }
+
     @RequestMapping("/admin/employee/add")
     public String toAdminEmployeeAdd(Model model) {
         // 前端显示角色名列表
