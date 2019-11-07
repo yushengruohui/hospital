@@ -271,7 +271,10 @@ public class PageController {
     public String toAdminNurseCheck() {
         return "admin/nurse/check";
     }
-
+    @RequestMapping("/admin/nurse/checkDetail")
+    public String toAdminNurseCheckDetail(){
+        return "admin/nurse/checkDetail";
+    }
     @RequestMapping("/admin/room/check_room")
     public String toAdminRoomCheckRoom() {
         return "admin/room/check_room";

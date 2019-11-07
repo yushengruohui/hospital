@@ -19,8 +19,8 @@
                 <li class="layui-nav-item"><a th:href="@{/page/admin/permission/index}">权限管理</a></li>
                 <!--<li class="layui-nav-item"><a th:href="@{/page/admin/report}">医药报表</a></li>-->
                 <li class="layui-nav-item"><a th:href="@{/page/admin/doctor/appointment}">医师管理</a></li>
-                 <li class="layui-nav-item"><a th:href="@{/page/admin/nurse/check}">护士管理</a></li>
-                 <li class="layui-nav-item"><a th:href="@{/page/admin/room/check_room}">区域管理</a></li>
+                 <li class="layui-nav-item"><a th:href="@{/page/admin/nurse/inpatient}">护士管理</a></li>
+                 <li class="layui-nav-item"><a th:href="@{/page/admin/room/ward_room}">区域管理</a></li>
                  <li class="layui-nav-item"><a th:href="@{/page/admin/medicine/index}">医药管理</a></li>
             </ul>
             <ul class="layui-nav layui-layout-right">
@@ -128,6 +128,9 @@
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="/page/admin/room/ward_room">住院区</a>
+                    </li>
                      <li class="layui-nav-item">
                         <a href="/page/admin/room/check_room">检查区</a>
                     </li>
@@ -136,9 +139,6 @@
                     </li>
                     <li class="layui-nav-item">
                         <a href="/page/admin/room/consult_room">诊室区</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="/page/admin/room/ward_room">住院区</a>
                     </li>
                 </ul>
             </div>

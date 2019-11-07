@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>有间医院自动化管理系统</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/layui/layui.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{com/admin::admin_head}"></div>
+
+    <div th:replace="~{com/admin::admin_left_nurse}"></div>
+
+    <div class="layui-body">
+        <!-- 主体内容 -->
+        <div style="padding:15px">
+            <table class="layui-table" id="checkTable" lay-filter="tableFilter"></table>
+        </div>
+    </div>
+
+    <div th:replace="~{com/admin::foot}"></div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'table'], function () {
+        var element = layui.element;
+        var table = layui.table;
+
+        table.render({
+            elem: '#checkTable'
+            , height: 600
+            , url: '/checkDetail/showCheckDetail' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'patientName', title: '患者', fixed: 'left', templet: function (checkDetail) {
+                            return checkDetail.patient.patientName;
+                        }
+                    }
+                    , {
+                    field: 'checkItemName', title: '检查项目', fixed: 'left', templet: function (checkDetail) {
+                        return checkDetail.checkItem.checkItemName;
+                    }
+                }
+                    , {
+                    field: 'roomAddress', title: '检查室', templet: function (checkDetail) {
+                        return checkDetail.room.roomAddress;
+                    }
+                }
+                    , {
+                    field: 'checkItemPrice', title: '检查项目价格', templet: function (checkDetail) {
+                        return checkDetail.checkItem.checkItemPrice;
+                    }
+                }
+                    , {
+                    field: 'checkDetailPayStatus', title: '支付状态', templet: function (checkDetail) {
+                        if (checkDetail.checkDetailPayStatus == 0) {
+                            return "未支付";
+                        } else {
+                            return "已支付";
+                        }
+                    }
+                }
+                ]
+            ]
+        });
+
+    });
+</script>
+
+</body>
+</html>
