@@ -34,9 +34,9 @@
 
                 <!-- employeeDetailIdentity -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">角色</label>
-                    <div class="layui-input-block">
-                        <select name="roleName" required>
+                    <label class="layui-form-label" for="roleName">角色</label>
+                    <div class="layui-input-block" style="width:200px;">
+                        <select name="roleName" id="roleName">
                             <option value="">请选择一个角色</option>
                             <option th:each="role:${roleNames}" th:value="${role}">[[${role}]]</option>
                         </select>
@@ -44,9 +44,9 @@
                 </div>
                 <!-- employeeDetailDescript -->
                 <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">职称</label>
-                    <div class="layui-input-block">
-                        <select name="titleName" id="titleName" required>
+                    <label class="layui-form-label" for="titleName">职称</label>
+                    <div class="layui-input-block" style="width:200px;">
+                        <select name="titleName" id="titleName">
                             <option value="">请选择一个职称</option>
                             <option th:each="title:${titleNames}" th:value="${title}">[[${title}]]</option>
                         </select>
@@ -54,8 +54,8 @@
                 </div>
                 <!-- employee -->
                 <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">科室</label>
-                    <div class="layui-input-block">
+                    <label class="layui-form-label" for="branchName">科室</label>
+                    <div class="layui-input-block" style="width:200px;">
                         <select name="branchName" id="branchName">
                             <option value="">请选择一个科室</option>
                             <option th:each="branch:${branchNames}" th:value="${branch}">[[${branch}]]</option>
@@ -83,9 +83,9 @@
 </div>
 <script>
     //JavaScript代码区域
-    layui.use('element', function () {
+    layui.use(['element', 'form'], function () {
         var element = layui.element;
-
+        var form = layui.form;
     });
 
 </script>
