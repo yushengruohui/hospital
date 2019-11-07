@@ -31,4 +31,11 @@ public interface ClientService {
      * @return
      */
     public Client insertClient(Client client);
+
+    /**
+     * 根据用户信息修改用户
+     * @param client
+     * @return
+     */
+    public int updateClient(Client client);
 }

@@ -14,7 +14,7 @@
     <div th:replace="~{com/inpatient::head}"></div>
 
     <!--================ 网页左侧导航栏 ================-->
-    <div th:replace="~{com/inpatient::left_inpatient}"></div>
+    <div th:replace="~{com/inpatient::left_bed}"></div>
 
     <!--================ 主体内容区 ================-->
     <div class="layui-body">
@@ -25,7 +25,9 @@
         </div>
     </div>
 </div>
-
+<script type="text/html" id="optBar">
+    <a class="layui-btn layui-btn-xs" lay-event="addBed">添加病床</a>
+</script>
 <script>
     //JavaScript代码区域
     layui.use(['element', 'table'], function () {
@@ -67,7 +69,7 @@
                     },
                     {
                         field: 'patientName', title: '患者', templet: function (bed) {
-                            return bed.patient.patientName == null ? "空" : bed.patient.patientName;
+                            return bed.patient==null?"空":bed.patient.patientName;
                         }
                     },
                     {
@@ -77,7 +79,7 @@
                     },
                     {
                         field: 'employeeName', title: '处理护士', templet: function (bed) {
-                            return bed.employee.employeeName == null ? "空" : bed.employee.employeeName;
+                            return bed.employee==null?"空":bed.employee.employeeName;
                         }
                     },
                     {
@@ -86,10 +88,118 @@
                     {
                         field: 'bedLeaveTime', width: 170, title: '离开时间', sort: true
                     }
+                    // ,
+                    // {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
                 ]
             ]
         });
     });
+
+    /*//点击事件
+    table.on('tool(bed_table_filter)', function (obj){
+        //获取当前行的数据
+        var rowData = obj.data;
+        switch (obj.event) {
+
+            case 'addBed':
+                layer.open({
+                    type: 1,//类型，新页面
+                    area: ['900px', '600px'],//定义宽和高
+                    title: '添加病床',//题目
+                    shadeClose: false,//点击遮罩层关闭
+                    content: $('#add_bed'), //打开的内容
+                    btn: ["提交", "返回"],//添加两个按钮
+                    success: function (layero, index) {
+                        // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                        $("#inpatientId").val(rowData.inpatientId);
+                    },
+                    yes: function (index, layero) {
+                        //yes默认触发第一个按钮事件
+                        var send_data = {
+                            // inpatientId:$("")
+                            bedName: $("#send_bedName").val(),
+                            bedStatus: $("#send_bedStatus").val(),
+                            inpatientId: $("#inpatientId").val()
+                        };
+                        $.ajax({
+                            url: "/inpatientDetail/insertInpatientDetail",
+                            type: "post",
+                            data: send_data,
+                            success: function (result) {
+                                alert(result);
+                            },
+                            error: function () {
+                                layer.msg("连接后台失败，服务器异常")
+                            }
+                        });
+                        layer.close(index);
+                        window.location.reload();
+                    },
+                    btn2: function (index, layero) {
+                        //第二个按钮事件
+
+                        layer.close(index);
+                    }
+                });
+                break;
+        }
+    });*/
 </script>
+
+<!--&lt;!&ndash;================ 模态框：添加病床 ================&ndash;&gt;
+<div id="add_bed" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+
+            <label class="layui-form-label" for="send_bedName">病床名称：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="send_bedName" id="send_bedName"
+                               autocomplete="off"
+                               class="layui-input"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <label class="layui-form-label" for="send_bedStatus">病床状态：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <textarea name="send_bedStatus" id="send_bedStatus"
+                                  autocomplete="off"
+                                  class="layui-textarea">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <label class="layui-form-label" for="send_bedPrice">病床价格：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="send_bedPrice" id="send_bedPrice"
+                               autocomplete="off"
+                               class="layui-input"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <label class="layui-form-label" for="send_roomId">所属病房：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="send_roomId" id="send_roomId"
+                               autocomplete="off"
+                               class="layui-input"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>-->
 </body>
 </html>

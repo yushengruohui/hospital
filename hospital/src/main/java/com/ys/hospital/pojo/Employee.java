@@ -29,4 +29,5 @@ public class Employee implements Serializable {
     private EmployeeDetail employeeDetail;
 
     private List<Role> roles;
+
 }

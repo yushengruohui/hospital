@@ -14,7 +14,7 @@
     <div th:replace="~{com/inpatient::head}"></div>
 
     <!--================ 网页左侧导航栏 ================-->
-    <div th:replace="~{com/inpatient::left_inpatient}"></div>
+    <div th:replace="~{com/inpatient::left_bed}"></div>
 
     <!--================ 主体内容区 ================-->
     <div class="layui-body">
@@ -52,7 +52,7 @@
                     },
                     {
                         field: 'bedStatus', title: '病床状态', fixed: 'left', templet: function (bed) {
-                            return bed.bedStatus = '0' ? "空闲" : bed.bedStatus;
+                            return bed.bedStatus='0'?"空闲":bed.bedStatus;
                         }
                     },
                     {
@@ -61,8 +61,8 @@
                         }
                     },
                     {
-                        field: 'patientId', title: '患者', templet: function (bed) {
-                            return bed.patientId == null ? "空" : bed.patientId;
+                        field: 'patientName', title: '患者', templet: function (bed) {
+                            return bed.patient==null?"空":bed.patient.patientName;
                         }
                     },
                     {
@@ -71,8 +71,8 @@
                         }
                     },
                     {
-                        field: 'employeeId', title: '处理护士', templet: function (bed) {
-                            return bed.employeeId == null ? "空" : bed.employeeId;
+                        field: 'employeeName', title: '处理护士', templet: function (bed) {
+                            return bed.employee==null?"空":bed.employee.employeeName;
                         }
                     },
                     {
