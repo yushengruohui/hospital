@@ -40,12 +40,12 @@
             , cols: [
                 [
                     {
-                        field: 'inpatientId', title: '住院信息ID', fixed: 'left', templet: function (inpatient) {
+                        field: 'inpatientId', width: 100, title: '住院信息ID', fixed: 'left', templet: function (inpatient) {
                             return inpatient.inpatientId;
                         }
                     },
                     {
-                    field: 'inpatientStatus', title: '处理状态', templet: function (inpatient) {
+                    field: 'inpatientStatus', width: 100, title: '处理状态', templet: function (inpatient) {
                             if(inpatient.inpatientStatus=='0'){
                                 return "未处理";
                             }else {
@@ -55,7 +55,7 @@
                     }
                     },
                     {
-                        field: 'patientName', title: '患者', templet: function (inpatient) {
+                        field: 'patientName', width: 80, title: '患者', templet: function (inpatient) {
                             return inpatient.inpatientNotify.diagnosis.appointment.patient.patientName;
                         }
                     },
@@ -65,12 +65,12 @@
                         }
                     },
                     {
-                        field: 'inpatientPrice', title: '住院总费用', templet: function (inpatient) {
+                        field: 'inpatientPrice', width: 80, title: '总费用', templet: function (inpatient) {
                             return inpatient.inpatientPrice==null?"0":inpatient.inpatientPrice;
                         }
                     },
                     {
-                        field: 'inpatientPayStatus', title: '支付状态', templet: function (inpatient) {
+                        field: 'inpatientPayStatus', width: 90, title: '支付状态', templet: function (inpatient) {
                             if(inpatient.inpatientPayStatus=='0'){
                                 return "未支付";
                             }else {
@@ -80,22 +80,22 @@
                         }
                     },
                     {
-                        field: 'inpatientPrepaidPrice', title: '患者预交费用', templet: function (inpatient) {
+                        field: 'inpatientPrepaidPrice', width: 90, title: '预交费用', templet: function (inpatient) {
                             return inpatient.inpatientPrepaidPrice;
                         }
                     },
                     {
-                        field: 'employeeName', title: '处理护士', templet: function (inpatient) {
+                        field: 'employeeName', width: 90, title: '处理护士', templet: function (inpatient) {
                             return inpatient.inpatientNotify.employee.employeeName;
                         }
                     },
                     {
-                        field: 'inpatientEntryTime', width: 170,title: '入院时间', sort: true
+                        field: 'inpatientEntryTime', width: 165,title: '入院时间', sort: true
                     },
                     {
-                        field: 'inpatientLeaveTime', width: 170,title: '离院时间', sort: true
+                        field: 'inpatientLeaveTime', width: 165,title: '离院时间', sort: true
                     },
-                    {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                    {title: '操作', width: 80, fixed: 'right', align: 'center', toolbar: '#optBar'}
                 ]
             ]
         });

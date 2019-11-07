@@ -41,7 +41,7 @@
             , cols: [
                 [
                     {
-                        field: 'inpatientId', title: '住院信息ID', fixed: 'left', templet: function (inpatient) {
+                        field: 'inpatientId', width: 100, title: '住院信息ID', fixed: 'left', templet: function (inpatient) {
                             return inpatient.inpatientId;
                         }
                     },
@@ -64,7 +64,7 @@
                         }
                     },
                     {
-                        field: 'inpatientPrice', title: '住院总费用', templet: function (inpatient) {
+                        field: 'inpatientPrice', title: '总费用', templet: function (inpatient) {
                             return inpatient.inpatientPrice==null?"0":inpatient.inpatientPrice;
                         }
                     },
@@ -74,7 +74,7 @@
                         }
                     },
                     {
-                        field: 'inpatientPrepaidPrice', title: '患者预交费用', templet: function (inpatient) {
+                        field: 'inpatientPrepaidPrice', title: '预交费用', templet: function (inpatient) {
                             return inpatient.inpatientPrepaidPrice;
                         }
                     },
@@ -120,7 +120,7 @@
                             var send_data = {
                                 // inpatientId:$("")
                                 inpatientId:$("#send_inpatientId").val(),
-                                bedId:$("#send_bedId").val(),
+                                bedId:rowData.bedId,
                                 inpatientPrice: $("#send_inpatientPrice").val()
                             };
                             $.ajax({

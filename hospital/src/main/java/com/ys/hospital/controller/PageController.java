@@ -204,6 +204,24 @@ public class PageController {
         return "/inpatient/bed_status";
     }
 
+    @RequestMapping("/inpatient/employee/index")
+    public String toInpatientEmployeeIndex(HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
+        return "inpatient/employee/index";
+    }
+
+    @RequestMapping("/inpatient/employee/update")
+    public String toInpatientEmployeeUpdate(Model model) {
+        String employeeId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Employee employee = new Employee();
+        employee.setEmployeeId(Integer.valueOf(employeeId));
+        EmployeeDetail employeeDetail = employeeDetailService.queryEmployeeInfoByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("employeeDetail", employeeDetail);
+        return "inpatient/employee/update";
+    }
+
     @RequestMapping("/admin/employee/report")
     public String toAdminEmployeeReport() {
         return "admin/employee_report";
