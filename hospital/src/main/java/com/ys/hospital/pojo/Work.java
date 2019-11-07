@@ -39,4 +39,6 @@ public class Work implements Serializable {
     private Room room;
     //所拥有的时间段
     private WorkTime workTime;
+
+    private Employee employee;
 }
