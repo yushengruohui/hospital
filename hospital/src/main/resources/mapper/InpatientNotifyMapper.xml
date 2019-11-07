@@ -17,6 +17,20 @@
         <result property="diagnosisId" column="diagnosis_id" jdbcType="INTEGER"/>
         <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
 
+        <association property="diagnosis" javaType="com.ys.hospital.pojo.Diagnosis">
+            <association property="appointment" javaType="com.ys.hospital.pojo.Appointment">
+                <association property="patient" javaType="com.ys.hospital.pojo.Patient">
+                    <result property="patientId" column="patient_id" jdbcType="INTEGER"/>
+                    <result property="patientPhone" column="patient_phone" jdbcType="VARCHAR"/>
+                    <result property="patientName" column="patient_name" jdbcType="VARCHAR"/>
+                    <result property="patientGender" column="patient_gender" jdbcType="VARCHAR"/>
+                    <result property="patientIdentity" column="patient_identity" jdbcType="VARCHAR"/>
+                    <result property="patientAddress" column="patient_address" jdbcType="VARCHAR"/>
+                    <result property="clientId" column="client_id" jdbcType="INTEGER"/>
+                </association>
+            </association>
+        </association>
+
         <association property="employee" javaType="com.ys.hospital.pojo.Employee">
             <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
             <result property="employeeName" column="employee_name" jdbcType="VARCHAR"/>
@@ -31,16 +45,36 @@
             inpatient_notify.inpatient_deal_time,
             inpatient_notify.diagnosis_id,
             inpatient_notify.employee_id,
+            diagnosis.*,
+            appointment.*,
+            patient.patient_name,
             employee.employee_name
         from inpatient_notify
+        join diagnosis on inpatient_notify.diagnosis_id = diagnosis.diagnosis_id
+        join appointment on diagnosis.appointment_id = appointment.appointment_id
+        join patient on appointment.patient_id = patient.patient_id
         join employee on inpatient_notify.employee_id = employee.employee_id
         where inpatient_notify.inpatient_notify_status = 1
     </select>
     <!--通过处理状态查看未处理通知单 -->
-    <select id="queryInpatientNotifyByStatus" resultMap="InpatientNotifyMap">
+    <!--<select id="queryInpatientNotifyByStatus" resultMap="InpatientNotifyMap">
         select
             inpatient_notify_id, inpatient_notify_status, inpatient_deal_time, diagnosis_id, employee_id
         from inpatient_notify
+        where inpatient_notify_status='0'
+    </select>-->
+    <!--通过处理状态查看未处理通知单 -->
+    <select id="queryInpatientNotifyByStatus" resultMap="InpatientNotifyInfoMap">
+        select
+        inpatient_notify.*,
+        diagnosis.*,
+        appointment.*,
+        patient.*
+        from
+        inpatient_notify
+        join diagnosis on inpatient_notify.diagnosis_id = diagnosis.diagnosis_id
+        join appointment on diagnosis.appointment_id = appointment.appointment_id
+        join patient on appointment.patient_id = patient.patient_id
         where inpatient_notify_status='0'
     </select>
 

@@ -48,7 +48,13 @@
                             return inpatientNotify.inpatientNotifyId;
                         }
                     }
-                    , {
+                    ,
+                    {
+                        field: 'patientName', title: '患者', templet: function (inpatientNotify) {
+                            return inpatientNotify.diagnosis.appointment.patient.patientName;
+                        }
+                    },
+                    {
                     field: 'inpatientNotifyStatus', title: '处理状态', templet: function (inpatientNotify) {
                         if (inpatientNotify.inpatientNotifyStatus == '0') {
                             return "未处理";

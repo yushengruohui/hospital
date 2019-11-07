@@ -12,6 +12,7 @@ import com.ys.hospital.service.RoomService;
 import com.ys.hospital.tools.MyPageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +62,7 @@ public class OperationController {
      */
     @RequestMapping("/findAllOperation")
     @ResponseBody
+    @Cacheable
     public MyPageInfo<Operation> findAllOperation(HttpSession session, MyPageInfo<Operation> myPageInfo) {
         PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
         Employee employee= (Employee) session.getAttribute("employee");
