@@ -15,6 +15,7 @@ import com.ys.hospital.tools.MyPageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +54,10 @@ public class AdminController {
     private BranchService branchService;
     @Resource
     private InitWorkTimeTool initWorkTimeTool;
+    @Resource
+    private WorkService workService;
+    @Resource
+    private RoomService roomService;
 
     @GetMapping("/employee")
     public EmployeeInfoVO searchEmployee(Integer employeeId) {
@@ -259,5 +264,34 @@ public class AdminController {
         rolePowerService.insertRolePower(rolePower);
 
         return "success";
+    }
+
+    /**
+     * 根据员工Id获取其从现在到以后七天的工作安排表
+     *
+     * @return 值班安排列表
+     */
+    @ResponseBody
+    @GetMapping("/works")
+    public MyPageInfo<Work> getWorkList(HttpSession session, MyPageInfo<Work> myPageInfo) {
+        PageHelper.startPage(myPageInfo.getPage(), myPageInfo.getLimit());
+        // Work work=new Work();
+        //查询所有值班信息
+        List<Work> works = workService.queryAllWork();
+        // System.out.println(works.get(0).getEmployee().getEmployeeName());
+        int roomId;
+        Room room = new Room();
+        //根据所在roomId查询room信息
+        for (int i = 0; i < works.size(); i++) {
+            roomId = works.get(i).getRoomId();
+            room.setRoomId(roomId);
+            //获取诊室信息将其注入值班安排中
+            works.get(i).setRoom(roomService.queryRoomByParam(room).get(0));
+        }
+        myPageInfo.setData(works);
+        PageInfo page = new PageInfo(myPageInfo.getData());
+        myPageInfo.setCode("0");
+        myPageInfo.setCount(page.getPageSize());
+        return myPageInfo;
     }
 }

@@ -10,20 +10,69 @@
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    <div th:replace="~{com/admin::admin_head}"></div>
+     <div th:replace="~{com/admin::admin_head}"></div>
 
     <div th:replace="~{com/admin::admin_left_medicine}"></div>
 
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-table" id="medicineTable" lay-filter="tableFilter">
+            </table>
+        </div>
+    </div>
 
     <div th:replace="~{com/admin::foot}"></div>
 </div>
+<script type="text/html" id="optBar">
+    <a class="layui-btn layui-btn-xs" lay-event="show_diagnosisMedicineDetail">查看处方详情</a>
+    <a class="layui-btn layui-btn-xs" lay-event="update_diagnosisMedicine">发药</a>
+</script>
 <script>
-    //JavaScript代码区域
-    layui.use('element', function () {
-      var element = layui.element;
 
+    //JavaScript代码区域
+    layui.use(['layer', 'element', 'table', 'form'], function () {
+        var layer = layui.layer;
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+
+        table.render({
+            elem: '#medicineTable'
+            , height: 600
+            , url: '/employee/medicines' //数据接口
+            , method: 'get'
+            , page: true //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'medicineName', title: '药品名', width: 160
+                    }, {
+                    field: 'medicineType', title: '药品类型', width: 120
+                }, {
+                    field: 'medicineInventory', title: '库存', width: 70
+                }, {
+                    field: 'medicineCharacter', title: '性状'
+                }, {
+                    field: 'medicineSave', title: '存储方式'
+                }, {
+                    field: 'medicinePrice', title: '价格', width: 70
+                }, {
+                    field: 'medicineConfict', title: '药性相冲'
+                }
+                ]
+            ]
+        });
+
+        table.on('tool(tableFilter)', function (obj) {
+            //获取当前行的数据
+            var rowData = obj.data;
+
+        });
     });
 
 </script>
 </body>
+
+
 </html>

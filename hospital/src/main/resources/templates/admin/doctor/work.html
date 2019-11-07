@@ -14,16 +14,347 @@
 
     <div th:replace="~{com/admin::admin_left_doctor}"></div>
 
+    <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-table" id="workTable" lay-filter="tableFilter">
+            </table>
+        </div>
+    </div>
 
     <div th:replace="~{com/admin::foot}"></div>
 </div>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function () {
-      var element = layui.element;
+<script type="text/html" id="optBar">
+    <a class="layui-btn layui-btn-xs" lay-event="show_work_detail">预约源详情</a>
 
+</script>
+<script>
+
+    //JavaScript代码区域
+    layui.use(['layer', 'element', 'table', 'form'], function () {
+        var layer = layui.layer;
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+
+        table.render({
+            elem: '#workTable'
+            , height: 600
+            , url: '/admin/works' //数据接口
+            , method: 'get'
+            , page: false //开启分页
+            , cols: [
+                [
+                    {
+                        field: 'employeeName', title: '医师姓名', templet: function (work) {
+                            return work.workId;
+                        }
+                    },
+                    {field: 'workDate', title: '值班日期', sort: true},
+                    {
+                        field: 'workWeek', title: '星期',templet: function (work) {
+                            switch (work.workWeek) {
+                                case 1:
+                                    return "星期一";
+                                case 2:
+                                    return "星期二";
+                                case 3:
+                                    return "星期三";
+                                case 4:
+                                    return "星期四";
+                                case 5:
+                                    return "星期五";
+                                case 6:
+                                    return "星期六";
+                                default:
+                                    return "星期日";
+                            }
+                        }
+                    }, {
+                    field: 'workMorning', title: '早上值班', templet: function (work) {
+                        return work.workMorning === 1 ? "是" : "否";
+                    }
+                }, {
+                    field: 'workAfternoon', title: '下午值班', templet: function (work) {
+                        return work.workAfternoon === 1 ? "是" : "否";
+                    }
+                }, {
+                    field: 'workDeal', title: '预约源'
+                }, {
+                    field: 'roomId', title: '诊室号', templet: function (work) {
+                        return work.room.roomId;
+                    }
+                }, {
+                    field: 'roomAddress', title: '诊室地址', templet: function (work) {
+                        return work.room.roomAddress;
+                    }
+                },
+                    {title: '操作', fixed: 'right', align: 'center', toolbar: '#optBar'}
+                ]
+            ]
+        });
+
+        table.on('tool(tableFilter)', function (obj) {
+            //获取当前行的数据
+            var rowData = obj.data;
+
+            switch (obj.event) {
+                // 显示预约源详情
+                case 'show_work_detail':
+                    layer.open({
+                        type: 1,//类型，新页面
+                        area: ['500px', '300px'],//定义宽和高
+                        title: '预约源显示',//题目
+                        shadeClose: false,//点击遮罩层关闭
+                        content: $('#open_work_detail'), //打开的内容
+                        btn: ["返回"],//添加两个按钮
+                        success: function (layero, index) {
+                            // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                            var workId1 = {
+                                workId: rowData.workId
+                            }
+                            $.ajax({
+                                url: "/work/getWorkTimeByWorkId",
+                                type: "post",
+                                data: workId1,
+                                success: function (result) {
+                                    $("#workTime1").html(result.workTime1);
+                                    $("#workTime2").html(result.workTime2);
+                                    $("#workTime3").html(result.workTime3);
+                                    $("#workTime4").html(result.workTime4);
+                                    $("#workTime5").html(result.workTime5);
+                                    $("#workTime6").html(result.workTime6);
+                                    $("#workTime7").html(result.workTime7);
+                                    $("#workTime8").html(result.workTime8);
+                                    $("#workTime9").html(result.workTime9);
+                                    $("#workTime10").html(result.workTime10);
+                                    $("#workTime11").html(result.workTime11);
+                                    $("#workTime12").html(result.workTime12);
+                                    $("#workTime13").html(result.workTime13);
+                                    $("#workTime14").html(result.workTime14);
+                                    console.info(result)
+                                },
+                                error: function () {
+                                    layer.msg("连接后台失败，服务器异常")
+                                }
+                            });
+                        },
+                        yes: function (index, layero) {
+                            //第二个按钮事件
+                            layer.close(index);
+                        }
+                    });
+                    break;
+                // 修改预约源
+                case 'update_workDeal':
+                    layer.open({
+                        type: 1,//类型，新页面
+                        area: ['500px', '300px'],//定义宽和高
+                        title: '修改预约源',//题目
+                        shadeClose: false,//点击遮罩层关闭
+                        content: $('#open_workDeal'), //打开的内容
+                        btn: ["提交", "取消"],//添加两个按钮
+                        success: function (layero, index) {
+                            // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                        },
+                        yes: function (index, layero) {
+                            //yes默认触发第一个按钮事件
+                            var send_data = {
+                                workId: rowData.workId,
+                                workDeal: $("#send_workDeal").val()
+                            };
+                            $.ajax({
+                                url: "/work/updateWorkDetailByWorkId",
+                                type: "post",
+                                data: send_data,
+                                success: function (result) {
+                                    alert(result);
+                                },
+                                error: function () {
+                                    layer.msg("连接后台失败，服务器异常")
+                                }
+                            });
+                            layer.close(index);
+                            window.location.reload();
+                        },
+                        btn2: function (index, layero) {
+                            //第二个按钮事件
+
+                            layer.close(index);
+                        }
+                    });
+                    break;
+                //休假选择
+                case 'update_isWork' :
+
+                    layer.open({
+                        type: 1,//类型，新页面
+                        area: ['500px', '300px'],//定义宽和高
+                        title: '选择休假时间段',//题目
+                        shadeClose: false,//点击遮罩层关闭
+                        content: $('#open_isWork'), //打开的内容
+                        btn: ["提交", "取消"],//添加两个按钮
+                        success: function (layero, index) {
+                            // 弹出页面成功后操作，可以修改一些值，如给某个input赋值
+                            form.val("isWorkFormFilter", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+                                workMorning: rowData.workMorning,
+                                workAfternoon: rowData.workAfternoon
+                            });
+                        },
+                        yes: function (index, layero) {
+                            //yes默认触发第一个按钮事件
+                            var send_data = {
+                                workId: rowData.workId,
+                                workWeek: rowData.workWeek,
+                                employeeId: rowData.employeeId,
+                                roomId: rowData.roomId,
+                                workDeal: rowData.workDeal,
+                                workDate: rowData.workDate,
+                                workMorning: $('#isMorning input[name="workMorning"]:checked').val(),
+                                workAfternoon: $('#isAfternoon input[name="workAfternoon"]:checked').val(),
+                            };
+                            $.ajax({
+                                url: "/work/updateIsWork",
+                                type: "post",
+                                data: send_data,
+                                success: function (result) {
+                                    alert(result);
+                                },
+                                error: function () {
+                                    layer.msg("连接后台失败，服务器异常")
+                                }
+                            });
+                            layer.close(index);
+                            window.location.reload();
+                        },
+                        btn2: function (index, layero) {
+                            //第二个按钮事件
+                            layer.close(index);
+                        }
+                    });
+                    break;
+            }
+
+        });
     });
 
 </script>
 </body>
+<!--================ 模态框：修改预约源 ================-->
+<div id="open_workDeal" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+
+            <label class="layui-form-label" for="send_workDeal">预约源：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" name="send_workDeal" id="send_workDeal" placeholder="请输入预约源数量"
+                               autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<!--================ 模态框：预约源详情================-->
+<div id="open_work_detail" style="display: none">
+    <form class="layui-form" lay-filter="checkItemFormFilter">
+        <div class="layui-form-item">
+            <!-- 内容主体区域 -->
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>时间段</th>
+                    <th>可预约人数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>08：00-08：30</td>
+                    <td id="workTime1"></td>
+                </tr>
+                <tr>
+                    <td>08：30-09：00</td>
+                    <td id="workTime2"></td>
+                </tr>
+                <tr>
+                    <td>09：00-09：30</td>
+                    <td id="workTime3"></td>
+                </tr>
+                <tr>
+                    <td>09：30-10：00</td>
+                    <td id="workTime4"></td>
+                </tr>
+                <tr>
+                    <td>10：00-10：30</td>
+                    <td id="workTime5"></td>
+                </tr>
+                <tr>
+                    <td>10：30-11：00</td>
+                    <td id="workTime6"></td>
+                </tr>
+                <tr>
+                    <td>11：00-11：30</td>
+                    <td id="workTime7"></td>
+                </tr>
+                <tr>
+                    <td>11：30-12：00</td>
+                    <td id="workTime8"></td>
+                </tr>
+                <tr>
+                    <td>14：00-14：30</td>
+                    <td id="workTime9"></td>
+                </tr>
+                <tr>
+                    <td>14：30-15：00</td>
+                    <td id="workTime10"></td>
+                </tr>
+                <tr>
+                    <td>15：00-15：30</td>
+                    <td id="workTime11"></td>
+                </tr>
+                <tr>
+                    <td>15：30-16：00</td>
+                    <td id="workTime12"></td>
+                </tr>
+                <tr>
+                    <td>16：00-16：30</td>
+                    <td id="workTime13"></td>
+                </tr>
+                <tr>
+                    <td>16：30-17：00</td>
+                    <td id="workTime14"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+
+<!--================ 模态框：休假 ================-->
+<div id="open_isWork" style="display: none">
+    <form class="layui-form" lay-filter="isWorkFormFilter">
+        <div class="layui-form-item">
+            <label class="layui-form-label">上午</label>
+            <div class="layui-input-block" id="isMorning">
+                <input type="radio" name="workMorning" value="0" title="休假">
+                <input type="radio" name="workMorning" value="1" title="值班">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">下午</label>
+            <div class="layui-input-block" id="isAfternoon">
+                <input type="radio" name="workAfternoon" value="0" title="休假">
+                <input type="radio" name="workAfternoon" value="1" title="值班">
+            </div>
+        </div>
+    </form>
+</div>
 </html>
