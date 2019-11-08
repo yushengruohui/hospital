@@ -393,7 +393,7 @@ public class WxController {
 
     @RequestMapping("/test")
     public void test() {
-
+        // initWorkTimeTool.initWorkTime(2019002);
     }
 
     //查看用户是否有支付密码
