@@ -18,16 +18,20 @@ import java.util.List;
 
 @Service
 public class CustomizedUserAuthorityInfoService implements UserDetailsService {
+	// 存储当前用户的权限信息到session中。
+	
     @Resource
     private EmployeeMapper employeeMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) { //重写loadUserByUsername 方法获得 userdetails 类型用户
+    public UserDetails loadUserByUsername(String userName) { 
+		//重写loadUserByUsername 方法获得 userdetails 类型用户
 
         Employee permissionInfo = employeeMapper.getPermissionInfo(userName);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         //String encodePassword = MD5Util.encode(String.valueOf(user.getPassword()));
+		// 存储的密码一定要加密，否则会报异常
         String encodePassword = encoder.encode(String.valueOf(permissionInfo.getEmployeePassword()));
 
         //当前用户的认证信息

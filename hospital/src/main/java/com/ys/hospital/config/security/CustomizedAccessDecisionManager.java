@@ -16,10 +16,14 @@ import java.util.Collection;
 
 @Service
 public class CustomizedAccessDecisionManager implements AccessDecisionManager {
+	//抉择器，是否拦截当前用户点击的url
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-        HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
+        // HttpServletRequest 当前用户点击的url
+		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
         String url, method;
+		
+		// authentication 当前用户的认证信息
         if ("anonymousUser".equals(authentication.getPrincipal())
                 || matchers("/images/**", request)
                 || matchers("/**/*.js", request)
@@ -28,13 +32,19 @@ public class CustomizedAccessDecisionManager implements AccessDecisionManager {
                 || matchers("/", request)
                 || matchers("/favicon.ico", request)
                 || matchers("/login", request)) {
+			
+			// 放行
             return;
         } else {
             for (GrantedAuthority ga : authentication.getAuthorities()) {
                 if (ga instanceof CustomizedGrantedAuthority) {
+					
+					// 转换成自定义的权限信息
                     CustomizedGrantedAuthority customizedGrantedAuthority = (CustomizedGrantedAuthority) ga;
                     url = customizedGrantedAuthority.getPermissionUrl();
                     method = customizedGrantedAuthority.getMethod();
+					
+					// 如果当前用户的请求url具有权限，则放行
                     if (matchers(url, request)) {
                         if (method.equals(request.getMethod()) || "ALL".equals(method)) {
                             return;
@@ -43,6 +53,7 @@ public class CustomizedAccessDecisionManager implements AccessDecisionManager {
                 }
             }
         }
+		// 不符合以上要求，拦截
         throw new AccessDeniedException("no right");
     }
 

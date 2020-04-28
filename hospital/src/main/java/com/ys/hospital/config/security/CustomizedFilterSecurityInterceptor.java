@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @Service
 public class CustomizedFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
-
+	// 在拦截器（过滤器）中放入自定义的安全元数据
 
     @Resource
     private FilterInvocationSecurityMetadataSource customizedSecurityMetadataSource;
