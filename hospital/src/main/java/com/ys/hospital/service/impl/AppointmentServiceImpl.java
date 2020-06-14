@@ -117,8 +117,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public int countAppointmentByStatus(Integer status) {
-        if (status == null)
+        if (status == null) {
             return 0;
+        }
         return this.appointmentMapper.countAppointmentByStatus(status);
     }
 }
